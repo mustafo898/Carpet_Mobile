@@ -2,9 +2,7 @@ package dark.composer.carpet.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dark.composer.carpet.fragments.LogInFragment
-import dark.composer.carpet.fragments.SigUpFragment
-import dark.composer.carpet.fragments.SplashFragment
+import dark.composer.carpet.fragments.*
 
 
 @Module
@@ -18,5 +16,19 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun signUpFragment(): SigUpFragment
+
+    @ContributesAndroidInjector
+    abstract fun defaultFragment(): DefaultFragment
+
+    @ContributesAndroidInjector
+    abstract fun adminFragment(): AdminFragment
+
+    @ContributesAndroidInjector
+    abstract fun customerFragment(): CustomerFragment
+
+    @ContributesAndroidInjector
+    abstract fun employeeFragment(): EmployeeFragment
+
+
 
 }
