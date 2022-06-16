@@ -1,5 +1,6 @@
 package dark.composer.carpet.mvvm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.repositories.SignUpRepository
@@ -12,10 +13,13 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SigUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) :
-    ViewModel() {
-    private val logUpChannel = Channel<Boolean>()
-    val logUpFlow = logUpChannel.receiveAsFlow()
+class SigUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) : ViewModel() {
+
+    private val signUpChannel = Channel<Boolean>()
+    val signUpFlow = signUpChannel.receiveAsFlow()
+
+    private val errorChannel = Channel<String>()
+    val errorFlow = errorChannel.receiveAsFlow()
 
     fun signUp(
         name: String,
@@ -25,37 +29,30 @@ class SigUpViewModel @Inject constructor(private val signUpRepository: SignUpRep
         configPassword: String,
     ) {
         viewModelScope.launch {
-            signUpRepository.signUp(
-                SignUpRequest(
-                    name = name,
-                    surname = surname,
-                    phoneNumber = phoneNumber,
-                    password = password,
-                    configPassword = configPassword
-                )
-            ).catch {
-                //errors
-
-
-            }.collect { result ->
-                when (result) {
-                    is BaseNetworkResult.Success -> {
-                        result.data?.let { isSignUp ->
-                            logUpChannel.send(isSignUp)
+            if (name.isNotEmpty() && surname.isNotEmpty() && phoneNumber.isNotEmpty() && password.isNotEmpty() && configPassword.isNotEmpty()){
+                if (name.length >= 4){
+                    if (surname.length >= 3){
+                        if (phoneNumber.length == 9){
+                            if (password.length >= 6){
+                                if (password == configPassword){
+                                    signUpRepository.signUp(SignUpRequest(name=name,surname=surname,phoneNumber=phoneNumber,password=password,configPassword=configPassword))
+                                }else{
+                                    errorChannel.send("Config Password must be equal password")
+                                }
+                            }else{
+                                errorChannel.send("Password must be 6 or more characters")
+                            }
+                        }else{
+                            errorChannel.send("Please enter phone correct")
                         }
+                    }else{
+                        errorChannel.send("Surname must be 3 or more characters")
                     }
-                    is BaseNetworkResult.Error -> {
-                        //network error
-
-                    }
-                    is BaseNetworkResult.Loading -> {
-                        //loading
-//                       result.isLoading?.let {
-//                           _isLoadingLiveData.value = it
-//                       }
-                    }
+                }else{
+                    errorChannel.send("Name must be 3 or more characters")
                 }
-
+            }else{
+                errorChannel.send("Please fill fields")
             }
         }
     }

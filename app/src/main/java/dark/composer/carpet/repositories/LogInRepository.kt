@@ -1,5 +1,6 @@
 package dark.composer.carpet.repositories
 
+import android.util.Log
 import dark.composer.carpet.retrofit.ApiService
 import dark.composer.carpet.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.retrofit.models.request.LogInRequest
@@ -21,6 +22,7 @@ class LogInRepository @Inject constructor(
             if (response.code() == 200){
                 response.body().let {
                     sharedPref.setToken(it!!.jwt)
+                    Log.d("QQQQQ", "logIn: ${it.name}")
                 }
                 emit(BaseNetworkResult.Success(true))
             }else{
