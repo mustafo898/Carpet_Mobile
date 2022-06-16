@@ -13,8 +13,5 @@ import dark.composer.carpet.mvvm.LogInViewModel
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
     override fun onViewCreate() {
 
-        binding.txt.setOnClickListener {
-            navController.navigate(R.id.action_logInFragment_to_sigUpFragment)
-        }
     }
 }

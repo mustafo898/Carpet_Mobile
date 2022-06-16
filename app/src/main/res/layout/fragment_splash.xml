@@ -6,9 +6,10 @@
     tools:context=".fragments.SplashFragment">
 
     <TextView
+        android:gravity="center"
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:text="Hell" />
 
 </FrameLayout>
