@@ -18,4 +18,28 @@ class SharedPref(context: Context) {
     }
 
     fun getToken() = preferences.getString("TOKEN", "")
+
+    fun setName(name: String) {
+        editor = preferences.edit()
+        editor.putString("NAME", name)
+        editor.apply()
+    }
+
+    fun getName() = preferences.getString("NAME", "")
+
+    fun setSurName(surName: String) {
+        editor = preferences.edit()
+        editor.putString("SURNAME", surName)
+        editor.apply()
+    }
+
+    fun getSurName() = preferences.getString("SURNAME", "")
+
+    fun setPhoneNumber(phoneNumber: String) {
+        editor = preferences.edit()
+        editor.putString("PHONE_NUMBER", phoneNumber)
+        editor.apply()
+    }
+
+    fun getPhoneNumber() = preferences.getString("PHONE_NUMBER", "")
 }

@@ -1,15 +1,19 @@
 package dark.composer.carpet.retrofit
 
-import dark.composer.carpet.retrofit.request.LogInRequest
-import dark.composer.carpet.retrofit.response.LogInResponse
+import dark.composer.carpet.retrofit.models.request.LogInRequest
+import dark.composer.carpet.retrofit.models.request.SignUpRequest
+import dark.composer.carpet.retrofit.models.response.LogInResponse
+import dark.composer.carpet.retrofit.models.response.SignUpResponse
 import dark.composer.carpet.utils.Constants
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 
 interface ApiService {
-
     @POST(Constants.LOGIN)
-    suspend fun (@Body LogInRequest):LogInResponse
+    suspend fun logIn(@Body logInRequest: LogInRequest):Response<LogInResponse>
 
+    @POST(Constants.SIGNUP)
+    suspend fun signUp(@Body signUpRequest: SignUpRequest):Response<SignUpResponse>
 }
