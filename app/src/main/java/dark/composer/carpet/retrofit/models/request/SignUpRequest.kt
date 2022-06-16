@@ -7,3 +7,4 @@ data class SignUpRequest(
     val password: String,
     val configPassword: String
 )
+//ProfileRole role: ADMIN,CUSTOMER,EMPLOYEE
