@@ -5,7 +5,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import dark.composer.carpet.mvvm.LogInViewModel
-import dark.composer.carpet.mvvm.SigUpViewModel
+import dark.composer.carpet.mvvm.SignUpViewModel
 import dark.composer.carpet.mvvm.SplashViewModel
 import dark.composer.carpet.scopes.ViewModelKey
 
@@ -24,6 +24,6 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SigUpViewModel::class)
-    abstract fun sigUpViewModel(sigUpViewModel : SigUpViewModel): ViewModel
+    @ViewModelKey(SignUpViewModel::class)
+    abstract fun sigUpViewModel(signUpViewModel : SignUpViewModel): ViewModel
 }

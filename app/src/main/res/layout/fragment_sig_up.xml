@@ -6,7 +6,7 @@
     android:gravity="center"
     android:background="@color/theme_color_8"
     android:orientation="vertical"
-    tools:context=".fragments.SigUpFragment">
+    tools:context=".fragments.SignUpFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_marginTop="30dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
-        android:id="@+id/phone"
+        android:id="@+id/phoneNumber"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
@@ -64,13 +64,28 @@
         android:layout_marginTop="30dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
-        android:id="@+id/security"
+        android:id="@+id/password"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/back_white"
         android:hint="Password"
+        android:textSize="20sp"
+        android:inputType="text"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:layout_marginTop="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:id="@+id/configPassword"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/back_white"
+        android:hint="Config password"
         android:textSize="20sp"
         android:inputType="text"
         android:textColor="@color/black"/>

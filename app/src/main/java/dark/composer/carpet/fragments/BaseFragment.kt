@@ -39,7 +39,6 @@ abstract class BaseFragment<VB : ViewBinding>(
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
 
-
         onViewCreate()
     }
 
