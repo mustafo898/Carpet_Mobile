@@ -10,9 +10,19 @@
         android:name="dark.composer.carpet.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
+
         <action
-            android:id="@+id/action_splashFragment_to_sigUpFragment"
-            app:destination="@id/sigUpFragment" />
+            android:id="@+id/action_splashFragment_to_defaultFragment"
+            app:destination="@id/defaultFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_customerFragment"
+            app:destination="@id/customerFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_adminFragment2"
+            app:destination="@id/adminFragment2" />
+        <action
+            android:id="@+id/action_splashFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
     </fragment>
 
     <fragment
@@ -23,6 +33,18 @@
         <action
             android:id="@+id/action_logInFragment_to_sigUpFragment"
             app:destination="@id/sigUpFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_sigUpFragment2"
+            app:destination="@id/sigUpFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_customerFragment"
+            app:destination="@id/customerFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_adminFragment2"
+            app:destination="@id/adminFragment2" />
     </fragment>
 
     <fragment
@@ -30,8 +52,39 @@
         android:name="dark.composer.carpet.fragments.SigUpFragment"
         android:label="fragment_sig_up"
         tools:layout="@layout/fragment_sig_up" >
+
         <action
-            android:id="@+id/action_sigUpFragment_to_logInFragment"
+            android:id="@+id/action_sigUpFragment_to_customerFragment"
+            app:destination="@id/customerFragment" />
+        <action
+            android:id="@+id/action_sigUpFragment_to_adminFragment2"
+            app:destination="@id/adminFragment2" />
+        <action
+            android:id="@+id/action_sigUpFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerFragment"
+        android:name="dark.composer.carpet.fragments.CustomerFragment"
+        android:label="fragment_customer"
+        tools:layout="@layout/fragment_customer" />
+    <fragment
+        android:id="@+id/defaultFragment"
+        android:name="dark.composer.carpet.fragments.DefaultFragment"
+        android:label="fragment_default"
+        tools:layout="@layout/fragment_default" >
+        <action
+            android:id="@+id/action_defaultFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/adminFragment2"
+        android:name="dark.composer.carpet.fragments.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" />
+    <fragment
+        android:id="@+id/employeeFragment"
+        android:name="dark.composer.carpet.fragments.EmployeeFragment"
+        android:label="fragment_employee"
+        tools:layout="@layout/fragment_employee" />
 </navigation>
