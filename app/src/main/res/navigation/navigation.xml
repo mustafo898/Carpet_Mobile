@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="dark.composer.carpet.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_sigUpFragment"
+            app:destination="@id/sigUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="dark.composer.carpet.fragments.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_sigUpFragment"
+            app:destination="@id/sigUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sigUpFragment"
+        android:name="dark.composer.carpet.fragments.SigUpFragment"
+        android:label="fragment_sig_up"
+        tools:layout="@layout/fragment_sig_up" >
+        <action
+            android:id="@+id/action_sigUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+</navigation>
