@@ -35,7 +35,25 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
                         if (phoneNumber.length == 9){
                             if (password.length >= 6){
                                 if (password == configPassword){
-                                    signUpRepository.signUp(SignUpRequest(name=name,surname=surname,phoneNumber=phoneNumber,password=password,configPassword=configPassword))
+                                    signUpRepository.signUp(SignUpRequest(name=name,surname=surname,phoneNumber=phoneNumber,password=password,configPassword=configPassword)).catch { t ->
+                                        Log.d("DDDD", "getServicesResponse: $t")
+                                    }.collect {
+                                        when (it) {
+                                            is BaseNetworkResult.Success -> {
+                                                it.data?.let { d ->
+                                                    signUpChannel.send(d)
+                                                }
+                                            }
+                                            is BaseNetworkResult.Error -> {
+                                                it.message?.let { d ->
+                                                    errorChannel.send(d)
+                                                }
+                                            }
+                                            else -> {
+                                                Log.d("s", "signUp:")
+                                            }
+                                        }
+                                    }
                                 }else{
                                     errorChannel.send("Config Password must be equal password")
                                 }
