@@ -21,6 +21,8 @@ class MainActivity : DaggerAppCompatActivity() {
         controller = findNavController(R.id.main_nav_fragment)
         appBarConfiguration = AppBarConfiguration(controller.graph)
         setupActionBarWithNavController(controller, appBarConfiguration)
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
