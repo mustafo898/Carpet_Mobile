@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SigUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) : ViewModel() {
 
     private val signUpChannel = Channel<Boolean>()
     val signUpFlow = signUpChannel.receiveAsFlow()

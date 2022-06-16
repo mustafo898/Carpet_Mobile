@@ -1,5 +1,6 @@
 package dark.composer.carpet.fragments
 
+import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentCustomerBinding
 
 class CustomerFragment : BaseFragment<FragmentCustomerBinding>(FragmentCustomerBinding::inflate) {

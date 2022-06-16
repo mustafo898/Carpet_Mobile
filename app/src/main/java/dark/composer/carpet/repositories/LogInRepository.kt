@@ -15,7 +15,6 @@ class LogInRepository @Inject constructor(
     private var sharedPref: SharedPref
 ) {
 
-
     suspend fun logIn(logInRequest: LogInRequest): Flow<BaseNetworkResult<Boolean>> {
         return flow {
             val response = service.logIn(logInRequest)
