@@ -2,7 +2,13 @@ package dark.composer.carpet.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dark.composer.carpet.fragments.*
+import dark.composer.carpet.fragments.mainfragments.AdminFragment
+import dark.composer.carpet.fragments.mainfragments.CustomerFragment
+import dark.composer.carpet.fragments.mainfragments.DefaultFragment
+import dark.composer.carpet.fragments.mainfragments.EmployeeFragment
+import dark.composer.carpet.fragments.registrfragments.LogInFragment
+import dark.composer.carpet.fragments.registrfragments.SignUpFragment
+import dark.composer.carpet.fragments.registrfragments.SplashFragment
 
 
 @Module

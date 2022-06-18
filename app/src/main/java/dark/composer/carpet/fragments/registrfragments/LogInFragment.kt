@@ -1,4 +1,4 @@
-package dark.composer.carpet.fragments
+package dark.composer.carpet.fragments.registrfragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.widget.Toast
@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentLogInBinding
+import dark.composer.carpet.fragments.BaseFragment
 import dark.composer.carpet.mvvm.LogInViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

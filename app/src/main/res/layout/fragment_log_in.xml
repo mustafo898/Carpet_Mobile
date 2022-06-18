@@ -6,7 +6,7 @@
     android:background="@color/theme_color_8"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".fragments.LogInFragment">
+    tools:context=".fragments.registrfragments.LogInFragment">
 
     <EditText
         android:id="@+id/phoneNumber"

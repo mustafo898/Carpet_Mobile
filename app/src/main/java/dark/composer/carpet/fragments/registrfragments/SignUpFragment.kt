@@ -1,4 +1,4 @@
-package dark.composer.carpet.fragments
+package dark.composer.carpet.fragments.registrfragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
