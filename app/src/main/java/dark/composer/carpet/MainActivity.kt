@@ -19,11 +19,11 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         controller = findNavController(R.id.main_nav_fragment)
-        appBarConfiguration = AppBarConfiguration(controller.graph)
-        setupActionBarWithNavController(controller, appBarConfiguration)
+//        appBarConfiguration = AppBarConfiguration(controller.graph)
+//        setupActionBarWithNavController(controller, appBarConfiguration)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//    }
 }
