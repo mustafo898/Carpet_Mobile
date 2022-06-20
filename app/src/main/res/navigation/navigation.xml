@@ -31,6 +31,9 @@
             app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 
     <fragment

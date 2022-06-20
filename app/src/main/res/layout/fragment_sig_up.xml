@@ -10,98 +10,151 @@
     tools:context=".fragments.registrFragments.SignUpFragment">
 
     <LinearLayout
-        android:layout_height="170dp"
+        android:layout_height="140dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="bottom">
 
         <TextView
+            android:id="@+id/welcome"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:fontFamily="@font/bungee_regular"
             android:text="Welcome"
+            android:transitionName="welcome"
             android:textSize="40sp"/>
 
         <TextView
+            android:id="@+id/logInText"
             android:layout_marginTop="-20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:transitionName="signInText"
             android:text="SignUp to start your purchases"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:id="@+id/nameInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="First Name"
-            android:id="@+id/name"
-            android:layout_height="wrap_content">
+            app:startIconTint="@color/black"
+            app:helperText="Required"
+            app:helperTextTextColor="#F44336"
+            app:startIconDrawable="@drawable/ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:lines="1"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Last Name"
-            android:id="@+id/lastName"
+            android:id="@+id/lastNameInput"
+            app:helperText="Required"
+            app:helperTextTextColor="#F44336"
+            app:startIconTint="@color/black"
+            app:startIconDrawable="@drawable/ic_person"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:lines="1"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:id="@+id/lastName"/>
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Phone Number"
-            android:id="@+id/phoneNumber"
+            app:prefixText="+998"
+            app:helperText="Required"
+            app:helperTextTextColor="#F44336"
+            app:counterEnabled="true"
+            app:counterMaxLength="9"
+            android:id="@+id/phoneNumberInput"
+            app:startIconDrawable="@drawable/ic_phone_android"
+            app:startIconTint="@color/black"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/phoneNumber"
+                android:textColor="@color/black"
+                android:lines="1"
+                android:transitionName="phone"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperText="Required"
+            app:helperTextTextColor="#F44336"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Password"
-            android:id="@+id/password"
-            app:endIconMode="password_toggle"
-            android:layout_height="wrap_content">
+            android:id="@+id/passwordInput"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/black"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:endIconTint="@color/black"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:id="@+id/password"
+                android:transitionName="password"
+                android:textColor="@color/black"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/black"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Config Password"
-            android:id="@+id/configPassword"
-            android:layout_height="wrap_content">
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:helperText="Required"
+            app:helperTextTextColor="#F44336"
+            android:id="@+id/configPasswordInput">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="@color/black"
+                android:id="@+id/configPassword"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -113,6 +166,7 @@
         android:textColor="@color/white"
         android:background="#000"
         android:id="@+id/register"
+        android:transitionName="go"
         android:textSize="22sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -120,6 +174,8 @@
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:textStyle="bold"
+        android:id="@+id/logIn"
+        android:transitionName="logIn"
         android:text="ALREADY HAVE AN ACCOUNT? LOGIN"/>
 
 <!--    <TextView-->
