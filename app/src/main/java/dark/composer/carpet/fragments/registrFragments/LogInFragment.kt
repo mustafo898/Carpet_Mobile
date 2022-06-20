@@ -1,4 +1,4 @@
-package dark.composer.carpet.fragments.registrfragments
+package dark.composer.carpet.fragments.registrFragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.widget.Toast

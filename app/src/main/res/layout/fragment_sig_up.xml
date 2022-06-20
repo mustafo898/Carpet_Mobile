@@ -3,109 +3,225 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/theme_color_8"
     android:orientation="vertical"
-    tools:context=".fragments.registrfragments.SignUpFragment">
+    android:padding="20dp"
+    tools:context=".fragments.registrFragments.SignUpFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_height="170dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:fontFamily="@font/bungee_regular"
+            android:text="Welcome"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:layout_marginTop="-20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="SignUp to start your purchases"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="First Name"
+            android:id="@+id/name"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Last Name"
+            android:id="@+id/lastName"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Phone Number"
+            android:id="@+id/phoneNumber"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Password"
+            android:id="@+id/password"
+            app:endIconMode="password_toggle"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            app:endIconMode="password_toggle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Config Password"
+            android:id="@+id/configPassword"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:textSize="24sp"
-        android:textColor="#424242"
-        android:textStyle="bold"/>
-
-    <EditText
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/name"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/back_white"
-        android:hint="Name"
-        android:textSize="20sp"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/surname"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/back_white"
-        android:hint="Surname"
-        android:textSize="20sp"
-        android:inputType="text"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/phoneNumber"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/back_white"
-        android:hint="Phone number"
-        android:textSize="20sp"
-        android:inputType="phone"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/password"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/back_white"
-        android:hint="Password"
-        android:textSize="20sp"
-        android:inputType="text"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:id="@+id/configPassword"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/back_white"
-        android:hint="Config password"
-        android:textSize="20sp"
-        android:inputType="text"
-        android:textColor="@color/black"/>
-
-    <Button
+        android:text="Go"
+        android:textColor="@color/white"
+        android:background="#000"
         android:id="@+id/register"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="Register"
-        android:background="@drawable/register_btn"/>
+        android:textSize="22sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/logIn"
-        android:text="Log In"
-        android:layout_marginTop="50dp"
-        android:textSize="20sp"/>
+        android:background="#00000000"
+        android:textStyle="bold"
+        android:text="ALREADY HAVE AN ACCOUNT? LOGIN"/>
+
+<!--    <TextView-->
+<!--        android:gravity="center"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Register"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textColor="#424242"-->
+<!--        android:textStyle="bold"/>-->
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:id="@+id/name"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/back_white"-->
+<!--        android:hint="Name"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textColor="@color/black"/>-->
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:id="@+id/surname"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/back_white"-->
+<!--        android:hint="Surname"-->
+<!--        android:textSize="20sp"-->
+<!--        android:inputType="text"-->
+<!--        android:textColor="@color/black"/>-->
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:id="@+id/phoneNumber"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/back_white"-->
+<!--        android:hint="Phone number"-->
+<!--        android:textSize="20sp"-->
+<!--        android:inputType="phone"-->
+<!--        android:textColor="@color/black"/>-->
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:id="@+id/password"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/back_white"-->
+<!--        android:hint="Password"-->
+<!--        android:textSize="20sp"-->
+<!--        android:inputType="text"-->
+<!--        android:textColor="@color/black"/>-->
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:id="@+id/configPassword"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/back_white"-->
+<!--        android:hint="Config password"-->
+<!--        android:textSize="20sp"-->
+<!--        android:inputType="text"-->
+<!--        android:textColor="@color/black"/>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/register"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:text="Register"-->
+<!--        android:background="@drawable/register_btn"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/logIn"-->
+<!--        android:text="Log In"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:textSize="20sp"/>-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>

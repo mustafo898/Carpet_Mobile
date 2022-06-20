@@ -1,4 +1,4 @@
-package dark.composer.carpet.fragments.registrfragments
+package dark.composer.carpet.fragments.registrFragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -42,34 +42,34 @@ class SignUpFragment : DaggerFragment() {
             providerFactory
         )[SignUpViewModel::class.java]
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.signUpFlow.collect {
-                    if (it) {
-                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_sigUpFragment_to_customerFragment)
-                    }
-                }
-                viewModel.errorFlow.collect {
-//                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                    Log.d("rrrr", "onViewCreate: $it")
-                }
-            }
-        }
-
-        binding.register.setOnClickListener {
-            Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
-            viewModel.signUp(
-                binding.name.text.toString().trim(),
-                binding.name.text.toString().trim(),
-                binding.phoneNumber.text.toString().trim(),
-                binding.password.text.toString().trim(),
-                binding.configPassword.text.toString().trim()
-            )
-        }
-
-        binding.logIn.setOnClickListener {
-            findNavController().navigate(R.id.action_sigUpFragment_to_logInFragment)
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.lifecycle.whenStarted {
+//                viewModel.signUpFlow.collect {
+//                    if (it) {
+//                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+//                        findNavController().navigate(R.id.action_sigUpFragment_to_customerFragment)
+//                    }
+//                }
+//                viewModel.errorFlow.collect {
+////                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+//                    Log.d("rrrr", "onViewCreate: $it")
+//                }
+//            }
+//        }
+//
+//        binding.register.setOnClickListener {
+//            Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
+//            viewModel.signUp(
+//                binding.name.text.toString().trim(),
+//                binding.name.text.toString().trim(),
+//                binding.phoneNumber.text.toString().trim(),
+//                binding.password.text.toString().trim(),
+//                binding.configPassword.text.toString().trim()
+//            )
+//        }
+//
+//        binding.logIn.setOnClickListener {
+//            findNavController().navigate(R.id.action_sigUpFragment_to_logInFragment)
+//        }
     }
 }

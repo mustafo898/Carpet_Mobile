@@ -5,11 +5,13 @@
     android:id="@+id/navigation"
     app:startDestination="@id/splashFragment">
 
+
+
     <fragment
         android:id="@+id/splashFragment"
-        android:name="dark.composer.carpet.fragments.registrfragments.SplashFragment"
+        android:name="dark.composer.carpet.fragments.registrFragments.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_default" >
 
         <action
             app:popUpTo="@id/defaultFragment"
@@ -31,11 +33,14 @@
             app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="dark.composer.carpet.fragments.registrfragments.LogInFragment"
+        android:name="dark.composer.carpet.fragments.registrFragments.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -57,7 +62,7 @@
 
     <fragment
         android:id="@+id/sigUpFragment"
-        android:name="dark.composer.carpet.fragments.registrfragments.SignUpFragment"
+        android:name="dark.composer.carpet.fragments.registrFragments.SignUpFragment"
         android:label="fragment_sig_up"
         tools:layout="@layout/fragment_sig_up" >
 

@@ -1,16 +1,15 @@
-package dark.composer.carpet.fragments.registrfragments
+package dark.composer.carpet.fragments.registrFragments
 
-import androidx.loader.app.LoaderManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
 import dark.composer.carpet.adapter.CategoryAdapter
 import dark.composer.carpet.adapter.PopularAdapter
-import dark.composer.carpet.databinding.FragmentDefBinding
-import dark.composer.carpet.databinding.FragmentSplashBinding
+import dark.composer.carpet.databinding.FragmentDefault1Binding
+import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.dto.CategoryModel
 import dark.composer.carpet.fragments.BaseFragment
 
-class SplashFragment : BaseFragment<FragmentDefBinding>(FragmentDefBinding::inflate) {
+class SplashFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
     private val adapterCategory by lazy {
         CategoryAdapter(requireContext())
     }
@@ -31,6 +30,9 @@ class SplashFragment : BaseFragment<FragmentDefBinding>(FragmentDefBinding::infl
         binding.txtCustomers.isSelected = true
         binding.txtAdmin.isSelected = true
         binding.txtEmployee.isSelected = true
+        binding.floatingActionButton.setOnClickListener {
+            navController.navigate(R.id.action_splashFragment_to_logInFragment)
+        }
     }
 
     private fun setCategory():List<CategoryModel>{
