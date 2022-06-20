@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="dark.composer.carpet.fragments.registrFragments.SplashFragment"
         android:label="fragment_default"
-        tools:layout="@layout/fragment_default" >
+        tools:layout="@layout/fragment_splash" >
 
         <action
             app:popUpTo="@id/defaultFragment"
@@ -31,9 +31,6 @@
             app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
     </fragment>
 
     <fragment
