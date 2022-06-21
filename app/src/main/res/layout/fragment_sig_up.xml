@@ -60,7 +60,7 @@
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textPersonName" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:textColor="@color/black"
-                android:inputType="text"
+                android:inputType="textPersonName"
                 android:id="@+id/lastName"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -159,15 +159,30 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go"
-        android:textColor="@color/white"
+        android:orientation="horizontal"
         android:background="#000"
+        android:gravity="center"
         android:id="@+id/register"
         android:transitionName="go"
-        android:textSize="22sp"/>
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go"
+            android:textColor="@color/white"
+            android:background="#00000000"
+            android:textSize="22sp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"

@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/phoneNumber"
                 android:lines="1"
+                android:maxLength="9"
                 android:transitionName="phone"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:id="@+id/password"
+                android:maxLength="16"
                 android:transitionName="password"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,15 +105,30 @@
             android:text="FORGOT PASSWORD?"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go"
-        android:textColor="@color/white"
+        android:orientation="horizontal"
         android:background="#000"
-        android:transitionName="go"
+        android:gravity="center"
         android:id="@+id/logIn"
-        android:textSize="22sp"/>
+        android:transitionName="go"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="go"
+            android:textColor="@color/white"
+            android:background="#00000000"
+            android:textSize="22sp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"

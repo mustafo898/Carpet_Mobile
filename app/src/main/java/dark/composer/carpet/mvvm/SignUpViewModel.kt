@@ -13,13 +13,29 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) :
+    ViewModel() {
 
     private val signUpChannel = Channel<Boolean>()
     val signUpFlow = signUpChannel.receiveAsFlow()
 
     private val errorChannel = Channel<String>()
     val errorFlow = errorChannel.receiveAsFlow()
+
+    private val phoneChannel = Channel<String>()
+    val phoneFlow = phoneChannel.receiveAsFlow()
+
+    private val passwordChannel = Channel<String>()
+    val passwordFlow = passwordChannel.receiveAsFlow()
+
+    private val configPasswordChannel = Channel<String>()
+    val configPasswordFlow = configPasswordChannel.receiveAsFlow()
+
+    private val nameChannel = Channel<String>()
+    val nameFlow = nameChannel.receiveAsFlow()
+
+    private val surNameChannel = Channel<String>()
+    val surNameFlow = surNameChannel.receiveAsFlow()
 
     fun signUp(
         name: String,
@@ -29,49 +45,141 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
         configPassword: String,
     ) {
         viewModelScope.launch {
-            if (name.isNotEmpty() && surname.isNotEmpty() && phoneNumber.isNotEmpty() && password.isNotEmpty() && configPassword.isNotEmpty()){
-                if (name.length >= 4){
-                    if (surname.length >= 3){
-                        if (phoneNumber.length == 9){
-                            if (password.length >= 6){
-                                if (password == configPassword){
-                                    signUpRepository.signUp(SignUpRequest(name=name,surname=surname,phoneNumber=phoneNumber,password=password,configPassword=configPassword)).catch { t ->
-                                        Log.d("DDDD", "getServicesResponse: $t")
-                                    }.collect {
-                                        when (it) {
-                                            is BaseNetworkResult.Success -> {
-                                                it.data?.let { d ->
-                                                    signUpChannel.send(d)
-                                                }
-                                            }
-                                            is BaseNetworkResult.Error -> {
-                                                it.message?.let { d ->
-                                                    errorChannel.send(d)
-                                                }
-                                            }
-                                            else -> {
-                                                Log.d("s", "signUp:")
-                                            }
-                                        }
-                                    }
-                                }else{
-                                    errorChannel.send("Config Password must be equal password")
-                                }
-                            }else{
-                                errorChannel.send("Password must be 6 or more characters")
+            if (!validConfigPassword(configPassword, password) && !validName(name) && !validPhone(phoneNumber) && !validPassword(password) && !validSurname(surname)) {
+                validConfigPassword(configPassword, password)
+                validName(name)
+                validPhone(phoneNumber)
+                validPassword(password)
+                validSurname(surname)
+            } else {
+                signUpRepository.signUp(
+                    SignUpRequest(
+                        name = name,
+                        surname = surname,
+                        phoneNumber = phoneNumber,
+                        password = password,
+                        configPassword = configPassword
+                    )
+                ).catch { t ->
+                    Log.d("DDDD", "getServicesResponse: $t")
+                }.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let { d ->
+                                signUpChannel.send(d)
                             }
-                        }else{
-                            errorChannel.send("Please enter phone correct")
                         }
-                    }else{
-                        errorChannel.send("Surname must be 3 or more characters")
+                        is BaseNetworkResult.Error -> {
+                            it.message?.let { d ->
+                                errorChannel.send(d)
+                            }
+                        }
+                        else -> {
+                            Log.d("s", "signUp:")
+                        }
                     }
-                }else{
-                    errorChannel.send("Name must be 3 or more characters")
                 }
-            }else{
-                errorChannel.send("Please fill fields")
             }
+        }
+    }
+
+    fun validName(name: String): Boolean {
+        if (name.isEmpty()) {
+            viewModelScope.launch {
+                nameChannel.send("Name must be entered")
+            }
+            return false
+        } else if (name.length <= 4) {
+            viewModelScope.launch {
+                nameChannel.send("Minimum 4 Characters Name")
+            }
+            return false
+        } else {
+            viewModelScope.launch {
+                nameChannel.send("Correct")
+            }
+            return true
+        }
+    }
+
+    fun validSurname(surName: String): Boolean {
+        if (surName.isEmpty()) {
+            viewModelScope.launch {
+                surNameChannel.send("Last Name must be entered")
+            }
+            return false
+        } else if (surName.length <= 4) {
+            viewModelScope.launch {
+                surNameChannel.send("Minimum 4 Characters LastName")
+            }
+            return false
+        } else {
+            viewModelScope.launch {
+                surNameChannel.send("Correct")
+            }
+            return true
+        }
+    }
+
+    fun validPhone(phone: String): Boolean {
+        if (phone.isEmpty()) {
+            viewModelScope.launch {
+                phoneChannel.send("Phone Number must be entered")
+            }
+            return false
+        } else if (phone.length != 9) {
+            viewModelScope.launch {
+                phoneChannel.send("Please Enter Correct Phone Number")
+            }
+            return false
+        } else {
+            viewModelScope.launch {
+                phoneChannel.send("Correct")
+            }
+            return true
+        }
+    }
+
+    fun validPassword(password: String): Boolean {
+        if (password.length <= 6) {
+            viewModelScope.launch {
+                passwordChannel.send("Minimum 6 Character Password")
+            }
+            return false
+        } else if (!password.matches(".*[A-Z].*".toRegex())) {
+            viewModelScope.launch {
+                passwordChannel.send("Must Contain 1 Upper-case Character")
+            }
+            return false
+        } else if (!password.matches(".*[a-z].*".toRegex())) {
+            viewModelScope.launch {
+                passwordChannel.send("Must Contain 1 Lower-case Character")
+            }
+            return false
+        } else if (!password.matches(".*[@#\$%^_].*".toRegex())) {
+            viewModelScope.launch {
+                passwordChannel.send("Must Contain 1 Special Character (@#\$%^_)")
+            }
+            return false
+        } else {
+            viewModelScope.launch {
+                passwordChannel.send("Correct")
+            }
+            return true
+        }
+    }
+
+    fun validConfigPassword(configPassword: String, password: String): Boolean {
+        return if (configPassword == password) {
+            viewModelScope.launch {
+                configPasswordChannel.send("Config Password must be Equal Password")
+            }
+            false
+        } else {
+            viewModelScope.launch {
+                configPasswordChannel.send("Correct")
+            }
+            true
         }
     }
 }
