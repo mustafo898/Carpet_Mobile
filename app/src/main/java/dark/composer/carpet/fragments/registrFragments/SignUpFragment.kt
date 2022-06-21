@@ -2,20 +2,16 @@ package dark.composer.carpet.fragments.registrFragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.transition.Transition
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialContainerTransform
 import dagger.android.support.DaggerFragment
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentSigUpBinding
@@ -53,12 +49,11 @@ class SignUpFragment : DaggerFragment() {
 
         binding.register.setOnClickListener {
             Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
-            viewModel.signUp(binding.name.text.toString().trim(), binding.name.text.toString().trim(), binding.phoneNumber.text.toString().trim(), binding.password.text.toString().trim(), binding.configPassword.text.toString().trim())
+            viewModel.signUp(binding.name.text.toString().trim(), binding.name.text.toString().trim(), binding.phoneNumber.text.toString().trim(), binding.password.text.toString().trim(), binding.confirmPassword.text.toString().trim())
         }
 
         binding.logIn.setOnClickListener {
             val extras = FragmentNavigatorExtras(binding.welcome to "welcome", binding.logInText to "signInText", binding.phoneNumber to "phone", binding.password to "password", binding.register to "go", binding.logIn to "logIn")
-
             findNavController().navigate(R.id.action_sigUpFragment_to_logInFragment, null, null, extras)
         }
 
@@ -137,11 +132,11 @@ class SignUpFragment : DaggerFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.configPasswordFlow.collect {
+                viewModel.confirmPasswordFlow.collect {
                     if (it == "Correct") {
-                        binding.configPasswordInput.isHelperTextEnabled = false
+                        binding.confirmPasswordInput.isHelperTextEnabled = false
                     } else {
-                        binding.configPasswordInput.helperText = it
+                        binding.confirmPasswordInput.helperText = it
                     }
                 }
             }
@@ -149,9 +144,11 @@ class SignUpFragment : DaggerFragment() {
     }
 
     private fun textListener() {
+        var confirm = ""
         binding.passwordInput.isHelperTextEnabled = false
         binding.password.addTextChangedListener {
             viewModel.validPassword(it.toString())
+            confirm = it.toString()
         }
 
         binding.nameInput.isHelperTextEnabled = false
@@ -164,9 +161,9 @@ class SignUpFragment : DaggerFragment() {
             viewModel.validSurname(it.toString())
         }
 
-        binding.configPasswordInput.isHelperTextEnabled = false
-        binding.configPassword.addTextChangedListener {
-            viewModel.validConfigPassword(it.toString(),binding.password.text.toString())
+        binding.confirmPasswordInput.isHelperTextEnabled = false
+        binding.confirmPassword.addTextChangedListener {
+            viewModel.validConfirmPassword(it.toString(),confirm)
         }
 
         binding.phoneNumberInput.isHelperTextEnabled = false

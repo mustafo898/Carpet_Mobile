@@ -28,8 +28,8 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
     private val passwordChannel = Channel<String>()
     val passwordFlow = passwordChannel.receiveAsFlow()
 
-    private val configPasswordChannel = Channel<String>()
-    val configPasswordFlow = configPasswordChannel.receiveAsFlow()
+    private val confirmPasswordChannel = Channel<String>()
+    val confirmPasswordFlow = confirmPasswordChannel.receiveAsFlow()
 
     private val nameChannel = Channel<String>()
     val nameFlow = nameChannel.receiveAsFlow()
@@ -45,8 +45,11 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
         configPassword: String,
     ) {
         viewModelScope.launch {
-            if (!validConfigPassword(configPassword, password) && !validName(name) && !validPhone(phoneNumber) && !validPassword(password) && !validSurname(surname)) {
-                validConfigPassword(configPassword, password)
+            if (!validConfirmPassword(configPassword, password) && !validName(name) && !validPhone(
+                    phoneNumber
+                ) && !validPassword(password) && !validSurname(surname)
+            ) {
+                validConfirmPassword(configPassword, password)
                 validName(name)
                 validPhone(phoneNumber)
                 validPassword(password)
@@ -169,17 +172,22 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
         }
     }
 
-    fun validConfigPassword(configPassword: String, password: String): Boolean {
-        return if (configPassword == password) {
+    fun validConfirmPassword(configPassword: String, password: String): Boolean {
+        if (password.isEmpty()) {
             viewModelScope.launch {
-                configPasswordChannel.send("Config Password must be Equal Password")
+                passwordChannel.send("Password must be Entered")
             }
-            false
+            return false
+        }else if (configPassword != password) {
+            viewModelScope.launch {
+                confirmPasswordChannel.send("Confirm Password must be Equal Password")
+            }
+            return false
         } else {
             viewModelScope.launch {
-                configPasswordChannel.send("Correct")
+                confirmPasswordChannel.send("Correct")
             }
-            true
+            return true
         }
     }
 }
