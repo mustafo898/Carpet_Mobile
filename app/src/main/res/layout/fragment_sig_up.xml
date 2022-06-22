@@ -186,7 +186,7 @@
         android:layout_height="wrap_content"
         android:background="#000"
         android:gravity="center"
-        android:text="Go"
+        android:text="@string/go"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:transitionName="go" />

@@ -35,10 +35,10 @@ class LogInViewModel @Inject constructor(
         phoneNumber: String,
         password: String,
     ) {
-        if (!validPhone(phoneNumber) && !validPassword(password)){
-           validPhone(phoneNumber)
+        if (!validPhone(phoneNumber) && !validPassword(password)) {
+            validPhone(phoneNumber)
             validPassword(password)
-        }else{
+        } else {
             viewModelScope.launch {
                 logInRepository.logIn(LogInRequest(password, phoneNumber)).catch { t ->
                     Log.d("DDDD", "getServicesResponse: $t")
@@ -64,17 +64,17 @@ class LogInViewModel @Inject constructor(
     }
 
     fun validPhone(phone: String): Boolean {
-        if (phone.isEmpty()){
+        if (phone.isEmpty()) {
             viewModelScope.launch {
                 phoneChannel.send("Phone Number must be entered")
             }
             return false
-        }else if (phone.length != 9) {
+        } else if (phone.length != 9) {
             viewModelScope.launch {
                 phoneChannel.send("Please Enter Correct Phone Number")
             }
             return false
-        }else{
+        } else {
             viewModelScope.launch {
                 phoneChannel.send("Correct")
             }
@@ -82,28 +82,30 @@ class LogInViewModel @Inject constructor(
         }
     }
 
-    fun validPassword(password: String):Boolean{
-        if (password.length <= 6){
+    fun validPassword(password: String): Boolean {
+        if (password.length <= 6) {
             viewModelScope.launch {
                 passwordChannel.send("Minimum 6 Character Password")
             }
             return false
-        }else if (!password.matches(".*[A-Z].*".toRegex())){
+        } else if (!password.matches(".*[A-Z].*".toRegex())) {
             viewModelScope.launch {
                 passwordChannel.send("Must Contain 1 Upper-case Character")
             }
             return false
-        }else if (!password.matches(".*[a-z].*".toRegex())){
+        } else if (!password.matches(".*[a-z].*".toRegex())) {
             viewModelScope.launch {
                 passwordChannel.send("Must Contain 1 Lower-case Character")
             }
             return false
-        }else if (!password.matches(".*[@#\$%^_].*".toRegex())){
-            viewModelScope.launch {
-                passwordChannel.send("Must Contain 1 Special Character (@#\$%^_)")
-            }
-            return false
-        } else{
+        }
+//        else if (!password.matches(".*[@#\$%^_].*".toRegex())){
+//            viewModelScope.launch {
+//                passwordChannel.send("Must Contain 1 Special Character (@#\$%^_)")
+//            }
+//            return false
+//        }
+        else {
             viewModelScope.launch {
                 passwordChannel.send("Correct")
             }

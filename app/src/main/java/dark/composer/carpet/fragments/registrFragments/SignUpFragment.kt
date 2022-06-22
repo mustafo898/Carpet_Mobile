@@ -3,6 +3,7 @@ package dark.composer.carpet.fragments.registrFragments
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +48,20 @@ class SignUpFragment : DaggerFragment() {
         collect()
         textListener()
 
+
+
         binding.register.setOnClickListener {
+
+            val inflate: LayoutInflater = layoutInflater
+            val layout: View =
+                inflate.inflate(R.layout.custom_toast_red, getView()?.findViewById(R.id.custom_toast_container))
+
+            val toast = Toast(requireContext())
+            toast.setGravity(Gravity.TOP, 0, 0)
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = layout
+            toast.show()
+
             Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
             viewModel.signUp(binding.name.text.toString().trim(), binding.name.text.toString().trim(), binding.phoneNumber.text.toString().trim(), binding.password.text.toString().trim(), binding.confirmPassword.text.toString().trim())
         }

@@ -3,4 +3,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">more</string>
+    <string name="hatolik_yurz_berdi">Hatolik yurz berdi!</string>
+    <string name="home">Home</string>
+    <string name="go">Go</string>
+    <string name="messages">Messages</string>
+    <string name="sync">Sync</string>
+    <string name="trash">Trash</string>
+    <string name="customer">Customer</string>
+    <string name="settings">Settings</string>
 </resources>
