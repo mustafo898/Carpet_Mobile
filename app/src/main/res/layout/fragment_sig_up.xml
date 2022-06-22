@@ -56,11 +56,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:lines="1"
-                android:textColor="@color/black" />
+                style="@style/editText"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,11 +74,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:lines="1"
-                android:textColor="@color/black" />
+                style="@style/editText"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,13 +94,10 @@
             app:startIconTint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/editText"
                 android:id="@+id/phoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="number"
-                android:lines="1"
                 android:maxLength="9"
-                android:textColor="@color/black"
                 android:transitionName="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,12 +118,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/editText"
                 android:inputType="textPassword"
-                android:lines="1"
                 android:maxLength="16"
-                android:textColor="@color/black"
                 android:transitionName="password" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,32 +141,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:lines="1"
-                android:maxLength="16"
-                android:textColor="@color/black" />
+                style="@style/editText"
+                android:maxLength="16" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-
-    <!--    <androidx.appcompat.widget.LinearLayoutCompat-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:background="#000"-->
-    <!--        android:gravity="center"-->
-    <!--        android:id="@+id/register"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/progress"-->
-    <!--            android:padding="10dp"-->
-    <!--            android:visibility="gone"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="match_parent"/>-->
-
-    <!--        -->
-    <!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register"
@@ -196,6 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00000000"
+        android:textSize="16sp"
         android:text="ALREADY HAVE AN ACCOUNT? LOGIN"
         android:textStyle="bold"
         android:transitionName="logIn" />

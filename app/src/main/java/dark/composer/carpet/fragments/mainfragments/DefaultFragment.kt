@@ -1,13 +1,16 @@
 package dark.composer.carpet.fragments.mainfragments
 
+import android.os.Bundle
+import android.util.Log
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
 import dark.composer.carpet.adapter.CategoryAdapter
 import dark.composer.carpet.adapter.PopularAdapter
-import dark.composer.carpet.databinding.FragmentDefault1Binding
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.dto.CategoryModel
 import dark.composer.carpet.fragments.BaseFragment
+
 
 class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
     private val adapterCategory by lazy {
@@ -32,8 +35,17 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         binding.txtCustomers.isSelected = true
         binding.txtAdmin.isSelected = true
         binding.txtEmployee.isSelected = true
-        binding.floatingActionButton.setOnClickListener {
 
+        adapterCategory.setClickListener {description, price, image ->
+            val secFragment = CategoryDetailsFragment()
+            val bundle = Bundle()
+            bundle.putString("DESC", description.transitionName)
+            Log.d("SSSSS", "onViewCreate: ${description.transitionName}")
+            bundle.putString("PRICE", price.transitionName)
+            bundle.putString("IMAGE", image.transitionName)
+            secFragment.arguments = bundle
+            val extras = FragmentNavigatorExtras(description to description.transitionName, price to price.transitionName, image to image.transitionName)
+            navController.navigate(R.id.action_defaultFragment_to_categoryDetailsFragment,null,null,extras)
         }
         binding.imageMore.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
@@ -55,13 +67,4 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         }
         return list
     }
-//    private fun startTimer() {
-//        Handler().postDelayed({
-//            if (shared.getToken() != "") {
-//                extention.controller?.startMainFragment(TrainerFragment())
-//            } else {
-//                extention.controller?.startMainFragment(RegisterFragment())
-//            }
-//        }, 3000)
-//    }
 }

@@ -98,6 +98,9 @@
         <action
             android:id="@+id/action_defaultFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_defaultFragment_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
     </fragment>
 
     <fragment
@@ -129,4 +132,9 @@
             android:id="@+id/action_settingsFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/categoryDetailsFragment"
+        android:name="dark.composer.carpet.fragments.mainfragments.CategoryDetailsFragment"
+        android:label="fragment_category_details"
+        tools:layout="@layout/fragment_category_details" />
 </navigation>

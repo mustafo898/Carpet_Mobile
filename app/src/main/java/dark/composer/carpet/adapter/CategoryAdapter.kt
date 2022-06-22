@@ -1,16 +1,30 @@
 package dark.composer.carpet.adapter
 
+import android.animation.Animator
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import dark.composer.carpet.R
 import dark.composer.carpet.databinding.ItemCategoryBinding
 import dark.composer.carpet.dto.CategoryModel
 
 class CategoryAdapter(private var context: Context) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     private val categoryList = mutableListOf<CategoryModel>()
+
+    private var clickListener: ((description:TextView, price:TextView, image:ImageView) -> Unit)? = null
+
+    fun setClickListener(f: (description:TextView,price:TextView,image:ImageView) -> Unit) {
+        clickListener = f
+    }
 
     inner class CategoryViewHolder(private var binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,6 +35,17 @@ class CategoryAdapter(private var context: Context) :
 //                .into(binding.image)
             binding.image.setImageResource(data.image)
             binding.price.text = data.rate
+
+            binding.name.transitionName = "name_$layoutPosition"
+            binding.price.transitionName = "price_$layoutPosition"
+            binding.image.transitionName = "image_$layoutPosition"
+
+            val anim = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+            itemView.startAnimation(anim)
+
+            itemView.setOnClickListener {
+                clickListener?.invoke(binding.name,binding.price,binding.image)
+            }
         }
     }
 
