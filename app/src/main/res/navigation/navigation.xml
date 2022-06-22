@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_splashFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -92,6 +95,9 @@
         <action
             android:id="@+id/action_defaultFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_defaultFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -105,4 +111,22 @@
         android:name="dark.composer.carpet.fragments.mainfragments.EmployeeFragment"
         android:label="fragment_employee"
         tools:layout="@layout/fragment_employee" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dark.composer.carpet.fragments.mainfragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_defaultFragment"
+            app:destination="@id/defaultFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_customerFragment"
+            app:destination="@id/customerFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+    </fragment>
 </navigation>

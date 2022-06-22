@@ -7,7 +7,7 @@ import dark.composer.carpet.fragments.BaseFragment
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
     override fun onViewCreate() {
         binding.txt.setOnClickListener {
-            navController.navigate(R.id.action_splashFragment_to_logInFragment)
+            navController.navigate(R.id.action_splashFragment_to_settingsFragment)
         }
     }
 }

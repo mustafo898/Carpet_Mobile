@@ -35,6 +35,9 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         binding.floatingActionButton.setOnClickListener {
 
         }
+        binding.imageMore.setOnClickListener {
+            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+        }
     }
 
     private fun setCategory():List<CategoryModel>{

@@ -1,14 +1,13 @@
 package dark.composer.carpet.fragments.registrFragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -52,23 +51,42 @@ class SignUpFragment : DaggerFragment() {
 
         binding.register.setOnClickListener {
 
-            val inflate: LayoutInflater = layoutInflater
-            val layout: View =
-                inflate.inflate(R.layout.custom_toast_red, getView()?.findViewById(R.id.custom_toast_container))
-
-            val toast = Toast(requireContext())
-            toast.setGravity(Gravity.TOP, 0, 0)
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = layout
-            toast.show()
+//            val inflate: LayoutInflater = layoutInflater
+//            val layout: View =
+//                inflate.inflate(R.layout.custom_toast_red, getView()?.findViewById(R.id.custom_toast_container))
+//
+//            val toast = Toast(requireContext())
+//            toast.setGravity(Gravity.TOP, 0, 0)
+//            toast.duration = Toast.LENGTH_SHORT
+//
+//            toast.view = layout
+//            toast.show()
 
             Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
-            viewModel.signUp(binding.name.text.toString().trim(), binding.name.text.toString().trim(), binding.phoneNumber.text.toString().trim(), binding.password.text.toString().trim(), binding.confirmPassword.text.toString().trim())
+            viewModel.signUp(
+                binding.name.text.toString().trim(),
+                binding.name.text.toString().trim(),
+                binding.phoneNumber.text.toString().trim(),
+                binding.password.text.toString().trim(),
+                binding.confirmPassword.text.toString().trim()
+            )
         }
 
         binding.logIn.setOnClickListener {
-            val extras = FragmentNavigatorExtras(binding.welcome to "welcome", binding.logInText to "signInText", binding.phoneNumber to "phone", binding.password to "password", binding.register to "go", binding.logIn to "logIn")
-            findNavController().navigate(R.id.action_sigUpFragment_to_logInFragment, null, null, extras)
+            val extras = FragmentNavigatorExtras(
+                binding.welcome to "welcome",
+                binding.logInText to "signInText",
+                binding.phoneNumber to "phone",
+                binding.password to "password",
+                binding.register to "go",
+                binding.logIn to "logIn"
+            )
+            findNavController().navigate(
+                R.id.action_sigUpFragment_to_logInFragment,
+                null,
+                null,
+                extras
+            )
         }
 
         val animation =
@@ -177,7 +195,7 @@ class SignUpFragment : DaggerFragment() {
 
         binding.confirmPasswordInput.isHelperTextEnabled = false
         binding.confirmPassword.addTextChangedListener {
-            viewModel.validConfirmPassword(it.toString(),confirm)
+            viewModel.validConfirmPassword(it.toString(), confirm)
         }
 
         binding.phoneNumberInput.isHelperTextEnabled = false
