@@ -34,4 +34,7 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun settingsFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun categoryDetailsFragment(): CategoryDetailsFragment
 }
