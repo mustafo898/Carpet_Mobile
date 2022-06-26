@@ -24,7 +24,7 @@ object NetworkModule {
 //        val httpLoggingInterceptor = HttpLoggingInterceptor()
 //        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return Retrofit.Builder()
-            .baseUrl("https://microstar.herokuapp.com/api/")
+            .baseUrl(Constants.BASE_URL)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(
                 OkHttpClient.Builder().addNetworkInterceptor(httpLoggingInterceptor)
