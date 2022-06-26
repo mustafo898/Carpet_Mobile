@@ -21,7 +21,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         binding.phoneNumber.text = "${shared.getPhoneNumber()}"
 
         binding.imageMore.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+            navController.navigate(R.id.action_adminFragment_to_settingsFragment)
         }
 
         binding.product.setOnClickListener {

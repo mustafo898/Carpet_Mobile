@@ -2,6 +2,7 @@ package dark.composer.carpet.presentation.fragment.deafaults
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,9 +39,15 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         adapterCategory.set(setCategory())
         adapterPopular.set(setPopular())
 
-        Glide.with(requireContext()).load(shared.getImage()).into(binding.image)
-        binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
-        binding.phoneNumber.text = "${shared.getPhoneNumber()}"
+        if (shared.getToken()!!.isNotEmpty()){
+            Glide.with(requireContext()).load(shared.getImage()).into(binding.image)
+            binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
+            binding.phoneNumber.text = "${shared.getPhoneNumber()}"
+        }else{
+            binding.image.visibility = View.GONE
+            binding.userName.visibility = View.GONE
+            binding.phoneNumber.visibility = View.GONE
+        }
 
         binding.userName.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
