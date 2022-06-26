@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.presentation.fragment.itemfragment.CategoryDetailsFragment
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.utils.SharedPref
+import javax.inject.Inject
 
 
 class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
@@ -20,6 +23,9 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
     private val adapterPopular by lazy {
         PopularAdapter(requireContext())
     }
+
+    @Inject
+    lateinit var shared:SharedPref
 
     override fun onViewCreate() {
         binding.listCategory.layoutManager = LinearLayoutManager(requireContext(),
@@ -32,9 +38,9 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         adapterCategory.set(setCategory())
         adapterPopular.set(setPopular())
 
-        binding.txtCustomers.isSelected = true
-        binding.txtAdmin.isSelected = true
-        binding.txtEmployee.isSelected = true
+        Glide.with(requireContext()).load(shared.getImage()).into(binding.image)
+        binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
+        binding.phoneNumber.text = "${shared.getPhoneNumber()}"
 
         adapterCategory.setClickListener {description, price, image ->
             val s = CategoryDetailsFragment()
@@ -50,10 +56,7 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
 //            val extras = FragmentNavigatorExtras(description to description.transitionName, price to price.transitionName, image to image.transitionName)
             navController.navigate(R.id.action_defaultFragment_to_categoryDetailsFragment,bundle)
         }
-        binding.imageMore.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
-        }
-        binding.floatingActionButton.setOnClickListener {
+        binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }
     }

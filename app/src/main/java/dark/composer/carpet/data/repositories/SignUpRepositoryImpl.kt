@@ -23,7 +23,8 @@ class SignUpRepositoryImpl @Inject constructor(
                 }
                 emit(BaseNetworkResult.Success(true))
             } else {
-                emit(BaseNetworkResult.Error(response.message().toString()))
+                emit(BaseNetworkResult.Error("User already exist"))
+//                Log.d("EEEEE", "signUp: ${response.}")
             }
         }
     }
