@@ -47,9 +47,7 @@
         <action
             android:id="@+id/action_logInFragment_to_sigUpFragment"
             app:destination="@id/sigUpFragment" />
-        <action
-            android:id="@+id/action_logInFragment_to_sigUpFragment2"
-            app:destination="@id/sigUpFragment" />
+
         <action
             android:id="@+id/action_logInFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
@@ -59,6 +57,9 @@
         <action
             android:id="@+id/action_logInFragment_to_adminFragment2"
             app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_defaultFragment"
+            app:destination="@id/defaultFragment" />
     </fragment>
 
     <fragment

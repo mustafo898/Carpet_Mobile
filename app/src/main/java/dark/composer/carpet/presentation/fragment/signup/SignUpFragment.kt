@@ -41,7 +41,6 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
 //            toast.view = layout
 //            toast.show()
 
-            Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
             viewModel.signUp(
                 binding.name.text.toString().trim(),
                 binding.name.text.toString().trim(),

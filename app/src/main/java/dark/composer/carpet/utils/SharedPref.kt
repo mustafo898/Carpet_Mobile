@@ -35,6 +35,14 @@ class SharedPref(context: Context) {
 
     fun getSurName() = preferences.getString("SURNAME", "")
 
+    fun setImage(image: String) {
+        editor = preferences.edit()
+        editor.putString("Image", image)
+        editor.apply()
+    }
+
+    fun getImage() = preferences.getString("Image", "")
+
     fun setPhoneNumber(phoneNumber: String) {
         editor = preferences.edit()
         editor.putString("PHONE_NUMBER", phoneNumber)
@@ -42,4 +50,11 @@ class SharedPref(context: Context) {
     }
 
     fun getPhoneNumber() = preferences.getString("PHONE_NUMBER", "")
+
+    fun setRole(role: String) {
+        editor = preferences.edit()
+        editor.putString("ROLE", role)
+        editor.apply()
+    }
+    fun getRole() = preferences.getString("ROLE", "")
 }

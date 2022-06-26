@@ -18,13 +18,20 @@ class LogInRepository @Inject constructor(
         return flow {
             val response = service.logIn(logInRequest)
             if (response.code() == 200){
-                response.body().let {
-                    sharedPref.setToken(it!!.jwt)
+                response.body()?.let {
+                    sharedPref.setToken(it.jwt)
+                    sharedPref.setImage(it.url?:"")
+                    sharedPref.setName(it.name)
+                    sharedPref.setSurName(it.surname)
+                    sharedPref.setPhoneNumber(it.phoneNumber)
+                    sharedPref.setRole(it.role)
                     Log.d("QQQQQ", "logIn: ${it.name}")
                 }
                 emit(BaseNetworkResult.Success(true))
+            }else if (response.code() == 403){
+                emit(BaseNetworkResult.Error("No access"))
             }else{
-                emit(BaseNetworkResult.Error(response.message().toString()))
+                emit(BaseNetworkResult.Error("User not found"))
             }
         }
     }

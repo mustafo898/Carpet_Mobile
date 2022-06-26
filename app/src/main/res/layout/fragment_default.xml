@@ -9,7 +9,6 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +30,10 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/popular" />
+                    app:layout_constraintTop_toBottomOf="@+id/taken" />
 
                 <TextView
-                    android:id="@+id/popular"
+                    android:id="@+id/taken"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -187,8 +186,8 @@
 
                         <TextView
                             android:id="@+id/order"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
@@ -205,161 +204,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_bar"
-            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:backgroundTint="#f6f6f6"
-            app:fabCradleMargin="8dp"
-            app:fabCradleRoundedCornerRadius="50dp"
-            app:fabCradleVerticalOffset="6dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="17dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageEmployee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/employee" />
-
-                    <TextView
-                        android:id="@+id/txtEmployee"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="Employees"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/customersImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/customer" />
-
-                    <TextView
-                        android:id="@+id/txtCustomers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:gravity="center"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="Customers"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageAdmin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/admin" />
-
-                    <TextView
-                        android:id="@+id/txtAdmin"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:ellipsize="marquee"
-                        android:gravity="center"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="Admin"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/settings" />
-
-                    <TextView
-                        android:id="@+id/txtMore"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:ellipsize="marquee"
-                        android:gravity="center"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="More"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#ff5e00"
-            android:elevation="3dp"
-            android:src="@drawable/ic_shopping_cart"
-            app:backgroundTint="#ff5e00"
-            app:layout_anchor="@id/bottom_bar" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

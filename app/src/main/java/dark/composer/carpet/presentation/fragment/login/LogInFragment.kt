@@ -10,11 +10,15 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentLogInBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
     lateinit var viewModel: LogInViewModel
+    @Inject
+    lateinit var shared:SharedPref
     override fun onViewCreate() {
         viewModel = ViewModelProvider(this, providerFactory)[LogInViewModel::class.java]
 
@@ -64,7 +68,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.logInFlow.collect {
                     if (it) {
-                        navController.navigate(R.id.action_logInFragment_to_customerFragment)
+                        if (shared.getRole() == "ADMIN"){
+                            navController.navigate(R.id.action_logInFragment_to_adminFragment2)
+                        }else{
+                            navController.navigate(R.id.action_logInFragment_to_defaultFragment)
+                        }
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     }
                 }
