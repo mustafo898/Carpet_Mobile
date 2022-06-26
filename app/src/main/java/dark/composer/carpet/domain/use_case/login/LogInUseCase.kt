@@ -8,18 +8,18 @@ class LogInUseCase @Inject constructor(
     private val signUpRepositoryImpl: SignUpRepositoryImpl
 ){
     fun validPhone(phone: String):ValidateModel {
-        if (phone.isEmpty()) {
-            return ValidateModel(
+        return if (phone.isEmpty()) {
+            ValidateModel(
                 error = "Phone Number must be entered",
                 correct = false
             )
         } else if (phone.length != 9) {
-            return ValidateModel(
+            ValidateModel(
                 error = "Please Enter Correct Phone Number",
                 correct = false
             )
         } else {
-            return ValidateModel(
+            ValidateModel(
                 correct = true
             )
         }

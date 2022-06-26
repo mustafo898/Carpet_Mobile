@@ -9,54 +9,54 @@ class SignUpUseCase @Inject constructor(
     private val signUpRepository: SignUpRepository
 ) {
     private fun validName(name: String): ValidateModel {
-        if (name.isEmpty()) {
-            return ValidateModel(
+        return if (name.isEmpty()) {
+            ValidateModel(
                 error = "Name must be entered",
                 correct = false
             )
         } else if (name.length <= 4) {
-            return ValidateModel(
+            ValidateModel(
                 error = "Minimum 4 Characters Name",
                 correct = false
             )
         } else {
-            return ValidateModel(
+            ValidateModel(
                 correct = false
             )
         }
     }
 
     private fun validSurname(surName: String): ValidateModel {
-        if (surName.isEmpty()) {
-            return ValidateModel(
+        return if (surName.isEmpty()) {
+            ValidateModel(
                 error = "Last Name must be entered",
                 correct = false
             )
         } else if (surName.length <= 4) {
-            return ValidateModel(
+            ValidateModel(
                 error = "Minimum 4 Characters LastName",
                 correct = false
             )
         } else {
-            return ValidateModel(
+            ValidateModel(
                 correct = true
             )
         }
     }
 
     private fun validPhone(phone: String): ValidateModel {
-        if (phone.isEmpty()) {
-            return ValidateModel(
+        return if (phone.isEmpty()) {
+            ValidateModel(
                 error = "Phone Number must be entered",
                 correct = false
             )
         } else if (phone.length != 9) {
-            return ValidateModel(
+            ValidateModel(
                 error = "Please Enter Correct Phone Number",
                 correct = false
             )
         } else {
-            return ValidateModel(
+            ValidateModel(
                 correct = true
             )
         }
@@ -91,18 +91,18 @@ class SignUpUseCase @Inject constructor(
     }
 
     private fun validConfirmPassword(configPassword: String, password: String): ValidateModel {
-        if (password.isEmpty()) {
-            return ValidateModel(
+        return if (password.isEmpty()) {
+            ValidateModel(
                 error = "Password must be Entered",
                 correct = false
             )
         } else if (configPassword != password) {
-            return ValidateModel(
+            ValidateModel(
                 error = "Confirm Password must be Equal Password",
                 correct = false
             )
         } else {
-            return ValidateModel(
+            ValidateModel(
                 correct = true
             )
         }
