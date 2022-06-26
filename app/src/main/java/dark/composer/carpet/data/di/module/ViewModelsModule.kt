@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import dark.composer.carpet.presentasion.fragment.login.LogInViewModel
-import dark.composer.carpet.presentasion.fragment.signup.SignUpViewModel
-import dark.composer.carpet.presentasion.fragment.splash.SplashViewModel
+import dark.composer.carpet.presentation.fragment.login.LogInViewModel
+import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
+import dark.composer.carpet.presentation.fragment.splash.SplashViewModel
 import dark.composer.carpet.data.scopes.ViewModelKey
 
 @Module

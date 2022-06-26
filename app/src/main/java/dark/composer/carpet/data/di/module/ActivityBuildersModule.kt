@@ -2,7 +2,7 @@ package dark.composer.carpet.data.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dark.composer.carpet.presentasion.activity.MainActivity
+import dark.composer.carpet.presentation.activity.MainActivity
 
 
 @Module

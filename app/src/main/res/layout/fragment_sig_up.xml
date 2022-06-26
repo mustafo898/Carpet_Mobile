@@ -7,7 +7,7 @@
     android:background="@color/theme_color_8"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".presentasion.fragment.signup.SignUpFragment">
+    tools:context=".presentation.fragment.signup.SignUpFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
