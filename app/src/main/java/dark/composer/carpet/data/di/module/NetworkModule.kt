@@ -1,5 +1,6 @@
 package dark.composer.carpet.data.di.module
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dark.composer.carpet.data.retrofit.ApiService
@@ -16,12 +17,29 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(httpLoggingInterceptor: HttpLoggingInterceptor, shared: SharedPref): Retrofit {
+    fun provideRetrofit(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        shared: SharedPref
+    ): Retrofit {
+//        val httpLoggingInterceptor = HttpLoggingInterceptor()
+//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl("https://microstar.herokuapp.com/api/")
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(
-                OkHttpClient.Builder()
-                    .addNetworkInterceptor(httpLoggingInterceptor)
+                OkHttpClient.Builder().addNetworkInterceptor(httpLoggingInterceptor)
+                    .addInterceptor { chain ->
+                        val request = chain.request()
+                        val newRequest = if (shared.getToken().isNullOrEmpty())
+                            request.newBuilder()
+                        else request.newBuilder()
+                            .header("Authorization", "Bearer ${shared.getToken()}")
+                        chain.proceed(newRequest.build()).also {
+//                        if (it.code == 401) {
+////                            Handler(Looper.getMainLooper()).post { shared.setAccessToken("empty") }
+//                        }
+                        }
+                    }
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())

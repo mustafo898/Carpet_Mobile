@@ -42,6 +42,10 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
         binding.phoneNumber.text = "${shared.getPhoneNumber()}"
 
+        binding.userName.setOnClickListener {
+            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+        }
+
         adapterCategory.setClickListener {description, price, image ->
             val s = CategoryDetailsFragment()
             val bundle = Bundle()
