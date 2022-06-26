@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +7,16 @@
     android:background="@color/theme_color_8"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".presentasion.fragments.registrFragments.SignUpFragment">
+    tools:context=".presentasion.fragment.signup.SignUpFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:gravity="bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="20dp">
 
         <TextView
             android:id="@+id/welcome"
@@ -37,11 +40,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:layout_editor_absoluteX="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameInput"
@@ -56,8 +61,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
-                android:inputType="textPersonName"
-                style="@style/editText"/>
+                style="@style/editText"
+                android:inputType="textPersonName" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,8 +79,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastName"
-                android:inputType="textPersonName"
-                style="@style/editText"/>
+                style="@style/editText"
+                android:inputType="textPersonName" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +99,8 @@
             app:startIconTint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/editText"
                 android:id="@+id/phoneNumber"
+                style="@style/editText"
                 android:inputType="number"
                 android:maxLength="9"
                 android:transitionName="phone" />
@@ -141,8 +146,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPassword"
-                android:inputType="textPassword"
                 style="@style/editText"
+                android:inputType="textPassword"
                 android:maxLength="16" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -151,20 +156,25 @@
         android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="#000"
         android:gravity="center"
         android:text="@string/go"
         android:textColor="@color/white"
         android:textSize="22sp"
-        android:transitionName="go" />
+        android:transitionName="go"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="20dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00000000"
-        android:textSize="16sp"
         android:text="ALREADY HAVE AN ACCOUNT? LOGIN"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:transitionName="logIn" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        android:transitionName="logIn"
+        app:layout_constraintTop_toBottomOf="@+id/register"
+        tools:layout_editor_absoluteX="20dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

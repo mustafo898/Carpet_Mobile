@@ -8,8 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import dark.composer.carpet.R
-import dark.composer.carpet.a.BaseFragment
 import dark.composer.carpet.databinding.FragmentLogInBinding
+import dark.composer.carpet.presentasion.fragment.BaseFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -64,6 +64,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.logInFlow.collect {
                     if (it) {
+                        navController.navigate(R.id.action_logInFragment_to_customerFragment)
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     }
                 }

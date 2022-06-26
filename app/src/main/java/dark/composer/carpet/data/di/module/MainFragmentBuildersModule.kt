@@ -2,13 +2,18 @@ package dark.composer.carpet.data.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dark.composer.carpet.presentasion.fragments.mainfragments.*
-import dark.composer.carpet.presentasion.fragments.registrFragments.LogInFragment
-import dark.composer.carpet.presentasion.fragments.registrFragments.SignUpFragment
-import dark.composer.carpet.presentasion.fragments.registrFragments.SplashFragment
+import dark.composer.carpet.presentasion.fragment.deafaults.DefaultFragment
+import dark.composer.carpet.presentasion.fragment.admin.AdminFragment
+import dark.composer.carpet.presentasion.fragment.customer.CustomerFragment
+import dark.composer.carpet.presentasion.fragment.employee.EmployeeFragment
+import dark.composer.carpet.presentasion.fragment.itemfragment.CategoryDetailsFragment
+import dark.composer.carpet.presentasion.fragment.login.LogInFragment
+import dark.composer.carpet.presentasion.fragment.settings.SettingsFragment
+import dark.composer.carpet.presentasion.fragment.signup.SignUpFragment
+import dark.composer.carpet.presentasion.fragment.splash.SplashFragment
 
 @Module
-abstract class MainFragmentBuildersModule {
+public abstract class MainFragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun splashFragment(): SplashFragment
 

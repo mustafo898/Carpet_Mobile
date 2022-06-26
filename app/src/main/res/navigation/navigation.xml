@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.registrFragments.SplashFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.splash.SplashFragment"
         android:label="fragment_default"
         tools:layout="@layout/fragment_splash" >
 
@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.registrFragments.LogInFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.login.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -63,7 +63,7 @@
 
     <fragment
         android:id="@+id/sigUpFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.registrFragments.SignUpFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.signup.SignUpFragment"
         android:label="fragment_sig_up"
         tools:layout="@layout/fragment_sig_up" >
 
@@ -83,13 +83,13 @@
 
     <fragment
         android:id="@+id/customerFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.CustomerFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.customer.CustomerFragment"
         android:label="fragment_customer"
         tools:layout="@layout/fragment_customer" />
 
     <fragment
         android:id="@+id/defaultFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.DefaultFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.deafaults.DefaultFragment"
         android:label="fragment_default"
         tools:layout="@layout/fragment_default" >
         <action
@@ -105,18 +105,18 @@
 
     <fragment
         android:id="@+id/adminFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.AdminFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.admin.AdminFragment"
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin" />
 
     <fragment
         android:id="@+id/employeeFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.EmployeeFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.employee.EmployeeFragment"
         android:label="fragment_employee"
         tools:layout="@layout/fragment_employee" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.SettingsFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -134,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryDetailsFragment"
-        android:name="dark.composer.carpet.presentasion.fragments.mainfragments.CategoryDetailsFragment"
+        android:name="dark.composer.carpet.presentasion.fragment.itemfragment.CategoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_category_details" />
 </navigation>

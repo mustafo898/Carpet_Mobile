@@ -16,28 +16,15 @@ import dagger.android.support.DaggerFragment
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentSigUpBinding
 import dark.composer.carpet.presentasion.DaggerViewModelFactory
+import dark.composer.carpet.presentasion.fragment.BaseFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpFragment : DaggerFragment() {
-    private lateinit var binding: FragmentSigUpBinding
+class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::inflate) {
     lateinit var viewModel: SignUpViewModel
 
-    @Inject
-    lateinit var providerFactory: DaggerViewModelFactory
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSigUpBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
@@ -94,11 +81,13 @@ class SignUpFragment : DaggerFragment() {
         sharedElementReturnTransition = animation
     }
 
+
     private fun collect() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.signUpFlow.collect {
                     if (it) {
+                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     }
                 }

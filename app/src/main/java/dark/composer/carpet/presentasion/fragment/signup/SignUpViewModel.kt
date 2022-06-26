@@ -3,7 +3,7 @@ package dark.composer.carpet.presentasion.fragment.signup
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.SignUpRepository
+import dark.composer.carpet.data.repositories.SignUpRepositoryImpl
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.SignUpRequest
 import kotlinx.coroutines.channels.Channel
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) :
+class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: SignUpRepositoryImpl) :
     ViewModel() {
 
     private val signUpChannel = Channel<Boolean>()
@@ -55,7 +55,7 @@ class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRe
                 validPassword(password)
                 validSurname(surname)
             } else {
-                signUpRepository.signUp(
+                signUpRepositoryImpl.signUp(
                     SignUpRequest(
                         name = name,
                         surname = surname,

@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentasion.default
+package dark.composer.carpet.presentasion.fragment.deafaults
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

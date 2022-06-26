@@ -1,15 +1,17 @@
-package dark.composer.carpet.presentasion.default
+package dark.composer.carpet.presentasion.fragment.deafaults
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.doOnPreDraw
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
-import dark.composer.carpet.a.BaseFragment
 import dark.composer.carpet.presentasion.fragment.itemfragment.CategoryDetailsFragment
-import dark.composer.carpet.adapter.CategoryAdapter
-import dark.composer.carpet.adapter.PopularAdapter
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.data.dto.CategoryModel
+import dark.composer.carpet.presentasion.fragment.BaseFragment
 
 
 class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
@@ -37,20 +39,24 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         binding.txtEmployee.isSelected = true
 
         adapterCategory.setClickListener {description, price, image ->
-            val secFragment = CategoryDetailsFragment()
+            val s = CategoryDetailsFragment()
             val bundle = Bundle()
             bundle.putString("DESC", description.transitionName)
             Log.d("SSSSS", "onViewCreate: ${description.transitionName}")
             bundle.putString("PRICE", price.transitionName)
             bundle.putString("IMAGE", image.transitionName)
-            secFragment.arguments = bundle
+            s.arguments = bundle
+            (view?.parent as? ViewGroup)?.doOnPreDraw {
+                startPostponedEnterTransition()
+            }
 //            val extras = FragmentNavigatorExtras(description to description.transitionName, price to price.transitionName, image to image.transitionName)
-
-
-            navController.navigate(R.id.action_defaultFragment_to_categoryDetailsFragment)
+            navController.navigate(R.id.action_defaultFragment_to_categoryDetailsFragment,bundle)
         }
         binding.imageMore.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+        }
+        binding.floatingActionButton.setOnClickListener {
+            navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }
     }
 

@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SignUpRepository @Inject constructor(
+class SignUpRepositoryImpl @Inject constructor(
     private val service: ApiService,
     private val sharedPref: SharedPref
 ) {
-    fun signUp(signUpRequest: SignUpRequest): Flow<BaseNetworkResult<Boolean>> {
+    suspend fun signUp(signUpRequest: SignUpRequest): Flow<BaseNetworkResult<Boolean>> {
         return flow {
             val response = service.signUp(signUpRequest)
             if (response.code() == 200) {
