@@ -8,7 +8,7 @@ import dark.composer.carpet.databinding.FragmentProfileBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
-    private val REQ_CODE = 1000
+    private val REQUEST_CODE = 1000
     override fun onViewCreate() {
         binding.backBtn.setOnClickListener {
             navController.navigate(R.id.action_profileFragment_to_settingsFragment)
@@ -17,7 +17,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         binding.changeImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            startActivityForResult(intent,REQ_CODE)
+            startActivityForResult(intent,REQUEST_CODE)
         }
     }
 
@@ -25,9 +25,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==RESULT_OK){
-            if (requestCode==REQ_CODE){
+            if (requestCode==REQUEST_CODE){
                 binding.image.setImageURI(data!!.data)
             }
         }
     }
+
 }
