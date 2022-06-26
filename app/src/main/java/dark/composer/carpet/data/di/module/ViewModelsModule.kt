@@ -8,6 +8,7 @@ import dark.composer.carpet.presentation.fragment.login.LogInViewModel
 import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 import dark.composer.carpet.presentation.fragment.splash.SplashViewModel
 import dark.composer.carpet.data.scopes.ViewModelKey
+import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
 
 @Module
 abstract class ViewModelsModule {
@@ -26,4 +27,9 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     abstract fun sigUpViewModel(signUpViewModel : SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun profileViewModel(profileViewModel : ProfileViewModel): ViewModel
 }

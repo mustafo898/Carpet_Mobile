@@ -12,6 +12,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
             navController.navigate(R.id.action_settingsFragment_to_defaultFragment)
         }
 
+        binding.profile.setOnClickListener {
+            navController.navigate(R.id.action_settingsFragment_to_profileFragment)
+        }
+
         binding.version.text = BuildConfig.VERSION_NAME
 
     }

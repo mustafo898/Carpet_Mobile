@@ -131,10 +131,23 @@
         <action
             android:id="@+id/action_settingsFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryDetailsFragment"
         android:name="dark.composer.carpet.presentation.fragment.itemfragment.CategoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_category_details" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 </navigation>

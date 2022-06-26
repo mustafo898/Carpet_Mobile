@@ -77,4 +77,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.1'
     //power spinner
     implementation "com.github.skydoves:powerspinner:1.2.2"
+    //github circle image view
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    implementation 'com.balysv:material-ripple:1.0.2'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
