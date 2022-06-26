@@ -8,6 +8,7 @@ import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
 
 class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inflate) {
+
     @Inject
     lateinit var shared:SharedPref
 

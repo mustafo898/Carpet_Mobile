@@ -2,7 +2,6 @@ package dark.composer.carpet.data.di.module
 
 import dagger.Module
 
-
 @Module
 object RoomModule {
 

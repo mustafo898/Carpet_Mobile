@@ -1,6 +1,5 @@
 package dark.composer.carpet.data.di.module
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dark.composer.carpet.data.retrofit.ApiService
@@ -11,6 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 
 @Module
 object NetworkModule {
@@ -34,7 +34,8 @@ object NetworkModule {
                             request.newBuilder()
                         else request.newBuilder()
                             .header("Authorization", "Bearer ${shared.getToken()}")
-                        chain.proceed(newRequest.build()).also {
+                        chain.proceed(newRequest.build())
+                            .also {
 //                        if (it.code == 401) {
 ////                            Handler(Looper.getMainLooper()).post { shared.setAccessToken("empty") }
 //                        }

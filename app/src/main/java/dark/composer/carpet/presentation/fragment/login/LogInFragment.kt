@@ -17,8 +17,10 @@ import javax.inject.Inject
 
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
     lateinit var viewModel: LogInViewModel
+
     @Inject
     lateinit var shared:SharedPref
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(this, providerFactory)[LogInViewModel::class.java]
 

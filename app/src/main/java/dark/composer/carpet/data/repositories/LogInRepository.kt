@@ -30,7 +30,7 @@ class LogInRepository @Inject constructor(
                 emit(BaseNetworkResult.Success(true))
             }else if (response.code() == 403){
                 emit(BaseNetworkResult.Error("No access"))
-            }else{
+            }else if(response.code() == 404){
                 emit(BaseNetworkResult.Error("User not found"))
             }
         }
