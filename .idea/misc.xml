@@ -16,9 +16,11 @@
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.132" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.132" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.132" />
+        <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_employee.xml" value="0.1605" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_home.xml" value="0.1045" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1505" />
+        <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_sale.xml" value="0.1" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/ic_sales.xml" value="0.1605" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/navigation_icon.xml" value="0.132" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable/rounded_shape.xml" value="0.1605" />
@@ -33,7 +35,7 @@
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_default.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_employee.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_log_in.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_profile.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_profile.xml" value="0.33195020746887965" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_settings.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_sig_up.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/layout/fragment_splash.xml" value="0.22447916666666667" />
