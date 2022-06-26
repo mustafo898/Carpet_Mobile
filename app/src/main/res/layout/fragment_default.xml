@@ -78,7 +78,7 @@
                     android:background="@drawable/search_back"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint="Find your "
+                    android:hint="Let's shop..."
                     android:inputType="textPersonName"
                     android:paddingStart="20sp"
                     android:textSize="14sp"

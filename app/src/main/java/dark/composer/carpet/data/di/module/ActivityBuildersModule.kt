@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dark.composer.carpet.presentation.activity.MainActivity
 
-
 @Module
 abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [ViewModelsModule::class, MainFragmentBuildersModule::class])
