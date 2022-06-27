@@ -5,10 +5,10 @@ import android.transition.TransitionInflater
 import android.util.Log
 import android.widget.Toast
 import dark.composer.carpet.R
-import dark.composer.carpet.databinding.FragmentCategoryDetailsBinding
+import dark.composer.carpet.databinding.FragmentFactoryDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 
-class FactoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>(FragmentCategoryDetailsBinding::inflate){
+class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate){
     private lateinit var viewModel: FactoryDetailsViewModel
 
     override fun onViewCreate() {
