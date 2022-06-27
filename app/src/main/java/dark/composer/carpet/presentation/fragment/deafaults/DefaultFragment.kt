@@ -8,13 +8,12 @@ import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.presentation.fragment.itemfragment.CategoryDetailsFragment
+import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
-
 
 class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
     private val adapterCategory by lazy {
@@ -54,7 +53,7 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         }
 
         adapterCategory.setClickListener {description, price, image ->
-            val s = CategoryDetailsFragment()
+            val s = FactoryDetailsFragment()
             val bundle = Bundle()
             bundle.putString("DESC", description.transitionName)
             Log.d("SSSSS", "onViewCreate: ${description.transitionName}")

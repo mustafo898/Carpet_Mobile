@@ -6,7 +6,7 @@ import dark.composer.carpet.presentation.fragment.deafaults.DefaultFragment
 import dark.composer.carpet.presentation.fragment.admin.AdminFragment
 import dark.composer.carpet.presentation.fragment.customer.CustomerFragment
 import dark.composer.carpet.presentation.fragment.employee.EmployeeFragment
-import dark.composer.carpet.presentation.fragment.itemfragment.CategoryDetailsFragment
+import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment
 import dark.composer.carpet.presentation.fragment.login.LogInFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
 import dark.composer.carpet.presentation.fragment.settings.SettingsFragment
@@ -40,7 +40,7 @@ public abstract class MainFragmentBuildersModule {
     abstract fun settingsFragment(): SettingsFragment
 
     @ContributesAndroidInjector
-    abstract fun categoryDetailsFragment(): CategoryDetailsFragment
+    abstract fun categoryDetailsFragment(): FactoryDetailsFragment
 
     @ContributesAndroidInjector
     abstract fun profileFragment():ProfileFragment

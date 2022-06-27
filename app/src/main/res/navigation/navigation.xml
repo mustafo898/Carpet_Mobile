@@ -34,9 +34,6 @@
         <action
             android:id="@+id/action_splashFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -100,8 +97,8 @@
             android:id="@+id/action_defaultFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_defaultFragment_to_categoryDetailsFragment"
-            app:destination="@id/categoryDetailsFragment" />
+            android:id="@+id/action_defaultFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />/>
     </fragment>
 
     <fragment
@@ -112,6 +109,9 @@
         <action
             android:id="@+id/action_adminFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />
     </fragment>
 
     <fragment
@@ -144,10 +144,10 @@
             app:destination="@id/defaultFragment" />
     </fragment>
     <fragment
-        android:id="@+id/categoryDetailsFragment"
-        android:name="dark.composer.carpet.presentation.fragment.itemfragment.CategoryDetailsFragment"
+        android:id="@+id/factoryDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment"
         android:label="fragment_category_details"
-        tools:layout="@layout/fragment_category_details" />
+        tools:layout="@layout/fragment_factory_details" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
