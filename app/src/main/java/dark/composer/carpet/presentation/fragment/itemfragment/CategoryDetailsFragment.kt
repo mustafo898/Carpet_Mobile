@@ -20,7 +20,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>(Fra
             Log.d("WWWW", "onViewCreate: $description")
             binding.description.transitionName = description
             Toast.makeText(requireContext(), "${binding.description.transitionName}  ", Toast.LENGTH_SHORT).show()
-            binding.price.transitionName = price
+            binding.date.transitionName = price
             binding.image.transitionName = image
         }
 

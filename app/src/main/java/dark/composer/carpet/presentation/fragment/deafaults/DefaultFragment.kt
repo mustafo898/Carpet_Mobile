@@ -29,11 +29,11 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
     lateinit var shared:SharedPref
 
     override fun onViewCreate() {
-        binding.listCategory.layoutManager = LinearLayoutManager(requireContext(),
+        binding.listSale.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL,false)
         binding.listPopular.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL,false)
-        binding.listCategory.adapter = adapterCategory
+        binding.listSale.adapter = adapterCategory
         binding.listPopular.adapter = adapterPopular
 
         adapterCategory.set(setCategory())

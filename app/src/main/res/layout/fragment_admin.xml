@@ -45,7 +45,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/takenImage"
-                    app:layout_constraintTop_toBottomOf="@+id/listCategory" />
+                    app:layout_constraintTop_toBottomOf="@+id/listSale" />
 
                 <ImageView
                     android:id="@+id/takenImage"
@@ -57,7 +57,7 @@
                     app:layout_constraintTop_toTopOf="@+id/taken" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listCategory"
+                    android:id="@+id/listSale"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"

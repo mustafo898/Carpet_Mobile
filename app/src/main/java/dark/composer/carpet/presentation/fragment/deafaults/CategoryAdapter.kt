@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import dark.composer.carpet.R
-import dark.composer.carpet.databinding.ItemCategoryBinding
 import dark.composer.carpet.data.dto.CategoryModel
+import dark.composer.carpet.databinding.ItemSaleBinding
 
 class CategoryAdapter(private var context: Context) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
@@ -22,7 +22,7 @@ class CategoryAdapter(private var context: Context) :
         clickListener = f
     }
 
-    inner class CategoryViewHolder(private var binding: ItemCategoryBinding) :
+    inner class CategoryViewHolder(private var binding: ItemSaleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CategoryModel) {
             binding.name.text = data.description
@@ -30,21 +30,21 @@ class CategoryAdapter(private var context: Context) :
 //                .override(100, 100)
 //                .into(binding.image)
             binding.image.setImageResource(data.image)
-            binding.price.text = data.rate
+            binding.time.text = data.rate
 
             binding.name.transitionName = "name_$layoutPosition"
-            binding.price.transitionName = "price_$layoutPosition"
+            binding.time.transitionName = "price_$layoutPosition"
             binding.image.transitionName = "image_$layoutPosition"
 
             ViewCompat.setTransitionName(binding.name, "name_$layoutPosition");
-            ViewCompat.setTransitionName(binding.price, "price_$layoutPosition");
+            ViewCompat.setTransitionName(binding.time, "price_$layoutPosition");
             ViewCompat.setTransitionName(binding.image, "image_$layoutPosition");
 
             val anim = AnimationUtils.loadAnimation(context, R.anim.slide_up)
             itemView.startAnimation(anim)
 
             itemView.setOnClickListener {
-                clickListener?.invoke(binding.name,binding.price,binding.image)
+                clickListener?.invoke(binding.name,binding.time,binding.image)
             }
         }
     }
@@ -61,7 +61,7 @@ class CategoryAdapter(private var context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(
-        ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemSaleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) =
