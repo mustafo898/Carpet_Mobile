@@ -22,6 +22,7 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 //            Toast.makeText(requireContext(), "${binding.description.transitionName}  ", Toast.LENGTH_SHORT).show()
 //            binding.date.transitionName = price
 //            binding.image.transitionName = image
+
         }
 
         val animation = TransitionInflater.from(requireContext()).inflateTransition(R.transition.animate)
