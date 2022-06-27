@@ -48,8 +48,11 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             binding.phoneNumber.visibility = View.GONE
         }
 
+        binding.image.setOnClickListener {
+            navController.navigate(R.id.action_defaultFragment_to_profileFragment)
+        }
         binding.userName.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+            navController.navigate(R.id.action_defaultFragment_to_profileFragment)
         }
 
         adapterCategory.setClickListener {description, price, image ->
@@ -64,11 +67,13 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
                 startPostponedEnterTransition()
             }
 //            val extras = FragmentNavigatorExtras(description to description.transitionName, price to price.transitionName, image to image.transitionName)
-            navController.navigate(R.id.action_defaultFragment_to_categoryDetailsFragment,bundle)
+            navController.navigate(R.id.action_defaultFragment_to_factoryDetailsFragment,bundle)
         }
+
         binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }
+
     }
 
     private fun setCategory():List<CategoryModel>{

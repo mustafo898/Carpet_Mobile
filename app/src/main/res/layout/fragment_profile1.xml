@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragment.profile.ProfileFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ps_imgone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!--                <include layout="@layout/toolbar_profile" />-->
+
+                <ImageView
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/more"
+                    android:src="@drawable/ic_more"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="bottom"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bgshape"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginBottom="32dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/image"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/pseven_user"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/circle"
+                            android:gravity="center|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="@+id/image"
+                            app:layout_constraintEnd_toEndOf="@+id/image">
+
+                            <ImageView
+                                android:id="@+id/changeImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_sales" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/laythree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/laytwo"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                tools:layout_editor_absoluteX="30dp">
+
+
+                <customfonts.TextView_Lato_Regular
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:gravity="center"
+                    android:id="@+id/userFull"
+                    android:lineSpacingExtra="5sp"
+                    android:text="Jaxon Clarke"
+                    android:textColor="#131314"
+                    android:textSize="23sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_location_on_black_24dp"
+                        app:tint="#88888f" />
+
+                    <customfonts.TextView_Lato_Regular
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:lineSpacingExtra="2.6sp"
+                        android:text="On the Moon"
+                        android:textColor="#88888f"
+                        android:textSize="13.4sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/laytwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="20dp"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:weightSum="3"
+                app:layout_constraintTop_toBottomOf="@+id/laythree"
+                tools:layout_editor_absoluteX="20dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nameInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
+                        style="@style/editText"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastNameInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="Last Name"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastName"
+                        style="@style/editText"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/currentPasswordInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="Current Password"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="16"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/black"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/current"
+                        style="@style/editText"
+                        android:inputType="textPassword"
+                        android:maxLength="16"
+                        android:transitionName="password" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/newPasswordInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="New Password"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="16"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/black"
+                    app:helperText="Required"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/newPassword"
+                        style="@style/editText"
+                        android:inputType="textPassword"
+                        android:maxLength="16"
+                        android:transitionName="password" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirmPasswordInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Password"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="16"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/black"
+                    app:helperText="Required"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirmPassword"
+                        style="@style/editText"
+                        android:inputType="textPassword"
+                        android:maxLength="16" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cnfirmPasswordInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Password"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="16"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/black"
+                    app:helperText="Required"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirmPssword"
+                        style="@style/editText"
+                        android:inputType="textPassword"
+                        android:maxLength="16" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirmPaswordInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Password"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="16"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/black"
+                    app:helperText="Required"
+                    app:helperTextTextColor="#F44336"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confrmPassword"
+                        style="@style/editText"
+                        android:inputType="textPassword"
+                        android:maxLength="16" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
