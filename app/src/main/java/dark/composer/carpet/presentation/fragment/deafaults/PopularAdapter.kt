@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dark.composer.carpet.data.dto.CategoryModel
-import dark.composer.carpet.databinding.ItemSaleBinding
+import dark.composer.carpet.databinding.ItemFactoryBinding
 
 class PopularAdapter(private var context: Context) :
     RecyclerView.Adapter<PopularAdapter.CategoryViewHolder>() {
     private val categoryList = mutableListOf<CategoryModel>()
 
-    inner class CategoryViewHolder(private var binding: ItemSaleBinding) :
+    inner class CategoryViewHolder(private var binding: ItemFactoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CategoryModel) {
             binding.name.text = data.description
@@ -35,7 +35,7 @@ class PopularAdapter(private var context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(
-        ItemSaleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemFactoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) =

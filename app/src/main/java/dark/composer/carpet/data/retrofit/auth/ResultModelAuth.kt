@@ -1,9 +1,6 @@
-package dark.composer.carpet.data.retrofit.models.auth
+package dark.composer.carpet.data.retrofit.auth
 
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.response.LogInResponse
-import dark.composer.carpet.data.retrofit.models.response.SignUpResponse
-import kotlinx.coroutines.flow.Flow
 
 data class ResultModelAuth(
     val signIp: ResultModelAuth? = null,

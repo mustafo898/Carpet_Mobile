@@ -4,20 +4,16 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
-import dark.composer.carpet.data.retrofit.models.response.factory.paginable.Content
-import dark.composer.carpet.databinding.FragmentSigUpBinding
-import dark.composer.carpet.databinding.ItemSaleBinding
+import dark.composer.carpet.databinding.ItemFactoryBinding
 
-class SaleAdapter(val context: Context) : RecyclerView.Adapter<SaleAdapter.SaleViewHolder>() {
+class FactoryAdapter(val context: Context) : RecyclerView.Adapter<FactoryAdapter.SaleViewHolder>() {
     private val listFactory = mutableListOf<FactoryResponse>()
 
-    inner class SaleViewHolder(val binding: ItemSaleBinding):RecyclerView.ViewHolder(binding.root){
+    inner class SaleViewHolder(val binding: ItemFactoryBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(list:FactoryResponse){
             binding.name.text = list.name
             if(list.photoUrl?.isNotEmpty() == true){
@@ -25,8 +21,8 @@ class SaleAdapter(val context: Context) : RecyclerView.Adapter<SaleAdapter.SaleV
             }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
-            binding.date.text = list.createdDate.substring(0,9)
-            binding.time.text = list.createdDate.substring(11,15)
+            binding.date.text = list.createdDate.substring(0,10)
+            binding.time.text = list.createdDate.substring(11,16)
             Log.d("DDDDD", "bind: ${binding.time}")
 
             itemView.setOnClickListener {
@@ -48,7 +44,7 @@ class SaleAdapter(val context: Context) : RecyclerView.Adapter<SaleAdapter.SaleV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= SaleViewHolder(
-        ItemSaleBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        ItemFactoryBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
     override fun onBindViewHolder(holder: SaleViewHolder, position: Int) = holder.bind(listFactory[position])
 

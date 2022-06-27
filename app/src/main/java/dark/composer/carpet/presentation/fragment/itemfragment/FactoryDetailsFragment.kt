@@ -1,32 +1,42 @@
 package dark.composer.carpet.presentation.fragment.itemfragment
 
 import android.os.Bundle
-import android.transition.TransitionInflater
-import android.util.Log
 import android.widget.Toast
-import dark.composer.carpet.R
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import dark.composer.carpet.databinding.FragmentFactoryDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 
-class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate){
+class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
     private lateinit var viewModel: FactoryDetailsViewModel
 
     override fun onViewCreate() {
+        viewModel = ViewModelProvider(
+            this,
+            providerFactory
+        )[FactoryDetailsViewModel::class.java]
+
+        var id = 0
         val bundle: Bundle? = this.arguments
         bundle?.let {
-//            val description = bundle.getString("DESC")
-//            val price = bundle.getString("PRICE")
-//            val image = bundle.getString("IMAGE")
-//            Log.d("WWWW", "onViewCreate: $description")
-//            binding.description.transitionName = description
-//            Toast.makeText(requireContext(), "${binding.description.transitionName}  ", Toast.LENGTH_SHORT).show()
-//            binding.date.transitionName = price
-//            binding.image.transitionName = image
-
+            id = it.getInt("ID")
         }
 
-        val animation = TransitionInflater.from(requireContext()).inflateTransition(R.transition.animate)
-        sharedElementEnterTransition = animation
-        sharedElementReturnTransition = animation
+        Toast.makeText(requireContext(), id.toString(), Toast.LENGTH_SHORT).show()
+
+        viewModel.liveDataInfoFactory.observe(requireActivity()){
+            if (it != null){
+                binding.date.text = it.createdDate.substring(0,10)
+                binding.time.text = it.createdDate.substring(11,16)
+                binding.status.text = it.status
+                Glide.with(requireContext()).load(it.photoUrl).into(binding.image)
+            }else{
+                binding.date.text = "..."
+                binding.status.text = "..."
+                binding.time.text = "..."
+            }
+        }
+
+        viewModel.getPagination(id)
     }
 }

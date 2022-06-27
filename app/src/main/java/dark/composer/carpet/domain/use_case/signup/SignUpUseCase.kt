@@ -1,7 +1,5 @@
 package dark.composer.carpet.domain.use_case.signup
 
-import dark.composer.carpet.data.retrofit.models.auth.ResultModelAuth
-import dark.composer.carpet.data.retrofit.models.request.SignUpRequest
 import dark.composer.carpet.domain.use_case.ValidateModel
 import javax.inject.Inject
 

@@ -28,9 +28,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
+            android:id="@+id/status"
             android:textSize="22sp"
-            android:text="Zorr"
+            android:text="Active"
             android:textColor="@color/black"/>
 
         <TextView
@@ -38,7 +38,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/date"
             android:textSize="22sp"
-            android:text="15000"
+            android:text="12.12.2020"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:textSize="22sp"
+            android:text="12:15"
             android:textColor="@color/black"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

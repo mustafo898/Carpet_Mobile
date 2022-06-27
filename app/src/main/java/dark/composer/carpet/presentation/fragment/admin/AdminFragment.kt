@@ -1,6 +1,5 @@
 package dark.composer.carpet.presentation.fragment.admin
 
-import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,15 +7,12 @@ import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentAdminBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment
-import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
-import kotlin.math.log
 
 class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inflate) {
-    private val saleAdapter by lazy {
-        SaleAdapter(requireContext())
+    private val factoryAdapter by lazy {
+        FactoryAdapter(requireContext())
     }
     @Inject
     lateinit var shared:SharedPref
@@ -29,11 +25,10 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         )[AdminViewModel::class.java]
 
         binding.listSale.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-        binding.listSale.adapter = saleAdapter
+        binding.listSale.adapter = factoryAdapter
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
-            saleAdapter.setListFactory(it!!.content)
-            Log.d("WWWWWW", "onViewCreate: ${it.content}")
+            factoryAdapter.setListFactory(it!!.content)
         }
 
         viewModel.getPagination(0,10)
@@ -50,11 +45,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)
         }
 
-        binding.product.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_logInFragment)
-        }
-
-        saleAdapter.setClickListener {
+        factoryAdapter.setClickListener {
             navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to it))
         }
     }
