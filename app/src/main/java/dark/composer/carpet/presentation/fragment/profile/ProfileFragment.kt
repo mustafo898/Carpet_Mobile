@@ -8,10 +8,14 @@ import android.widget.Toast
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentProfileBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.utils.SharedPref
+import javax.inject.Inject
 
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val REQUEST_CODE = 100
+    @Inject
+    lateinit var sharedPref: SharedPref
     override fun onViewCreate() {
         binding.backBtn.setOnClickListener {
             navController.navigate(R.id.action_profileFragment_to_settingsFragment)
@@ -23,6 +27,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 //            startActivityForResult(intent,REQUEST_CODE)
             uploadImage()
         }
+        binding.name.setText(sharedPref.getName().toString())
+        binding.lastName.setText(sharedPref.getSurName().toString())
     }
 
     var selectedImageUri: Uri? = null

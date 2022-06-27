@@ -7,5 +7,4 @@ class EmployeeFragment : BaseFragment<FragmentEmployeeBinding>(FragmentEmployeeB
     override fun onViewCreate() {
 
     }
-
 }
