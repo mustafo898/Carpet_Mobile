@@ -74,6 +74,7 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
             dialog.show()
         }
 
+
         viewModel.getInfoFactory(id)
     }
 }
