@@ -28,12 +28,6 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         binding.listSale.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
         binding.listSale.adapter = factoryAdapter
 
-        viewModel.liveDataListPagination.observe(requireActivity()) {
-            factoryAdapter.setListFactory(it!!.content)
-        }
-
-        viewModel.getPagination(0,10)
-
         binding.txtCustomers.isSelected = true
         binding.txtFactory.isSelected = true
         binding.txtEmployee.isSelected = true
@@ -51,6 +45,14 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
                 factoryAdapter.addFactory(t)
             }
         }
+
+        viewModel.liveDataListPagination.observe(requireActivity()){
+            it?.let {t->
+                factoryAdapter.setListFactory(t.content)
+            }
+        }
+
+        viewModel.getPagination(0,10)
 
         binding.imageMore.setOnClickListener {
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)

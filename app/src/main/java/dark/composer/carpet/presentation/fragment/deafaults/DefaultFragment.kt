@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
@@ -12,13 +13,16 @@ import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFra
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.presentation.fragment.admin.AdminViewModel
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
 
 class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBinding::inflate) {
-    private val adapterCategory by lazy {
-        CategoryAdapter(requireContext())
+    private val factoryAdapter by lazy {
+        FactoryAdapter(requireContext())
     }
+
+    lateinit var viewModel: DefaultViewModel
 
     private val adapterPopular by lazy {
         PopularAdapter(requireContext())
@@ -28,14 +32,25 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
     lateinit var shared:SharedPref
 
     override fun onViewCreate() {
+        viewModel = ViewModelProvider(
+            this,
+            providerFactory
+        )[DefaultViewModel::class.java]
+
         binding.listSale.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL,false)
         binding.listPopular.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL,false)
-        binding.listSale.adapter = adapterCategory
+        binding.listSale.adapter = factoryAdapter
         binding.listPopular.adapter = adapterPopular
 
-        adapterCategory.set(setCategory())
+        viewModel.liveDataListPagination.observe(requireActivity()){
+            it?.let {t->
+                factoryAdapter.setListFactory(t.content)
+            }
+        }
+        viewModel.getPagination(0,10)
+
         adapterPopular.set(setPopular())
 
         if (shared.getToken()!!.isNotEmpty()){
@@ -55,33 +70,12 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             navController.navigate(R.id.action_defaultFragment_to_profileFragment)
         }
 
-        adapterCategory.setClickListener {description, price, image ->
-            val s = FactoryDetailsFragment()
-            val bundle = Bundle()
-            bundle.putString("DESC", description.transitionName)
-            Log.d("SSSSS", "onViewCreate: ${description.transitionName}")
-            bundle.putString("PRICE", price.transitionName)
-            bundle.putString("IMAGE", image.transitionName)
-            s.arguments = bundle
-            (view?.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
-//            val extras = FragmentNavigatorExtras(description to description.transitionName, price to price.transitionName, image to image.transitionName)
-            navController.navigate(R.id.action_defaultFragment_to_factoryDetailsFragment,bundle)
-        }
+
 
         binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }
 
-    }
-
-    private fun setCategory():List<CategoryModel>{
-        val list = mutableListOf<CategoryModel>()
-        for (i in 0 until 10){
-            list.add(CategoryModel("Shu zor chiqibti ggggggggggg",R.drawable.carpet,"1203369 cym"))
-        }
-        return list
     }
 
     private fun setPopular():List<CategoryModel>{
