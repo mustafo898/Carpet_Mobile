@@ -57,10 +57,6 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             binding.phoneNumber.visibility = View.GONE
         }
 
-        binding.userName.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
-        }
-
         binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }

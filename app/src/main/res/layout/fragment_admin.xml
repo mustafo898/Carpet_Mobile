@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_color_8"
     tools:context=".presentation.fragment.admin.AdminFragment">
 
     <ScrollView
@@ -64,6 +65,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sale" />
+
+                <ImageView
+                    android:id="@+id/add_factory"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
                 <TextView
                     android:id="@+id/sale"
@@ -155,7 +164,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="32dp"
-                    android:background="@drawable/orange_back"
+                    android:background="@drawable/back_reklam"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/search">
@@ -166,8 +175,11 @@
                         android:layout_height="wrap_content"
                         android:text="May 2 - June 5"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
+                        android:marqueeRepeatLimit="marquee_forever"
                         app:layout_constraintStart_toStartOf="@+id/deliver"
                         app:layout_constraintTop_toBottomOf="@+id/deliver" />
 
@@ -177,9 +189,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Free Delivery"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
+                        android:singleLine="true"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
@@ -189,6 +204,7 @@
                         android:layout_height="150dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:elevation="3dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -198,6 +214,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:elevation="6dp"
                         android:background="@drawable/back_order"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/day"

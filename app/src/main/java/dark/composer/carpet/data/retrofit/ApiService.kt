@@ -2,6 +2,8 @@ package dark.composer.carpet.data.retrofit
 
 import dark.composer.carpet.data.retrofit.models.request.LogInRequest
 import dark.composer.carpet.data.retrofit.models.request.SignUpRequest
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
+import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -22,4 +24,10 @@ interface ApiService {
 
     @GET(Constants.FACTORY_INFO)
     suspend fun getFactoryInfo(@Path("id") id:Int):Response<FactoryResponse>
+
+    @PUT(Constants.FACTORY_UPDATE)
+    suspend fun updateInfoFactory(@Body factoryUpdate:FactoryUpdateRequest, @Path("id") id:Int):Response<FactoryResponse>
+
+    @POST(Constants.FACTORY_ADD)
+    suspend fun addInfoFactory(@Body factoryAddRequest: FactoryAddRequest):Response<FactoryResponse>
 }

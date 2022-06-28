@@ -38,9 +38,14 @@ class FactoryAdapter(val context: Context) : RecyclerView.Adapter<FactoryAdapter
     }
 
     fun setListFactory(list: List<FactoryResponse>){
-        this.listFactory.clear()
-        this.listFactory.addAll(list)
+        listFactory.clear()
+        listFactory.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun addFactory(factory:FactoryResponse){
+        listFactory.add(factory)
+        notifyItemInserted(listFactory.size-1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= SaleViewHolder(

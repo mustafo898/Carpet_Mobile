@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.AdminRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
+import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -15,6 +17,9 @@ import javax.inject.Inject
 class AdminViewModel @Inject constructor(private val adminRepository: AdminRepository) : ViewModel(){
     private val listPagination = MutableLiveData<PaginationResponse?>()
     val liveDataListPagination:MutableLiveData<PaginationResponse?> = listPagination
+
+    private val addFactory = MutableLiveData<FactoryResponse?>()
+    val liveDataAddFactory:MutableLiveData<FactoryResponse?> = addFactory
 
     private val _loadingChannel = Channel<Boolean?>()
     val loadingFlow = _loadingChannel.receiveAsFlow()
@@ -29,6 +34,32 @@ class AdminViewModel @Inject constructor(private val adminRepository: AdminRepos
                     is BaseNetworkResult.Success->{
                         listPagination.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data?.content?.get(0)?.createdDate}")
+                    }
+                    is BaseNetworkResult.Error->{
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading->{
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun addFactory(addFactoryRequest: FactoryAddRequest){
+        viewModelScope.launch {
+            adminRepository.addFactory(addFactoryRequest).observeForever{
+                when(it){
+                    is BaseNetworkResult.Success->{
+                        addFactory.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
                     }
                     is BaseNetworkResult.Error->{
                         viewModelScope.launch {

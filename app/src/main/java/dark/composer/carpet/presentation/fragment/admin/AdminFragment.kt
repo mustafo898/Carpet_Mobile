@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.databinding.FragmentAdminBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -41,8 +42,22 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
         binding.phoneNumber.text = "${shared.getPhoneNumber()}"
 
+        binding.addFactory.setOnClickListener {
+            viewModel.addFactory(FactoryAddRequest(name = "Hello"))
+        }
+
+        viewModel.liveDataAddFactory.observe(requireActivity()){
+            it?.let {t->
+                factoryAdapter.addFactory(t)
+            }
+        }
+
         binding.imageMore.setOnClickListener {
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)
+        }
+
+        binding.image.setOnClickListener {
+            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
         }
 
         factoryAdapter.setClickListener {
