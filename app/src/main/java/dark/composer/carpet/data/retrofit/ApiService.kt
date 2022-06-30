@@ -24,8 +24,8 @@ interface ApiService {
     suspend fun profileFileUpload(@Part file:MultipartBody.Part):Response<ProfileResponse>
 
     @Multipart
-    @POST("attach/upload/profile")
-    suspend fun factoryFileUpload(@Part file:MultipartBody.Part):Response<ProfileResponse>
+    @POST("attach/upload/factory/{key}")
+    suspend fun factoryFileUpload(@Part file:MultipartBody.Part, @Path("key") page:String):Response<ProfileResponse>
 
     @POST(Constants.SIGNUP)
     suspend fun signUp(@Body signUpRequest: SignUpRequest):Response<SignUpResponse>
