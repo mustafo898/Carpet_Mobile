@@ -1,4 +1,4 @@
-package dark.composer.carpet.data.retrofit.models.response
+package dark.composer.carpet.data.retrofit.models.response.login
 
 data class LogInResponse(
     val name: String,

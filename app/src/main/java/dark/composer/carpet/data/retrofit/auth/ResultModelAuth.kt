@@ -1,6 +1,6 @@
 package dark.composer.carpet.data.retrofit.auth
 
-import dark.composer.carpet.data.retrofit.models.response.LogInResponse
+import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 
 data class ResultModelAuth(
     val signIp: ResultModelAuth? = null,
