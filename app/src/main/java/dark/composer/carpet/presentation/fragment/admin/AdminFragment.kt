@@ -4,6 +4,9 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
+import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.databinding.FragmentAdminBinding
@@ -59,11 +62,40 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         }
 
         binding.image.setOnClickListener {
-            navController.navigate(R.id.action_defaultFragment_to_settingsFragment)
+            navController.navigate(R.id.action_adminFragment_to_settingsFragment)
         }
 
         factoryAdapter.setClickListener {
             navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to it))
         }
+
+    }
+
+//    private fun getAllNewMovies() {
+//        viewModel.movieRepository.getAllNewMovies(requireContext()).observe(this) { result ->
+//            val imageList = ArrayList<SlideModel>() // Create image list
+//            val positions = ArrayList<Long>() // Create image list
+//            result?.results?.forEach { movies ->
+//                positions.add(movies.id)
+//                imageList.add(
+//                    SlideModel(
+//                        "${Constants.BASE_IMAGE_URL}${movies.backdropPath}",
+//                        movies.originalTitle
+//                    )
+//                )
+//            }
+//            binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
+//            binding.imageSlider.setItemClickListener(object : ItemClickListener {
+//                override fun onItemSelected(position: Int) {
+//                    val bundle = bundleOf("MOVIE_ID" to positions[position])
+//                    navController.navigate(R.id.action_mainFragment_to_movieDetailFragment, bundle)
+//                }
+//            })
+//        }
+//    }
+
+    override fun onStop() {
+        binding.imageSlider.stopSliding()
+        super.onStop()
     }
 }

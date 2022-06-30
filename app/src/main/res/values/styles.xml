@@ -11,5 +11,8 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-
+    <style name="AnimationForDialog">
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
+    </style>
 </resources>

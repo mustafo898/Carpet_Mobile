@@ -12,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import dagger.android.support.DaggerAppCompatActivity
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.ActivityMainBinding
-import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
 
 class MainActivity : DaggerAppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration

@@ -1,17 +1,16 @@
 package dark.composer.carpet.presentation.fragment.profile
 
-import android.Manifest
-import android.app.Activity
 import android.app.Activity.RESULT_OK
-import android.content.Context
+import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
@@ -29,7 +28,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
-
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val REQUEST_CODE = 100
@@ -62,8 +60,80 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
         binding.userFull.text =
             "${sharedPref.getName().toString()}  ${sharedPref.getSurName().toString()}"
+
+        binding.more.setOnClickListener {
+            val popup = PopupMenu(requireContext(), binding.more)
+
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
+
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
+                PopupMenu.OnMenuItemClickListener {
+                override fun onMenuItemClick(item: MenuItem): Boolean {
+
+                    when (item.itemId) {
+                        R.id.editName -> {
+                            Toast.makeText(
+                                requireContext(),
+                                "You Clicked : " + item.title,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            customDialog()
+                            return true
+                        }
+                        R.id.changePassword -> {
+                            Toast.makeText(
+                                requireContext(),
+                                "You Clicked : " + item.title,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        R.id.logout -> {
+                            Toast.makeText(
+                                requireContext(),
+                                "You Clicked : " + item.title,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else -> {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            })
+
+            popup.show() //showing popup menu
+
+        }
     }
 
+    fun customDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_update_factory)
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+
+        dialog.window?.setWindowAnimations(R.style.AnimationForDialog)
+
+        val cancel: ImageButton = dialog.findViewById(R.id.cancelFB)
+        val accept: ImageButton = dialog.findViewById(R.id.acceptFB)
+
+        cancel.setOnClickListener {
+            Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
+    //            dialog.cancel()
+            dialog.dismiss()
+        }
+
+        accept.setOnClickListener {
+            Toast.makeText(requireContext(), "data is changed", Toast.LENGTH_SHORT).show()
+        }
+
+        dialog.show()
+    }
+
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -78,7 +148,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             Log.d("EEEEEE", "onActivityResult: $this")
                         }.collect {
                             sharedPref.setImage(it.url)
-                            Glide.with(requireContext()).load(sharedPref.getImage()).into(binding.image)
+                            Glide.with(requireContext()).load(sharedPref.getImage())
+                                .into(binding.image)
                         }
                     }
                 }
@@ -91,7 +162,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    var imagePath = ""
+    private var imagePath = ""
 
     private fun uploadFile(uri: Uri): String? {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
