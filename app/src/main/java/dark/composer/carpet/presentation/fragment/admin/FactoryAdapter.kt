@@ -21,7 +21,7 @@ class FactoryAdapter(val context: Context) : RecyclerView.Adapter<FactoryAdapter
             }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
-            binding.date.text = list.createdDate.substring(0,10)
+            binding.date.text = list.createdDate.substring(0,11)
             binding.time.text = list.createdDate.substring(11,16)
             Log.d("DDDDD", "bind: ${binding.time}")
 

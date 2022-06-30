@@ -33,7 +33,6 @@ import javax.inject.Inject
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val REQUEST_CODE = 100
-    private val REQUEST = 1
     lateinit var viewModel: ProfileViewModel
 
     @Inject
@@ -52,6 +51,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 startActivityForResult(it, REQUEST_CODE)
             }
         }
+        Glide.with(requireContext()).load(sharedPref.getImage()).into(binding.image)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
@@ -77,8 +77,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         viewModel.successFlow.catch {
                             Log.d("EEEEEE", "onActivityResult: $this")
                         }.collect {
-                            Glide.with(requireContext()).load(it.url).into(binding.image)
                             sharedPref.setImage(it.url)
+                            Glide.with(requireContext()).load(sharedPref.getImage()).into(binding.image)
                         }
                     }
                 }
