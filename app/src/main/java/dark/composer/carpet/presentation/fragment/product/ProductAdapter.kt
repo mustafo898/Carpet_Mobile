@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
-import dark.composer.carpet.databinding.ItemFactoryBinding
 import dark.composer.carpet.databinding.ItemProductBinding
 
 class ProductAdapter(private var context: Context) : RecyclerView.Adapter<ProductAdapter.SaleViewHolder>() {

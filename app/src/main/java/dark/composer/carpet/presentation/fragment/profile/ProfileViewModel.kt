@@ -3,10 +3,8 @@ package dark.composer.carpet.presentation.fragment.profile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.FactoryDetailsRepository
 import dark.composer.carpet.data.repositories.ProfileRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.LogInRequest
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch

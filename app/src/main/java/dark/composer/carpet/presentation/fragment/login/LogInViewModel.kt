@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.LogInRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.LogInRequest
+import dark.composer.carpet.data.retrofit.models.request.login.LogInRequest
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch

@@ -1,7 +1,7 @@
 package dark.composer.carpet.domain.use_case.signup
 
 import dark.composer.carpet.data.retrofit.auth.ResultModelAuth
-import dark.composer.carpet.data.retrofit.models.request.SignUpRequest
+import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
 import kotlinx.coroutines.flow.Flow
 
 interface SignUpRepository {

@@ -1,4 +1,4 @@
-package dark.composer.carpet.data.retrofit.models.request
+package dark.composer.carpet.data.retrofit.models.request.signup
 
 data class SignUpRequest(
     val name: String,

@@ -1,19 +1,13 @@
 package dark.composer.carpet.presentation.fragment.deafaults
 
-import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.admin.AdminViewModel
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
 

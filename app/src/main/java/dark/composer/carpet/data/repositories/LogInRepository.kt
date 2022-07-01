@@ -3,7 +3,7 @@ package dark.composer.carpet.data.repositories
 import android.util.Log
 import dark.composer.carpet.data.retrofit.ApiService
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.LogInRequest
+import dark.composer.carpet.data.retrofit.models.request.login.LogInRequest
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

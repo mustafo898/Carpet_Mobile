@@ -151,7 +151,7 @@
     </fragment>
     <fragment
         android:id="@+id/factoryDetailsFragment"
-        android:name="dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_factory_details" />
     <fragment
