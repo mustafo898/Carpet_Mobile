@@ -119,7 +119,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
         val cancel: ImageButton = dialog.findViewById(R.id.cancelFB)
         val accept: ImageButton = dialog.findViewById(R.id.acceptFB)
-
+        dialog.setCancelable(false)
         cancel.setOnClickListener {
             Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
     //            dialog.cancel()
