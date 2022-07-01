@@ -7,6 +7,10 @@ import dark.composer.carpet.data.retrofit.models.response.factory.FactoryRespons
 import dark.composer.carpet.databinding.FragmentProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
@@ -31,8 +35,19 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         binding.list.adapter = productAdapter
         productAdapter.setListFactory(getData())
 
+        binding.list.showShimmerAdapter()
+        CoroutineScope(Dispatchers.Main).launch {
+            shimmer()
+        }
         binding.back.setOnClickListener {
             navController.navigate(R.id.action_productFragment_to_adminFragment)
+        }
+    }
+
+    suspend fun shimmer(){
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
+            binding.list.hideShimmerAdapter()
         }
     }
 
