@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragment.product.ProductFragment">
 
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/tab_layout"
+        app:tabIndicatorColor="#B4B2BF"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/black"
+        app:tabRippleColor="#B4B2BF"
+        app:tabSelectedTextColor="#B4B2BF"/>
 
-
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

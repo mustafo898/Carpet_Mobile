@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.itemfragment
+package dark.composer.carpet.presentation.fragment.factory_detail
 
 import android.app.Activity
 import android.app.AlertDialog

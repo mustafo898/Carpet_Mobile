@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.itemfragment
+package dark.composer.carpet.presentation.fragment.factory_detail
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

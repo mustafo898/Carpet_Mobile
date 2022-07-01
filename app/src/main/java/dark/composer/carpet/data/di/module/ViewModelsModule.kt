@@ -10,7 +10,7 @@ import dark.composer.carpet.presentation.fragment.splash.SplashViewModel
 import dark.composer.carpet.data.scopes.ViewModelKey
 import dark.composer.carpet.presentation.fragment.admin.AdminViewModel
 import dark.composer.carpet.presentation.fragment.deafaults.DefaultViewModel
-import dark.composer.carpet.presentation.fragment.itemfragment.FactoryDetailsViewModel
+import dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsViewModel
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
 
 @Module
