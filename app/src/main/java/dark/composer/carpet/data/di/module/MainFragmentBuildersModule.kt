@@ -48,6 +48,4 @@ public abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun productFragment():ProductFragment
-
-
 }

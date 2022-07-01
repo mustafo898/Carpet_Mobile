@@ -2,82 +2,89 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_margin="8dp"
+    android:background="#CAA8A8"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gradient" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/rate"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="italic" />
-
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/gradient" />
 
         <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/name"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="20.13.2022"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="italic"/>
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/rate"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="20:15"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="italic"/>
+            android:textSize="16sp"
+            android:textStyle="italic" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="20.13.2022"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="20:15"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="italic"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

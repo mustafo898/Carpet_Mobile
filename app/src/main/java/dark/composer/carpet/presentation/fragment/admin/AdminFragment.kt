@@ -65,10 +65,13 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)
         }
 
+        binding.product.setOnClickListener {
+            navController.navigate(R.id.action_adminFragment_to_productFragment)
+        }
+
         factoryAdapter.setClickListener {
             navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to it))
         }
-
     }
 
 //    private fun getAllNewMovies() {

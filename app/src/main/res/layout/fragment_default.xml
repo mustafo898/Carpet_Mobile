@@ -141,7 +141,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/search">
 
                     <TextView
-                        android:id="@+id/sale"
+                        android:id="@+id/factory_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="May 2 - June 5"
@@ -180,9 +180,9 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/back_order"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/sale"
-                        app:layout_constraintStart_toStartOf="@+id/sale"
-                        app:layout_constraintTop_toBottomOf="@+id/sale">
+                        app:layout_constraintEnd_toEndOf="@+id/factory_txt"
+                        app:layout_constraintStart_toStartOf="@+id/factory_txt"
+                        app:layout_constraintTop_toBottomOf="@+id/factory_txt">
 
                         <TextView
                             android:id="@+id/order"
