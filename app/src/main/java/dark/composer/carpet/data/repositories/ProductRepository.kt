@@ -25,6 +25,5 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
             list.value = BaseNetworkResult.Error(response.message())
         }
         return list
-
     }
 }
