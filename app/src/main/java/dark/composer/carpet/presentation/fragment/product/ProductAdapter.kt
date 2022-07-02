@@ -40,7 +40,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
     }
 
     fun setListFactory(list: List<FactoryResponse>) {
-        this.listFactory.clear()
+//        this.listFactory.clear()
         this.listFactory.addAll(list)
         notifyDataSetChanged()
     }
