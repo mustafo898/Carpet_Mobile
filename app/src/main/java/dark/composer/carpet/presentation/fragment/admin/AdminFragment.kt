@@ -4,9 +4,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.interfaces.ItemClickListener
-import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.databinding.FragmentAdminBinding
@@ -18,8 +15,9 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
     private val factoryAdapter by lazy {
         FactoryAdapter(requireContext())
     }
+
     @Inject
-    lateinit var shared:SharedPref
+    lateinit var shared: SharedPref
     lateinit var viewModel: AdminViewModel
 
     override fun onViewCreate() {
@@ -28,7 +26,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             providerFactory
         )[AdminViewModel::class.java]
 
-        binding.listSale.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+        binding.listSale.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.listSale.adapter = factoryAdapter
 
         binding.txtCustomers.isSelected = true
@@ -43,19 +42,19 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             viewModel.addFactory(FactoryAddRequest(name = "Hello"))
         }
 
-        viewModel.liveDataAddFactory.observe(requireActivity()){
-            it?.let {t->
+        viewModel.liveDataAddFactory.observe(requireActivity()) {
+            it?.let { t ->
                 factoryAdapter.addFactory(t)
             }
         }
 
-        viewModel.liveDataListPagination.observe(requireActivity()){
-            it?.let {t->
+        viewModel.liveDataListPagination.observe(requireActivity()) {
+            it?.let { t ->
                 factoryAdapter.setListFactory(t.content)
             }
         }
 
-        viewModel.getPagination(0,10)
+        viewModel.getPagination(0, 10)
 
         binding.imageMore.setOnClickListener {
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)
@@ -70,7 +69,10 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         }
 
         factoryAdapter.setClickListener {
-            navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to it))
+            navController.navigate(
+                R.id.action_adminFragment_to_factoryDetailsFragment,
+                bundleOf("ID" to it)
+            )
         }
     }
 

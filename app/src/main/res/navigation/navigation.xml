@@ -9,28 +9,28 @@
         android:id="@+id/splashFragment"
         android:name="dark.composer.carpet.presentation.fragment.splash.SplashFragment"
         android:label="fragment_default"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
 
         <action
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_defaultFragment"
-            app:destination="@id/defaultFragment" />
+            app:destination="@id/defaultFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
         <action
-            app:popUpTo="@id/customerFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_customerFragment"
-            app:destination="@id/customerFragment" />
+            app:destination="@id/customerFragment"
+            app:popUpTo="@id/customerFragment"
+            app:popUpToInclusive="true" />
         <action
-            app:popUpTo="@id/adminFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_adminFragment2"
-            app:destination="@id/adminFragment" />
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/adminFragment"
+            app:popUpToInclusive="true" />
         <action
-            app:popUpTo="@id/employeeFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_splashFragment_to_employeeFragment"
-            app:destination="@id/employeeFragment" />
+            app:destination="@id/employeeFragment"
+            app:popUpTo="@id/employeeFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
@@ -40,7 +40,7 @@
         android:id="@+id/logInFragment"
         android:name="dark.composer.carpet.presentation.fragment.login.LogInFragment"
         android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" >
+        tools:layout="@layout/fragment_log_in">
         <action
             android:id="@+id/action_logInFragment_to_sigUpFragment"
             app:destination="@id/sigUpFragment" />
@@ -63,7 +63,7 @@
         android:id="@+id/sigUpFragment"
         android:name="dark.composer.carpet.presentation.fragment.signup.SignUpFragment"
         android:label="fragment_sig_up"
-        tools:layout="@layout/fragment_sig_up" >
+        tools:layout="@layout/fragment_sig_up">
 
         <action
             android:id="@+id/action_sigUpFragment_to_customerFragment"
@@ -89,7 +89,7 @@
         android:id="@+id/defaultFragment"
         android:name="dark.composer.carpet.presentation.fragment.deafaults.DefaultFragment"
         android:label="fragment_default"
-        tools:layout="@layout/fragment_default" >
+        tools:layout="@layout/fragment_default">
         <action
             android:id="@+id/action_defaultFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
@@ -108,7 +108,7 @@
         android:id="@+id/adminFragment"
         android:name="dark.composer.carpet.presentation.fragment.admin.AdminFragment"
         android:label="fragment_admin"
-        tools:layout="@layout/fragment_admin" >
+        tools:layout="@layout/fragment_admin">
         <action
             android:id="@+id/action_adminFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -132,7 +132,7 @@
         android:id="@+id/settingsFragment"
         android:name="dark.composer.carpet.presentation.fragment.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_defaultFragment"
             app:destination="@id/defaultFragment" />
@@ -161,17 +161,17 @@
         android:id="@+id/profileFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_product"
         android:id="@+id/productFragment"
         android:name="dark.composer.carpet.presentation.fragment.product.ProductFragment"
-        android:label="ProductFragment" >
+        android:label="ProductFragment"
+        tools:layout="@layout/fragment_product">
         <action
             android:id="@+id/action_productFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
