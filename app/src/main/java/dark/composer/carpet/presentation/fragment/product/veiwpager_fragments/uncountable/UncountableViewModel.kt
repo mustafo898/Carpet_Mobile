@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.product
+package dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -6,17 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProductRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductViewModel @Inject constructor(private val repository:ProductRepository) : ViewModel() {
-    private val createProduct = MutableLiveData<ProductResponse>()
-    val createProductLiveData : MutableLiveData<ProductResponse> = createProduct
+class UncountableViewModel @Inject constructor(private val repo: ProductRepository) : ViewModel() {
+
+    private val listPagination = MutableLiveData<List<ProductResponse>?>()
+    val liveDataListPagination: MutableLiveData<List<ProductResponse>?> = listPagination
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
@@ -24,20 +23,20 @@ class ProductViewModel @Inject constructor(private val repository:ProductReposit
     private val _loadingChannel = Channel<Boolean?>()
     val loadingFlow = _loadingChannel.receiveAsFlow()
 
-    fun createProduct(createRequest: ProductCreateRequest){
+    fun getPagination(page: Int, size: Int, type: String) {
         viewModelScope.launch {
-            repository.createProduct(createRequest).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
-                        createProduct.value = it.data
+            repo.getPagination(page, size, type).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        listPagination.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data}")
                     }
-                    is BaseNetworkResult.Error->{
+                    is BaseNetworkResult.Error -> {
                         viewModelScope.launch {
                             _errorChannel.send(it.message)
                         }
                     }
-                    is BaseNetworkResult.Loading->{
+                    is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {
                             _loadingChannel.send(it.isLoading)
                         }
@@ -49,4 +48,5 @@ class ProductViewModel @Inject constructor(private val repository:ProductReposit
             }
         }
     }
+
 }

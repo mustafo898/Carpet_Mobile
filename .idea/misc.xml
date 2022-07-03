@@ -12,6 +12,7 @@
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/dialog_update_factory.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_admin.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_category_details.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_countable.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_custom_dialog.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_customer.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_default.xml" value="0.3416666666666667" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_settings.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_sig_up.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_splash.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/Carpet/app/src/main/res/layout/fragment_uncountable.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/item_category.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/item_product.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/Carpet/app/src/main/res/layout/item_product_demo_grid.xml" value="0.3416666666666667" />

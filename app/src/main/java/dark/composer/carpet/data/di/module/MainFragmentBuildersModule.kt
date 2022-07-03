@@ -9,6 +9,8 @@ import dark.composer.carpet.presentation.fragment.employee.EmployeeFragment
 import dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsFragment
 import dark.composer.carpet.presentation.fragment.login.LogInFragment
 import dark.composer.carpet.presentation.fragment.product.ProductFragment
+import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable.CountableFragment
+import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
 import dark.composer.carpet.presentation.fragment.settings.SettingsFragment
 import dark.composer.carpet.presentation.fragment.signup.SignUpFragment
@@ -48,4 +50,10 @@ public abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun productFragment():ProductFragment
+
+    @ContributesAndroidInjector
+    abstract fun productCountable():CountableFragment
+
+    @ContributesAndroidInjector
+    abstract fun productUncountable():UncountableFragment
 }

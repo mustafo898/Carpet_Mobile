@@ -39,12 +39,8 @@
             android:id="@+id/add_product"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:shimmer_demo_layout="@layout/item_product_demo_grid"
-        app:shimmer_demo_layout_manager_type="grid"
-        app:shimmer_demo_angle="15"
-        android:id="@+id/list"/>
-
+        android:id="@+id/viewPager"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

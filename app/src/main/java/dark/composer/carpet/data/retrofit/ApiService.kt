@@ -34,9 +34,9 @@ interface ApiService {
 
     @GET("product/pagination/{type}")
     suspend fun getProductPagination(
+        @Path("type") type: String,
         @Query("page") page: Int,
-        @Query("size") size: Int,
-        @Path("type") type: String
+        @Query("size") size: Int
     ): Response<List<ProductResponse>>
 
     // factory CRUD

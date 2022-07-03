@@ -18,5 +18,4 @@ class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<
             throw RuntimeException(e)
         }
     }
-
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ProductRepository @Inject constructor(private var service: ApiService) {
     suspend fun getPagination(page:Int,size:Int,type:String): LiveData<BaseNetworkResult<List<ProductResponse>>> {
         val list = MutableLiveData<BaseNetworkResult<List<ProductResponse>>>()
-        val response = service.getProductPagination(page,size,type)
+        val response = service.getProductPagination(type,page,size)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
             response.body()?.let {
