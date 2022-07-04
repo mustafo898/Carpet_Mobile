@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dark.composer.carpet.R
@@ -35,6 +36,13 @@ class UncountableFragment : BaseFragment<FragmentUncountableBinding>(FragmentUnc
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.list.adapter = productAdapter
         binding.list.showShimmerAdapter()
+
+        productAdapter.setClickListener {
+            navController.navigate(
+                R.id.action_productFragment_to_productDetailsFragment,
+                bundleOf("ID" to it,"TYPE" to "UNCOUNTABLE")
+            )
+        }
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { it1 ->

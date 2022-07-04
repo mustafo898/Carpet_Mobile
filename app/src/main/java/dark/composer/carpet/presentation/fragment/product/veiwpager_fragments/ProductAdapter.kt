@@ -18,7 +18,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
         fun bind(list: ProductResponse) {
             binding.name.text = list.name
             if (list.urlImageList != null) {
-                Glide.with(context).load(list.urlImageList[0]).error(R.drawable.ic_image_null).into(binding.image)
+                Glide.with(context).load(list.urlImageList[0]).into(binding.image)
             } else {
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }

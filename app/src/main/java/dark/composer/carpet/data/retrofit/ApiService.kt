@@ -9,6 +9,7 @@ import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.signup.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.product.ProductDetailsResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import dark.composer.carpet.utils.Constants
@@ -32,7 +33,10 @@ interface ApiService {
     @POST("product/adm")
     suspend fun createProduct(@Body productCreateRequest: ProductCreateRequest): Response<ProductResponse>
 
-    @GET("product/pagination/{type}")
+    @GET("product/adm/{type}")
+    suspend fun productDetails(@Path("type") type:String, @Query("id") id:String): Response<ProductDetailsResponse>
+
+    @GET("product/adm/pagination/{type}")
     suspend fun getProductPagination(
         @Path("type") type: String,
         @Query("page") page: Int,

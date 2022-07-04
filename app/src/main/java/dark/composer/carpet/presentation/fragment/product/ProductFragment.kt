@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dark.composer.carpet.R
+import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.databinding.FragmentProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.PagerAdapter
@@ -36,6 +37,10 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
                 1-> tab.text="UNCOUNTABLE"
             }
         }.attach()
+
+        binding.addProduct.setOnClickListener {
+            viewModel.createProduct(ProductCreateRequest(2,"Yellow","Modern", 4, 6,"Gilam", "pon", 30.0,"COUNTABLE",6))
+        }
 
         binding.back.setOnClickListener {
             navController.navigate(R.id.action_productFragment_to_adminFragment)
