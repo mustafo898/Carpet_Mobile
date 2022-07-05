@@ -1,12 +1,14 @@
 package dark.composer.carpet.presentation.fragment.login
 
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentLogInBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -71,6 +73,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                 viewModel.logInFlow.collect {
                     if (it) {
                         if (shared.getRole() == "ADMIN"){
+                            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
                             navController.navigate(R.id.action_logInFragment_to_adminFragment2)
                         }else{
                             navController.navigate(R.id.action_logInFragment_to_defaultFragment)

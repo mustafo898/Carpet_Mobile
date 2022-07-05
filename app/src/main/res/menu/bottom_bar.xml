@@ -3,10 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:actionViewClass="android.widget.SearchView" >
+        android:id="@+id/adminFragment"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="Home">
     </item>
 
+    <item
+        app:showAsAction="always"
+        android:enabled="true"
+        android:id="@+id/favourite"
+        android:icon="@drawable/ic_favorite"
+        android:title="Saved">
+    </item>
+
+    <item
+        app:showAsAction="always"
+        android:enabled="true"
+        android:id="@+id/factory"
+        android:icon="@drawable/ic_factory"
+        android:title="Factories">
+    </item>
+
+    <item
+        app:showAsAction="always"
+        android:enabled="true"
+        android:id="@+id/productFragment"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Products">
+    </item>
+
+    <item
+        android:enabled="true"
+        app:showAsAction="always"
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings">
+    </item>
 </menu>

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProductRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
+import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 class UncountableViewModel @Inject constructor(private val repo: ProductRepository) : ViewModel() {
 
-    private val listPagination = MutableLiveData<List<ProductResponse>?>()
-    val liveDataListPagination: MutableLiveData<List<ProductResponse>?> = listPagination
+    private val listPagination = MutableLiveData<List<ProductPaginationResponse>?>()
+    val liveDataListPagination: MutableLiveData<List<ProductPaginationResponse>?> = listPagination
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()

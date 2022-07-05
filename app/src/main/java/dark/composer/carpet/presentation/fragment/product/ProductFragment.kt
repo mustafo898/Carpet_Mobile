@@ -13,10 +13,6 @@ import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
 
 class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
-    private val pagerAdapter by lazy {
-        PagerAdapter(this)
-    }
-
     @Inject
     lateinit var shared: SharedPref
 
@@ -30,6 +26,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
             providerFactory
         )[ProductViewModel::class.java]
 
+        val pagerAdapter = PagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
         TabLayoutMediator(binding.tabLayout,binding.viewPager){tab,pos ->
             when(pos){
@@ -39,7 +36,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         }.attach()
 
         binding.addProduct.setOnClickListener {
-            viewModel.createProduct(ProductCreateRequest(2,"Yellow","Modern", 4, 6,"Gilam", "pon", 30.0,"COUNTABLE",6))
+            viewModel.createProduct(ProductCreateRequest(2,"Yellow","Modern", 4, 6,"Hello", "pon", 30.0,"COUNTABLE",6))
         }
 
         binding.back.setOnClickListener {

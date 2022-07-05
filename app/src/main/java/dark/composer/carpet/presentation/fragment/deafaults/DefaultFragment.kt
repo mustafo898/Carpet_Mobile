@@ -64,8 +64,6 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             navController.navigate(R.id.action_defaultFragment_to_profileFragment)
         }
 
-
-
         binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
         }

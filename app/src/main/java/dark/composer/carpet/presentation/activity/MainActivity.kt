@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import dagger.android.support.DaggerAppCompatActivity
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.ActivityMainBinding
@@ -24,6 +26,8 @@ class MainActivity : DaggerAppCompatActivity() {
         controller = findNavController(R.id.main_nav_fragment)
 //        appBarConfiguration = AppBarConfiguration(controller.graph)
 //        setupActionBarWithNavController(controller, appBarConfiguration)
+
+        binding.bottomNavigation.setupWithNavController(controller)
         checkPermission()
     }
 

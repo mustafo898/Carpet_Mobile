@@ -124,8 +124,7 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
                     }
                 }
                 val file = File(imagePath)
-                val requestBody =
-                    RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+                val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
                 viewModel.uploadFile(body,key)
             }

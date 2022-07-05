@@ -8,22 +8,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
+import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.databinding.ItemProductBinding
 
 class ProductAdapter(private var context: Context) : RecyclerView.Adapter<ProductAdapter.SaleViewHolder>() {
-    private val listFactory = mutableListOf<ProductResponse>()
+    private val listFactory = mutableListOf<ProductPaginationResponse>()
 
     inner class SaleViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(list: ProductResponse) {
+        fun bind(list: ProductPaginationResponse) {
             binding.name.text = list.name
-            if (list.urlImageList != null) {
-                Glide.with(context).load(list.urlImageList[0]).into(binding.image)
-            } else {
+            if (list.imageUrlList.isNotEmpty()){
+                Glide.with(context).load(list.imageUrlList[0]).into(binding.image)
+                Log.d("RRRRR", "bind: ${list.imageUrlList[0]}")
+            }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
-            binding.date.text = list.createDate
-            binding.rate.text = list.type
+            binding.date.text = list.createdDate
+            binding.rate.text = list.factoryName
 
             Log.d("DDDDD", "bind: ${binding.time}")
 
@@ -39,7 +41,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
         clickListener = f
     }
 
-    fun setProductListProduct(list: List<ProductResponse>) {
+    fun setProductListProduct(list: List<ProductPaginationResponse>) {
         this.listFactory.addAll(list)
         notifyDataSetChanged()
     }
