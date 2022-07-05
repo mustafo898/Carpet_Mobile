@@ -24,8 +24,6 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         controller = findNavController(R.id.main_nav_fragment)
-//        appBarConfiguration = AppBarConfiguration(controller.graph)
-//        setupActionBarWithNavController(controller, appBarConfiguration)
 
         binding.bottomNavigation.setupWithNavController(controller)
         checkPermission()
@@ -64,8 +62,4 @@ class MainActivity : DaggerAppCompatActivity() {
             ActivityCompat.requestPermissions(this@MainActivity,permission,1)
         }
     }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//    }
 }

@@ -23,6 +23,7 @@ import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,7 +32,7 @@ import java.io.File
 class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(FragmentProductDetailsBinding::inflate) {
     lateinit var viewModel: ProductDetailsViewModel
     private val REQUEST_CODE = 100
-
+    var attachId = ""
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
@@ -54,7 +55,8 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(Fragm
                 binding.factoryName.text = t.factory.name
                 binding.createDate.text = "${t.factory.createdDate.substring(11,16)}  ${t.factory.createdDate.substring(0,10)}"
                 binding.pon.text = t.pon
-                binding.visible.text = t.uuid
+                attachId = t.attachId
+                binding.visible.text = t.attachId
                 binding.size.text = "${t.weight} x ${t.height}"
             }
         }
@@ -97,7 +99,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(Fragm
                 val file = File(imagePath)
                 val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
-//                viewModel.uploadFile(body,)
+                viewModel.uploadFile(body,attachId)
             }
         }
     }
