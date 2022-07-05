@@ -100,6 +100,15 @@ class ProductDetailsFragment :
                 startActivityForResult(it, REQUEST_CODE)
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.successChangeFlow.catch {
+                    Log.d("EEEEEE", "onActivityResult: $this")
+                }.collect {
+                    Glide.with(requireContext()).load(it.urlImageList[it.urlImageList.size-1]).into(binding.image)
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,15 +120,7 @@ class ProductDetailsFragment :
                     uploadFile(it)
                 }.toString()
                 Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.lifecycle.whenStarted {
-                        viewModel.successChangeFlow.catch {
-                            Log.d("EEEEEE", "onActivityResult: $this")
-                        }.collect {
-                            Glide.with(requireContext()).load(it.urlImageList[0]).into(binding.image)
-                        }
-                    }
-                }
+
                 val file = File(imagePath)
                 val requestBody =
                     RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)

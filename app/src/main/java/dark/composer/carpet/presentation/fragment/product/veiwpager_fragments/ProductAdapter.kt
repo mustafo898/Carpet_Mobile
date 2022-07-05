@@ -19,8 +19,8 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
         fun bind(list: ProductPaginationResponse) {
             binding.name.text = list.name
             if (list.imageUrlList.isNotEmpty()){
-                Glide.with(context).load(list.imageUrlList[0]).into(binding.image)
-                Log.d("RRRRR", "bind: ${list.imageUrlList[0]}")
+                Glide.with(context).load(list.imageUrlList[list.imageUrlList.size-1]).into(binding.image)
+                Log.d("RRRRR", "bind: ${list.imageUrlList[list.imageUrlList.size-1]}")
             }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
@@ -42,6 +42,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
     }
 
     fun setProductListProduct(list: List<ProductPaginationResponse>) {
+        this.listFactory.clear()
         this.listFactory.addAll(list)
         notifyDataSetChanged()
     }
