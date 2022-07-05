@@ -19,21 +19,23 @@
         <action
             android:id="@+id/action_splashFragment_to_customerFragment"
             app:destination="@id/customerFragment"
-            app:popUpTo="@id/customerFragment"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_adminFragment2"
             app:destination="@id/adminFragment"
-            app:popUpTo="@id/adminFragment"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_employeeFragment"
             app:destination="@id/employeeFragment"
-            app:popUpTo="@id/employeeFragment"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -47,16 +49,24 @@
 
         <action
             android:id="@+id/action_logInFragment_to_employeeFragment"
-            app:destination="@id/employeeFragment" />
+            app:destination="@id/employeeFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_logInFragment_to_customerFragment"
-            app:destination="@id/customerFragment" />
+            app:destination="@id/customerFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_logInFragment_to_adminFragment2"
-            app:destination="@id/adminFragment" />
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_logInFragment_to_defaultFragment"
-            app:destination="@id/defaultFragment" />
+            app:destination="@id/defaultFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -67,13 +77,19 @@
 
         <action
             android:id="@+id/action_sigUpFragment_to_customerFragment"
-            app:destination="@id/customerFragment" />
+            app:destination="@id/customerFragment"
+            app:popUpTo="@id/sigUpFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sigUpFragment_to_adminFragment2"
-            app:destination="@id/adminFragment" />
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/sigUpFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sigUpFragment_to_employeeFragment"
-            app:destination="@id/employeeFragment" />
+            app:destination="@id/employeeFragment"
+            app:popUpTo="@id/sigUpFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sigUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
