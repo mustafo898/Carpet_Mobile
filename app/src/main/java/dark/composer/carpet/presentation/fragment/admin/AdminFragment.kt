@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
+import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.databinding.FragmentAdminBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -19,6 +20,14 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
     private val factoryAdapter by lazy {
         FactoryAdapter(requireContext())
     }
+//    private fun getData(){
+//        val list = ArrayList<FactoryResponse>()
+//        for (i in 0 until 14){
+//            list.add(FactoryResponse("12",i,"key_$i","Name",null,"Active",true))
+//        }
+//        factoryAdapter.setListFactory(list)
+//        binding.listSale.hideShimmerAdapter()
+//    }
 
     @Inject
     lateinit var shared: SharedPref
@@ -30,9 +39,14 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             providerFactory
         )[AdminViewModel::class.java]
 
-        binding.listSale.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.listSale.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.listSale.adapter = factoryAdapter
+        binding.listSale.showShimmerAdapter()
+
+//        viewModel.liveDataListPagination.observe(requireActivity()){
+//            binding.listSale.hideShimmerAdapter()
+//            factoryAdapter.setListFactory(it!!.content)
+//        }
 
         Glide.with(requireContext()).load(shared.getImage()).into(binding.image)
         binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
@@ -54,6 +68,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { t ->
+                binding.listSale.hideShimmerAdapter()
                 factoryAdapter.setListFactory(t.content)
             }
         }

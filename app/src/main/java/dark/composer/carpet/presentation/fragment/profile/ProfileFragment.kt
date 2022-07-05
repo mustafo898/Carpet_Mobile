@@ -1,8 +1,10 @@
 package dark.composer.carpet.presentation.fragment.profile
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore
@@ -11,6 +13,8 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
@@ -21,7 +25,6 @@ import dark.composer.carpet.databinding.FragmentProfileBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -44,10 +47,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
 
         binding.changeImage.setOnClickListener {
-            Intent(Intent.ACTION_PICK).also {
-                it.type = "image/*"
-                startActivityForResult(it, REQUEST_CODE)
-            }
+            checkPermission()
         }
         Glide.with(requireContext()).load(sharedPref.getImage()).into(binding.image)
 
@@ -109,6 +109,44 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        val permission = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        if (ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[0]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[1]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[2]
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d("SSSSS", "checkPermission: Otdi")
+            Intent(Intent.ACTION_PICK).also {
+                it.type = "image/*"
+                startActivityForResult(it, REQUEST_CODE)
+            }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), permission, 1)
+        }
+    }
+
     fun customDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_update_factory)
@@ -122,7 +160,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         dialog.setCancelable(false)
         cancel.setOnClickListener {
             Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
-    //            dialog.cancel()
+            //            dialog.cancel()
             dialog.dismiss()
         }
 

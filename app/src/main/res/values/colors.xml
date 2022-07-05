@@ -17,6 +17,6 @@
     <color name="transparent">#00000000</color>
     <color name="textcolor">#131314</color>
 
-    <color name="demo_dark_transparent">#66909090</color>
+    <color name="demo_dark_transparent">#66706E6E</color>
     <color name="demo_bg">#33909090</color>
 </resources>

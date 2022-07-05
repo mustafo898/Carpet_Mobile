@@ -42,7 +42,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
     }
 
     fun setProductListProduct(list: List<ProductPaginationResponse>) {
-        this.listFactory.clear()
+//        this.listFactory.clear()
         this.listFactory.addAll(list)
         notifyDataSetChanged()
     }

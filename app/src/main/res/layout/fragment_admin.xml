@@ -57,11 +57,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/taken" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                     android:id="@+id/listSale"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
+                    app:shimmer_demo_layout="@layout/item_factory_demo_liner"
+                    app:shimmer_demo_layout_manager_type="linear_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/factory_txt" />

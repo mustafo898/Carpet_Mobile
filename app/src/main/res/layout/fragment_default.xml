@@ -54,6 +54,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/category" />
 
+                <LinearLayout
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/listSale">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/logIn"
+                        android:layout_width="110dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/shape_login"
+                        android:text="Log In" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/category"
                     android:layout_width="wrap_content"
@@ -72,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="32dp"
                     android:background="@drawable/search_back"
                     android:drawablePadding="10dp"
@@ -84,49 +101,8 @@
                     android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/phoneNumber"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:drawableStart="@drawable/ic_search" />
-
-                <TextView
-                    android:id="@+id/phoneNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="+998909991122"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/userName"
-                    app:layout_constraintTop_toBottomOf="@+id/userName"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="32dp"
-                    android:src="@drawable/ic_person"
-                    app:civ_border_color="@color/purple_200"
-                    app:civ_border_width="2dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/userName"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="15dp"
-                    android:singleLine="true"
-                    android:text="John Doe"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:textStyle="bold|normal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -175,6 +151,7 @@
                         app:layout_constraintVertical_bias="0.0"
                         app:srcCompat="@drawable/carpet" />
 
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -203,6 +180,8 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,42 +24,45 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         controller = findNavController(R.id.main_nav_fragment)
+//        appBarConfiguration = AppBarConfiguration(controller.graph)
+//        setupActionBarWithNavController(controller, appBarConfiguration)
 
         binding.bottomNavigation.setupWithNavController(controller)
-        checkPermission()
+//        checkPermission()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        checkPermission()
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        checkPermission()
+//    }
+//
+//    private fun checkPermission() {
+//        val permission = arrayOf(
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        )
+//
+//        if (ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                permission[0]
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                permission[1]
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                permission[2]
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ){
+//            Log.d("SSSSS", "checkPermission: Otdi")
+//        } else{
+//            ActivityCompat.requestPermissions(this@MainActivity,permission,1)
+//        }
+//    }
 
-    private fun checkPermission() {
-        val permission = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                permission[0]
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                permission[1]
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                permission[2]
-            ) == PackageManager.PERMISSION_GRANTED
-        ){
-            Log.d("SSSSS", "checkPermission: Otdi")
-        } else{
-            ActivityCompat.requestPermissions(this@MainActivity,permission,1)
-        }
-    }
 }

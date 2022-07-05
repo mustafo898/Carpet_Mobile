@@ -1,7 +1,9 @@
 package dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -12,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
@@ -95,10 +99,43 @@ class ProductDetailsFragment :
         }
 
         binding.changeImage.setOnClickListener {
+            checkPermission()
+        }
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        val permission = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[0]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[1]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[2]
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d("SSSSS", "checkPermission: Otdi")
             Intent(Intent.ACTION_PICK).also {
                 it.type = "image/*"
                 startActivityForResult(it, REQUEST_CODE)
             }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), permission, 1)
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {

@@ -1,13 +1,17 @@
 package dark.composer.carpet.presentation.fragment.factory_detail
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
@@ -18,7 +22,6 @@ import dark.composer.carpet.databinding.FragmentFactoryDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -26,7 +29,8 @@ import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
-class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
+class FactoryDetailsFragment :
+    BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
     private lateinit var viewModel: FactoryDetailsViewModel
     private val REQUEST_CODE = 100
 
@@ -47,15 +51,15 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 
         Toast.makeText(requireContext(), id.toString(), Toast.LENGTH_SHORT).show()
         var visible = false
-        viewModel.liveDataInfoFactory.observe(requireActivity()){
-            if (it != null){
-                binding.date.text = it.createdDate.substring(0,10)
-                binding.time.text = it.createdDate.substring(11,16)
+        viewModel.liveDataInfoFactory.observe(requireActivity()) {
+            if (it != null) {
+                binding.date.text = it.createdDate.substring(0, 10)
+                binding.time.text = it.createdDate.substring(11, 16)
                 binding.status.text = it.name
                 key = it.key
                 visible = it.visible
                 Glide.with(requireContext()).load(it.photoUrl).into(binding.image)
-            }else{
+            } else {
                 binding.date.text = "..."
                 binding.status.text = "..."
                 binding.time.text = "..."
@@ -67,10 +71,10 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 
             dialog.setTitle("Update Factory")
             dialog.setMessage("Name")
-            dialog.setPositiveButton("Ok") { dialog, d ->
-                viewModel.updateInfoFactory(FactoryUpdateRequest(id,"Name","ACTIVE",true),id)
+            dialog.setPositiveButton("Ok") { _, _ ->
+                viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", true), id)
             }
-            dialog.setNegativeButton("No",){ dialog,d->
+            dialog.setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
                 dialog.dismiss()
             }
@@ -78,25 +82,22 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
         }
 
         binding.changeImage.setOnClickListener {
-            Intent(Intent.ACTION_PICK).also {
-                it.type = "image/*"
-                startActivityForResult(it, REQUEST_CODE)
-            }
+            checkPermission()
         }
 
         binding.delete.setOnClickListener {
             val dialog = AlertDialog.Builder(requireContext())
 
             dialog.setTitle("Update Factory")
-            if (visible){
+            if (visible) {
                 dialog.setMessage("${!visible}")
-            }else{
+            } else {
                 dialog.setMessage("$visible")
             }
             dialog.setPositiveButton("Ok") { dialog, d ->
-                viewModel.updateInfoFactory(FactoryUpdateRequest(id,"Name","ACTIVE",false),id)
+                viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", false), id)
             }
-            dialog.setNegativeButton("No",){ dialog,d->
+            dialog.setNegativeButton("No") { dialog, d ->
                 dialog.cancel()
                 dialog.dismiss()
             }
@@ -104,6 +105,43 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
         }
 
         viewModel.getInfoFactory(id)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        val permission = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[0]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[1]
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity!!.applicationContext,
+                permission[2]
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d("SSSSS", "checkPermission: Otdi")
+            Intent(Intent.ACTION_PICK).also {
+                it.type = "image/*"
+                startActivityForResult(it, REQUEST_CODE)
+            }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), permission, 1)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -124,9 +162,10 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
                     }
                 }
                 val file = File(imagePath)
-                val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+                val requestBody =
+                    RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                viewModel.uploadFile(body,key)
+                viewModel.uploadFile(body, key)
             }
         }
     }
