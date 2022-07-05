@@ -12,6 +12,6 @@ data class ProductResponse(
     val type: String,
     val urlImageList: List<String>? = null,
     val uuid: String,
-    val attachId:String,
+    val attachUUID:String,
     val weight: Double
 )

@@ -29,7 +29,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(FragmentProductDetailsBinding::inflate) {
+class ProductDetailsFragment :
+    BaseFragment<FragmentProductDetailsBinding>(FragmentProductDetailsBinding::inflate) {
     lateinit var viewModel: ProductDetailsViewModel
     private val REQUEST_CODE = 100
     var attachId = ""
@@ -39,36 +40,58 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(Fragm
             providerFactory
         )[ProductDetailsViewModel::class.java]
 
-        var id  = ""
+        var id = ""
         var type = ""
         val bundle: Bundle? = this.arguments
         bundle?.let {
-            id = it.getString("ID","")
-            type = it.getString("TYPE","")
+            id = it.getString("ID", "")
+            type = it.getString("TYPE", "")
         }
 
-        viewModel.productLiveData.observe(requireActivity()){
-            it?.let {t->
-                binding.date.text = "${t.createDate.substring(11,16)}  ${t.createDate.substring(0,10)}"
+        viewModel.productLiveData.observe(requireActivity()) {
+            it?.let { t ->
+                binding.date.text =
+                    "${t.createDate.substring(11, 16)}  ${t.createDate.substring(0, 10)}"
                 binding.design.text = t.design
                 binding.name.text = t.name
                 binding.factoryName.text = t.factory.name
-                binding.createDate.text = "${t.factory.createdDate.substring(11,16)}  ${t.factory.createdDate.substring(0,10)}"
+                binding.createDate.text = "${
+                    t.factory.createdDate.substring(
+                        11,
+                        16
+                    )
+                }  ${t.factory.createdDate.substring(0, 10)}"
                 binding.pon.text = t.pon
-                attachId = t.attachId
-                binding.visible.text = t.attachId
+                attachId = t.attachUUID
+                Log.d("QQQQQQ", "onViewCreate: $attachId")
+                binding.visible.text = t.attachUUID
                 binding.size.text = "${t.weight} x ${t.height}"
             }
         }
 
-        viewModel.productDetails(id,type)
+        viewModel.productDetails(id, type)
 
         binding.update.setOnClickListener {
-            viewModel.updateProduct(id,type, ProductCreateRequest(1,"White","Mex",5,9,"Vinicius", "152",5.6,"COUNTABLE",6))
+            viewModel.updateProduct(
+                id,
+                type,
+                ProductCreateRequest(
+                    1,
+                    "White",
+                    "Mex",
+                    5,
+                    9,
+                    "Vinicius",
+                    "152",
+                    5.6,
+                    "COUNTABLE",
+                    6
+                )
+            )
         }
 
         binding.delete.setOnClickListener {
-            viewModel.deleteProduct(id,type)
+            viewModel.deleteProduct(id, type)
         }
 
         binding.changeImage.setOnClickListener {
@@ -82,10 +105,11 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(Fragm
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-
             if (requestCode == REQUEST_CODE) {
                 val uri = data?.data
-                imagePath = uri?.let { uploadFile(it) }.toString()
+                imagePath = uri?.let {
+                    uploadFile(it)
+                }.toString()
                 Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewLifecycleOwner.lifecycle.whenStarted {
@@ -97,9 +121,10 @@ class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding>(Fragm
                     }
                 }
                 val file = File(imagePath)
-                val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+                val requestBody =
+                    RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                viewModel.uploadFile(body,attachId)
+                viewModel.uploadFile(body, attachId)
             }
         }
     }
