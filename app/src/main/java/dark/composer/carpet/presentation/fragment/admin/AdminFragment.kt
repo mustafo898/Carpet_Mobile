@@ -1,16 +1,12 @@
 package dark.composer.carpet.presentation.fragment.admin
 
-import android.opengl.Visibility
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.databinding.FragmentAdminBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -39,7 +35,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             providerFactory
         )[AdminViewModel::class.java]
 
-        binding.listSale.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.listSale.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.listSale.adapter = factoryAdapter
         binding.listSale.showShimmerAdapter()
 
@@ -47,6 +44,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 //            binding.listSale.hideShimmerAdapter()
 //            factoryAdapter.setListFactory(it!!.content)
 //        }
+
 
         Glide.with(requireContext()).load(shared.getImage()).into(binding.image)
         binding.userName.text = "${shared.getName()} ${shared.getSurName()}"
