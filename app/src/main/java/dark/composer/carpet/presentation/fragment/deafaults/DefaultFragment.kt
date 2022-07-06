@@ -36,6 +36,7 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             providerFactory
         )[DefaultViewModel::class.java]
 
+
         binding.listSale.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL, false
