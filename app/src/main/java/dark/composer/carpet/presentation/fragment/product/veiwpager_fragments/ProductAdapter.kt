@@ -35,6 +35,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
         }
     }
 
+
     private var clickListener: ((position: String) -> Unit)? = null
 
     fun setClickListener(f: (position: String) -> Unit) {
