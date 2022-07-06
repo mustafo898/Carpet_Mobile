@@ -5,6 +5,7 @@ import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
+import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.signup.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -12,6 +13,7 @@ import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResp
 import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import dark.composer.carpet.utils.Constants
 import okhttp3.MultipartBody
@@ -25,9 +27,15 @@ interface ApiService {
     @POST(Constants.LOGIN)
     suspend fun logIn(@Body logInRequest: LogInRequest): Response<LogInResponse>
 
+    @GET("profile/profile")
+    suspend fun getProfile(): Response<ProfileResponse>
+
+    @GET("profile/update")
+    suspend fun updateProfile(@Body body:ProfileRequest): Response<ProfileResponse>
+
     @Multipart
     @POST("attach/upload/profile")
-    suspend fun profileFileUpload(@Part file: MultipartBody.Part): Response<ProfileResponse>
+    suspend fun profileFileUpload(@Part file: MultipartBody.Part): Response<ProfileFileResponse>
 
     /* product CRUD */
     @POST("product/emp")
@@ -83,5 +91,5 @@ interface ApiService {
     suspend fun factoryFileUpload(
         @Part file: MultipartBody.Part,
         @Path("key") page: String
-    ): Response<ProfileResponse>
+    ): Response<ProfileFileResponse>
 }

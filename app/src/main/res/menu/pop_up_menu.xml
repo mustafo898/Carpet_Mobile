@@ -7,12 +7,22 @@
         android:title="Edit Name" />
 
     <item
-        android:id="@+id/changePassword"
-        android:icon="@drawable/ic_security"
-        android:title="Change Password" />
-
-    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_exit"
         android:title="Log Out" />
+
+    <item
+        android:id="@+id/delete_menu"
+        android:icon="@drawable/ic_trash"
+        android:title="Delete" />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_exit"
+        android:title="Share" />
+
+    <item
+        android:id="@+id/changeImage_menu"
+        android:icon="@drawable/ic_sales"
+        android:title="Change Image" />
 </menu>

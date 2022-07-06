@@ -8,7 +8,8 @@ import dark.composer.carpet.data.repositories.FactoryDetailsRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
     private val infoFactory = MutableLiveData<FactoryResponse?>()
     val liveDataInfoFactory: MutableLiveData<FactoryResponse?> = infoFactory
 
-    private val successChannel = Channel<ProfileResponse>()
+    private val successChannel = Channel<ProfileFileResponse>()
     val successFlow = successChannel.receiveAsFlow()
 
     private val _loadingChannel = Channel<Boolean?>()
@@ -28,6 +29,9 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
 
+    private val listPagination = MutableLiveData<PaginationResponse?>()
+    val liveDataListPagination:MutableLiveData<PaginationResponse?> = listPagination
+
     fun getInfoFactory(id:Int){
         viewModelScope.launch {
             factoryDetailsRepository.getInfoFactory(id).observeForever{
@@ -35,6 +39,32 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
                     is BaseNetworkResult.Success->{
                         infoFactory.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data}")
+                    }
+                    is BaseNetworkResult.Error->{
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading->{
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun getPagination(page:Int,size: Int){
+        viewModelScope.launch {
+            factoryDetailsRepository.getPagination(page,size).observeForever{
+                when(it){
+                    is BaseNetworkResult.Success->{
+                        listPagination.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data?.content?.get(0)?.createdDate}")
                     }
                     is BaseNetworkResult.Error->{
                         viewModelScope.launch {

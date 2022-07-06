@@ -28,7 +28,9 @@ class DefaultViewModel @Inject constructor(private val defaultRepository: Defaul
                 when(it){
                     is BaseNetworkResult.Success->{
                         listPagination.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.content?.get(0)?.createdDate}")
+                        if (it.data != null){
+//                            Log.d("EEEEE", "getPagination: ${it.data.content[0].createdDate}")
+                        }
                     }
                     is BaseNetworkResult.Error->{
                         viewModelScope.launch {

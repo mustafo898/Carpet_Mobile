@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="20dp"
     android:orientation="vertical"
     tools:context=".presentation.fragment.factory_detail.FactoryDetailsFragment">
 
@@ -17,21 +16,57 @@
            android:layout_height="wrap_content"
            android:orientation="vertical">
 
-           <androidx.appcompat.widget.LinearLayoutCompat
+           <androidx.constraintlayout.widget.ConstraintLayout
                android:layout_width="match_parent"
                android:gravity="center"
-               android:background="@drawable/orange_back"
-               android:layout_height="150dp">
+               android:layout_height="wrap_content">
 
                <ImageView
-                   android:id="@+id/image"
+                   android:id="@+id/back"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:layout_marginStart="16dp"
+                   android:src="@drawable/ic_back"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="@+id/favourite"
+                   app:tint="#676767" />
+
+               <com.denzcoskun.imageslider.ImageSlider
+                   android:id="@+id/imageSlide"
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"/>
-           </androidx.appcompat.widget.LinearLayoutCompat>
+                   android:layout_height="200dp"
+                   app:iss_delay="0"
+                   app:iss_period="3500"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <ImageView
+                   android:id="@+id/more"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:layout_marginTop="24dp"
+                   android:layout_marginEnd="16dp"
+                   android:src="@drawable/ic_more"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <ImageView
+                   android:id="@+id/favourite"
+                   android:layout_width="30dp"
+                   android:layout_height="31dp"
+                   android:layout_marginEnd="8dp"
+                   android:src="@drawable/ic_favorite_border"
+                   app:layout_constraintEnd_toStartOf="@+id/more"
+                   app:layout_constraintTop_toTopOf="@+id/more" />
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
 
            <androidx.appcompat.widget.LinearLayoutCompat
                android:layout_width="match_parent"
                android:layout_marginTop="20dp"
+               android:padding="20dp"
                android:layout_height="wrap_content"
                android:orientation="vertical">
 
@@ -107,62 +142,19 @@
                    android:textColor="@color/black"/>
            </androidx.appcompat.widget.LinearLayoutCompat>
 
-           <androidx.appcompat.widget.LinearLayoutCompat
+           <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:orientation="vertical"
-               android:layout_marginTop="50dp">
+               android:text="Others"
+               android:textColor="@color/black"
+               android:textSize="20sp"
+               android:layout_marginStart="30dp"/>
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/update"
-                   android:textSize="22sp"
-                   android:text="Update"
-                   android:textColor="@color/black"/>
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/delete"
-                   android:textSize="22sp"
-                   android:text="Delete"
-                   android:textColor="@color/black"/>
-
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:padding="20dp">
-
-                   <de.hdodenhof.circleimageview.CircleImageView
-                       android:id="@+id/imageChange"
-                       android:layout_width="150dp"
-                       android:layout_height="150dp"
-                       android:layout_gravity="bottom"
-                       android:src="@drawable/pseven_user"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintTop_toTopOf="parent" />
-
-                   <LinearLayout
-                       android:layout_width="50dp"
-                       android:layout_height="50dp"
-                       android:layout_gravity="bottom|end"
-                       android:background="@drawable/bgcircle"
-                       android:gravity="center|center_vertical"
-                       app:layout_constraintBottom_toBottomOf="@+id/imageChange"
-                       app:layout_constraintEnd_toEndOf="@+id/imageChange">
-
-                       <ImageView
-                           android:id="@+id/changeImage"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:src="@drawable/ic_sales" />
-
-                   </LinearLayout>
-
-               </androidx.constraintlayout.widget.ConstraintLayout>
-
-           </androidx.appcompat.widget.LinearLayoutCompat>
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/list_product"/>
        </androidx.appcompat.widget.LinearLayoutCompat>
    </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -10,6 +10,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
@@ -21,7 +22,9 @@ import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
+import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
+import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.catch
@@ -42,31 +45,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onViewCreate() {
         viewModel = ViewModelProvider(this, providerFactory)[ProfileViewModel::class.java]
 
-        binding.backBtn.setOnClickListener {
-            navController.navigate(R.id.action_profileFragment_to_settingsFragment)
-        }
+        observe()
+
+//        binding.backBtn.setOnClickListener {
+//            navController.navigate(R.id.action_profileFragment_to_settingsFragment)
+//        }
 
         binding.changeImage.setOnClickListener {
             checkPermission()
         }
-        Glide.with(requireContext()).load(sharedPref.getImage()).into(binding.image)
+        
+        viewModel.getProfile()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.errorFlow.collect {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        binding.userFull.text =
-            "${sharedPref.getName().toString()}  ${sharedPref.getSurName().toString()}"
-
+        
         binding.more.setOnClickListener {
             val popup = PopupMenu(requireContext(), binding.more)
 
             //Inflating the Popup using xml file
             popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
-
+            var d=popup.menu.findItem(R.id.delete_menu)
+            d.isVisible = false
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
                 PopupMenu.OnMenuItemClickListener {
@@ -74,20 +72,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
                     when (item.itemId) {
                         R.id.editName -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "You Clicked : " + item.title,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            customDialog()
-                            return true
-                        }
-                        R.id.changePassword -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "You Clicked : " + item.title,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            val dialog =
+                                UpdateProfileDialog(requireContext(), "Password", name, lastname)
+                            dialog.setOnAddListener { name, lastname, password ->
+                                viewModel.updateProfile(ProfileRequest(password, name, lastname))
+                            }
+                            dialog.show()
                         }
                         R.id.logout -> {
                             Toast.makeText(
@@ -95,6 +85,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                                 "You Clicked : " + item.title,
                                 Toast.LENGTH_SHORT
                             ).show()
+                        }
+                        R.id.share ->{
+
                         }
                         else -> {
                             return false
@@ -107,6 +100,28 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             popup.show() //showing popup menu
 
         }
+    }
+
+    var name = ""
+    var lastname = ""
+    private fun observe() {
+        viewModel.liveDataProfile.observe(requireActivity()) {
+            it?.let { t ->
+                name = t.name
+                lastname = t.surname
+                binding.userFull.text = "${t.name} ${t.surname}"
+                Glide.with(requireContext()).load(t.url).into(binding.image)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.errorFlow.collect {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -147,29 +162,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    fun customDialog() {
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_update_factory)
-
-        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
-
-        dialog.window?.setWindowAnimations(R.style.AnimationForDialog)
-
-        val cancel: ImageButton = dialog.findViewById(R.id.cancelFB)
-        val accept: ImageButton = dialog.findViewById(R.id.acceptFB)
-        dialog.setCancelable(false)
-        cancel.setOnClickListener {
-            Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
-            //            dialog.cancel()
-            dialog.dismiss()
-        }
-
-        accept.setOnClickListener {
-            Toast.makeText(requireContext(), "data is changed", Toast.LENGTH_SHORT).show()
-        }
-
-        dialog.show()
-    }
+//    fun customDialog(type: String) {
+//        val dialog = Dialog(requireContext())
+//        dialog.setContentView(R.layout.dialog_update_profile)
+//
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+//
+//        dialog.window?.setWindowAnimations(R.style.AnimationForDialog)
+//        val name: EditText = dialog.findViewById(R.id.name_dialog)
+//        val cancel: ImageButton = dialog.findViewById(R.id.cancelFB)
+//        val accept: ImageButton = dialog.findViewById(R.id.acceptFB)
+//        dialog.setCancelable(false)
+//        cancel.setOnClickListener {
+//            Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
+//            //            dialog.cancel()
+//            dialog.dismiss()
+//        }
+//
+//        accept.setOnClickListener {
+//            Toast.makeText(requireContext(), "data is changed", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        dialog.show()
+//    }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

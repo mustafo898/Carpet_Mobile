@@ -13,14 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_marginEnd="5dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_back"
-            android:id="@+id/back"/>
-
         <com.google.android.material.tabs.TabLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -33,12 +25,6 @@
             app:tabTextColor="@color/black"
             app:tabRippleColor="#B4B2BF"
             app:tabSelectedTextColor="#B4B2BF"/>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_add"
-            android:id="@+id/add_product"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.viewpager2.widget.ViewPager2

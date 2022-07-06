@@ -81,7 +81,7 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.signUpFlow.collect {
                     if (it) {
-                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
+//                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
                         activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     }

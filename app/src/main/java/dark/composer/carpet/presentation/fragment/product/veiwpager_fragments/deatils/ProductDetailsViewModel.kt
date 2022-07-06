@@ -9,7 +9,6 @@ import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch

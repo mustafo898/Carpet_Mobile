@@ -35,12 +35,12 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
             }
         }.attach()
 
-        binding.addProduct.setOnClickListener {
-            viewModel.createProduct(ProductCreateRequest(2,"Yellow","Modern", 4, 6,"Hello", "pon", 30.0,"COUNTABLE",6))
-        }
-
-        binding.back.setOnClickListener {
-            navController.navigate(R.id.action_productFragment_to_adminFragment)
-        }
+//        binding.addProduct.setOnClickListener {
+//            viewModel.createProduct(ProductCreateRequest(2,"Yellow","Modern", 4, 6,"Hello", "pon", 30.0,"COUNTABLE",6))
+//        }
+//
+//        binding.back.setOnClickListener {
+//            navController.navigate(R.id.action_productFragment_to_adminFragment)
+//        }
     }
 }

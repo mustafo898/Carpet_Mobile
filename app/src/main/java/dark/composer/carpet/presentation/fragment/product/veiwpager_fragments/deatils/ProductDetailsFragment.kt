@@ -11,9 +11,11 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -22,7 +24,9 @@ import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
+import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.databinding.FragmentProductDetailsBinding
+import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableViewModel
 import kotlinx.coroutines.flow.catch
@@ -59,11 +63,7 @@ class ProductDetailsFragment :
                 binding.design.text = t.design
                 binding.name.text = t.name
                 binding.factoryName.text = t.factory.name
-                binding.createDate.text = "${
-                    t.factory.createdDate.substring(
-                        11,
-                        16
-                    )
+                binding.createDate.text = "${t.factory.createdDate.substring(11, 16)
                 }  ${t.factory.createdDate.substring(0, 10)}"
                 binding.pon.text = t.pon
                 attachId = t.attachUUID
@@ -75,33 +75,69 @@ class ProductDetailsFragment :
 
         viewModel.productDetails(id, type)
 
-        binding.update.setOnClickListener {
-            viewModel.updateProduct(
-                id,
-                type,
-                ProductCreateRequest(
-                    1,
-                    "White",
-                    "Mex",
-                    5,
-                    9,
-                    "Vinicius",
-                    "152",
-                    5.6,
-                    "COUNTABLE",
-                    6
-                )
-            )
+        binding.more.setOnClickListener {
+            val popup = PopupMenu(requireContext(), binding.more)
+
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
+            popup.menu.findItem(R.id.editName).title = "Edit Product"
+            popup.menu.findItem(R.id.logout).isVisible = false
+
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
+                PopupMenu.OnMenuItemClickListener {
+                override fun onMenuItemClick(item: MenuItem): Boolean {
+                    when (item.itemId) {
+                        R.id.editName -> {
+                            viewModel.updateProduct(
+                                id,
+                                type,
+                                ProductCreateRequest(
+                                    1,
+                                    "White",
+                                    "Mex",
+                                    5,
+                                    9,
+                                    "Vinicius",
+                                    "152",
+                                    5.6,
+                                    "COUNTABLE",
+                                    6
+                                )
+                            )
+                        }
+                        R.id.delete_menu->{
+                            viewModel.deleteProduct(id, type)
+                        }
+                        R.id.changeImage_menu->{
+                            checkPermission()
+                        }
+                        R.id.share -> {
+
+                        }
+                        else -> {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            })
+
+            popup.show() //showing popup menu
         }
 
-        binding.delete.setOnClickListener {
-            viewModel.deleteProduct(id, type)
-        }
-
-        binding.changeImage.setOnClickListener {
-            checkPermission()
-        }
+//        binding.update.setOnClickListener {
+//
+//        }
+//
+//        binding.delete.setOnClickListener {
+//        }
+//
+//        binding.changeImage.setOnClickListener {
+//            checkPermission()
+//        }
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -116,18 +152,9 @@ class ProductDetailsFragment :
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
-        if (ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                permission[0]
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                permission[1]
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                permission[2]
-            ) == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(activity!!.applicationContext, permission[0]) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(activity!!.applicationContext, permission[1]) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(activity!!.applicationContext, permission[2]) == PackageManager.PERMISSION_GRANTED
         ) {
             Log.d("SSSSS", "checkPermission: Otdi")
             Intent(Intent.ACTION_PICK).also {
@@ -136,15 +163,6 @@ class ProductDetailsFragment :
             }
         } else {
             ActivityCompat.requestPermissions(requireActivity(), permission, 1)
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.successChangeFlow.catch {
-                    Log.d("EEEEEE", "onActivityResult: $this")
-                }.collect {
-                    Glide.with(requireContext()).load(it.urlImageList[it.urlImageList.size-1]).into(binding.image)
-                }
-            }
         }
     }
 

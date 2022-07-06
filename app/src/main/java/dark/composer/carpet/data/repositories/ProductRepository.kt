@@ -9,9 +9,7 @@ import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRe
 import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import okhttp3.MultipartBody
-import okhttp3.internal.readFieldOrNull
 import javax.inject.Inject
 
 class ProductRepository @Inject constructor(private var service: ApiService) {

@@ -9,6 +9,7 @@ import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -17,6 +18,9 @@ import javax.inject.Inject
 class AdminViewModel @Inject constructor(private val adminRepository: AdminRepository) : ViewModel(){
     private val listPagination = MutableLiveData<PaginationResponse?>()
     val liveDataListPagination:MutableLiveData<PaginationResponse?> = listPagination
+
+    private val profile = MutableLiveData<ProfileResponse?>()
+    val liveDataProfile:MutableLiveData<ProfileResponse?> = profile
 
     private val addFactory = MutableLiveData<FactoryResponse?>()
     val liveDataAddFactory:MutableLiveData<FactoryResponse?> = addFactory
@@ -34,6 +38,32 @@ class AdminViewModel @Inject constructor(private val adminRepository: AdminRepos
                     is BaseNetworkResult.Success->{
                         listPagination.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data?.content?.get(0)?.createdDate}")
+                    }
+                    is BaseNetworkResult.Error->{
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading->{
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun getProfile(){
+        viewModelScope.launch {
+            adminRepository.getProfile().observeForever{
+                when(it){
+                    is BaseNetworkResult.Success->{
+                        profile.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
                     }
                     is BaseNetworkResult.Error->{
                         viewModelScope.launch {

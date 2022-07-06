@@ -20,6 +20,9 @@ class PopularAdapter(private var context: Context) :
 //                .into(binding.image)
             binding.image.setImageResource(data.image)
             binding.time.text = data.rate
+            itemView.setOnClickListener {
+                clickListener?.invoke(layoutPosition)
+            }
         }
     }
 
@@ -32,6 +35,12 @@ class PopularAdapter(private var context: Context) :
     fun add(categoryModel: CategoryModel) {
         categoryList.add(categoryModel)
         notifyItemInserted(categoryList.size - 1)
+    }
+
+    private var clickListener: ((position: Int) -> Unit)? = null
+
+    fun setClickListener(f: (position: Int) -> Unit) {
+        clickListener = f
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(

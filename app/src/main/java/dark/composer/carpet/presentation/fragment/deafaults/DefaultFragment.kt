@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.databinding.FragmentDefaultBinding
+import dark.composer.carpet.presentation.dialog.AddDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
@@ -49,6 +50,14 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         viewModel.getPagination(0, 10)
 
         adapterPopular.set(setPopular())
+
+        adapterPopular.setClickListener {
+            val dialog = AddDialog(requireContext())
+            dialog.setStatus(true)
+            dialog.setVisible(false)
+            dialog.setTitle("Add Factory !!!")
+            dialog.show()
+        }
 
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.move_left)
         binding.logIn.startAnimation(anim)

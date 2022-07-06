@@ -9,17 +9,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
+import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.databinding.FragmentFactoryDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.presentation.fragment.admin.FactoryAdapter
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -33,6 +39,10 @@ class FactoryDetailsFragment :
     BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
     private lateinit var viewModel: FactoryDetailsViewModel
     private val REQUEST_CODE = 100
+
+    private val factoryAdapter by lazy {
+        FactoryAdapter(requireContext())
+    }
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -49,60 +59,72 @@ class FactoryDetailsFragment :
             id = it.getInt("ID")
         }
 
-        Toast.makeText(requireContext(), id.toString(), Toast.LENGTH_SHORT).show()
+        binding.list.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.list.adapter = factoryAdapter
+        binding.list.showShimmerAdapter()
+
+        viewModel.liveDataListPagination.observe(requireActivity()) {
+            it?.let { t ->
+                binding.list.hideShimmerAdapter()
+                factoryAdapter.setListFactory(t.content)
+            }
+        }
+
         var visible = false
+
         viewModel.liveDataInfoFactory.observe(requireActivity()) {
             if (it != null) {
-                binding.date.text = it.createdDate.substring(0, 10)
-                binding.time.text = it.createdDate.substring(11, 16)
-                binding.status.text = it.name
+                binding.date.text = "${it.createdDate.substring(0, 10)} ${it.createdDate.substring(11, 16)}"
+                binding.status.text = it.status
+                binding.name.text = it.name
                 key = it.key
                 visible = it.visible
                 Glide.with(requireContext()).load(it.photoUrl).into(binding.image)
             } else {
                 binding.date.text = "..."
                 binding.status.text = "..."
-                binding.time.text = "..."
+                binding.name.text = "..."
             }
         }
 
-        binding.update.setOnClickListener {
-            val dialog = AlertDialog.Builder(requireContext())
+        binding.more.setOnClickListener {
+            val popup = PopupMenu(requireContext(), binding.more)
 
-            dialog.setTitle("Update Factory")
-            dialog.setMessage("Name")
-            dialog.setPositiveButton("Ok") { _, _ ->
-                viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", true), id)
-            }
-            dialog.setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
-                dialog.dismiss()
-            }
-            dialog.show()
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
+            popup.menu.findItem(R.id.editName).title = "Edit Product"
+            popup.menu.findItem(R.id.logout).isVisible = false
+
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
+                PopupMenu.OnMenuItemClickListener {
+                override fun onMenuItemClick(item: MenuItem): Boolean {
+                    when (item.itemId) {
+                        R.id.editName -> {
+                            viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", true), id)
+                        }
+                        R.id.delete_menu->{
+
+                        }
+                        R.id.changeImage_menu->{
+                            checkPermission()
+                        }
+                        R.id.share -> {
+
+                        }
+                        else -> {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            })
+
+            popup.show() //showing popup menu
         }
 
-        binding.changeImage.setOnClickListener {
-            checkPermission()
-        }
-
-        binding.delete.setOnClickListener {
-            val dialog = AlertDialog.Builder(requireContext())
-
-            dialog.setTitle("Update Factory")
-            if (visible) {
-                dialog.setMessage("${!visible}")
-            } else {
-                dialog.setMessage("$visible")
-            }
-            dialog.setPositiveButton("Ok") { dialog, d ->
-                viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", false), id)
-            }
-            dialog.setNegativeButton("No") { dialog, d ->
-                dialog.cancel()
-                dialog.dismiss()
-            }
-            dialog.show()
-        }
+        viewModel.getPagination(0, 10)
 
         viewModel.getInfoFactory(id)
     }
@@ -182,4 +204,41 @@ class FactoryDetailsFragment :
         cursor?.close()
         return result
     }
+
+    //        binding.update.setOnClickListener {
+//            val dialog = AlertDialog.Builder(requireContext())
+//
+//            dialog.setTitle("Update Factory")
+//            dialog.setMessage("Name")
+//            dialog.setPositiveButton("Ok") { _, _ ->
+//            }
+//            dialog.setNegativeButton("No") { dialog, _ ->
+//                dialog.cancel()
+//                dialog.dismiss()
+//            }
+//            dialog.show()
+//        }
+
+//        binding.changeImage.setOnClickListener {
+//            checkPermission()
+//        }
+
+//        binding.delete.setOnClickListener {
+//            val dialog = AlertDialog.Builder(requireContext())
+//
+//            dialog.setTitle("Update Factory")
+//            if (visible) {
+//                dialog.setMessage("${!visible}")
+//            } else {
+//                dialog.setMessage("$visible")
+//            }
+//            dialog.setPositiveButton("Ok") { dialog, d ->
+//                viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", false), id)
+//            }
+//            dialog.setNegativeButton("No") { dialog, d ->
+//                dialog.cancel()
+//                dialog.dismiss()
+//            }
+//            dialog.show()
+//        }
 }

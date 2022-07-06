@@ -4,14 +4,11 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dark.composer.carpet.presentation.fragment.deafaults.DefaultFragment
 import dark.composer.carpet.presentation.fragment.admin.AdminFragment
-import dark.composer.carpet.presentation.fragment.customer.CustomerFragment
-import dark.composer.carpet.presentation.fragment.employee.EmployeeFragment
 import dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsFragment
 import dark.composer.carpet.presentation.fragment.login.LogInFragment
 import dark.composer.carpet.presentation.fragment.product.ProductFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable.CountableFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsFragment
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
 import dark.composer.carpet.presentation.fragment.settings.SettingsFragment
@@ -32,11 +29,6 @@ public abstract class MainFragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun defaultFragment(): DefaultFragment
 
-    @ContributesAndroidInjector
-    abstract fun customerFragment(): CustomerFragment
-
-    @ContributesAndroidInjector
-    abstract fun employeeFragment(): EmployeeFragment
 
     @ContributesAndroidInjector
     abstract fun adminFragment(): AdminFragment

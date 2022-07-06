@@ -14,9 +14,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
 
     override fun onViewCreate() {
 
-        binding.backBtn.setOnClickListener {
-            checkRole()
-        }
+//        binding.backBtn.setOnClickListener {
+//            checkRole()
+//        }
 
         binding.profile.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_profileFragment)
