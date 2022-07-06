@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
+import dark.composer.carpet.presentation.dialog.CustomDialog
 import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -77,7 +78,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             dialog.setOnAddListener { name, lastname, password ->
                                 viewModel.updateProfile(ProfileRequest(password, name, lastname))
                             }
-                            dialog.show()
+                            CustomDialog(requireContext()).show()
                         }
                         R.id.logout -> {
                             Toast.makeText(
