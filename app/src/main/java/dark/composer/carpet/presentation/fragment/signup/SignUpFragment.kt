@@ -1,6 +1,8 @@
 package dark.composer.carpet.presentation.fragment.signup
 
 import android.transition.TransitionInflater
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -31,18 +33,6 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
 
 
         binding.register.setOnClickListener {
-
-//            val inflate: LayoutInflater = layoutInflater
-//            val layout: View =
-//                inflate.inflate(R.layout.custom_toast_red, getView()?.findViewById(R.id.custom_toast_container))
-//
-//            val toast = Toast(requireContext())
-//            toast.setGravity(Gravity.TOP, 0, 0)
-//            toast.duration = Toast.LENGTH_SHORT
-//
-//            toast.view = layout
-//            toast.show()
-
             viewModel.signUp(
                 binding.name.text.toString().trim(),
                 binding.name.text.toString().trim(),
@@ -75,6 +65,21 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
         sharedElementReturnTransition = animation
     }
 
+    private fun successToast(text:String){
+        val inflate: LayoutInflater = layoutInflater
+        val layout: View =
+            inflate.inflate(
+                R.layout.custom_toast_green,
+                view?.findViewById(R.id.custom_toast_container)
+            )
+
+        val toast = Toast(requireContext())
+        toast.setGravity(Gravity.TOP, 0, 0)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.setText(text)
+        toast.view = layout
+        toast.show()
+    }
 
     private fun collect() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -83,7 +88,9 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
                     if (it) {
 //                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
                         activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+                        successToast("Now you are user, Thanks!")
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+
                     }
                 }
             }

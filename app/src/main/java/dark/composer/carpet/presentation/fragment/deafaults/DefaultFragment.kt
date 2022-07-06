@@ -1,6 +1,11 @@
 package dark.composer.carpet.presentation.fragment.deafaults
 
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
@@ -64,13 +69,50 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
 
         binding.order.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
+//            successToast()
         }
 
         binding.logIn.setOnClickListener {
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
+//            successToast()
 
+            val inflater: LayoutInflater = layoutInflater
+            val layout: View =
+                inflater.inflate(
+                    R.layout.custom_toast_yellow,
+                    view?.findViewById(R.id.custom_toast_containerY)
+                )
+            var text: TextView? = view!!.findViewById(R.id.toastYellow)
+            val message="Please register first!"
+            text?.text = message
+            var f = text?.text.toString()
+
+            val toast = Toast(requireContext())
+            toast.setGravity(Gravity.TOP, 0, 0)
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = layout
+            toast.show()
         }
 
+    }
+
+    private fun successToast() {
+        val inflater: LayoutInflater = layoutInflater
+        val layout: View =
+            inflater.inflate(
+                R.layout.custom_toast_yellow,
+                view?.findViewById(R.id.custom_toast_containerY)
+            )
+        val text: TextView? = view!!.findViewById(R.id.toastYellow)
+        val message="Please register first!"
+        text?.text = message
+        var f = text?.text.toString()
+
+        val toast = Toast(requireContext())
+        toast.setGravity(Gravity.TOP, 0, 0)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
     }
 
     private fun setPopular(): List<CategoryModel> {
