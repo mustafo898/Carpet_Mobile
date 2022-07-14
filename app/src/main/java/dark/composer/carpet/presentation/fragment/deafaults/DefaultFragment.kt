@@ -12,6 +12,7 @@ import dark.composer.carpet.R
 import dark.composer.carpet.data.dto.CategoryModel
 import dark.composer.carpet.databinding.FragmentDefaultBinding
 import dark.composer.carpet.presentation.dialog.AddDialog
+import dark.composer.carpet.presentation.dialog.CustomDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Inject
