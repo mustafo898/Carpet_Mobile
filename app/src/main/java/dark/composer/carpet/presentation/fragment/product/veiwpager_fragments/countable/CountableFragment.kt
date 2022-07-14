@@ -1,9 +1,11 @@
 package dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable
 
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentCountableBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -39,6 +41,7 @@ class CountableFragment :
         }
 
         productAdapter.setClickListener {
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.GONE
             navController.navigate(
                 R.id.action_productFragment_to_productDetailsFragment,
                 bundleOf("ID" to it, "TYPE" to "COUNTABLE")
