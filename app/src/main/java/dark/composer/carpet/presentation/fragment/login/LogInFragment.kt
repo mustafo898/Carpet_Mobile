@@ -82,21 +82,21 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         }
     }
 
-    private fun successToast(text:String){
-        val inflate: LayoutInflater = layoutInflater
-        val layout: View =
-            inflate.inflate(
-                R.layout.custom_toast_green,
-                view?.findViewById(R.id.custom_toast_container)
-            )
-
-        val toast = Toast(requireContext())
-        toast.setGravity(Gravity.TOP, 0, 0)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.setText(text)
-        toast.view = layout
-        toast.show()
-    }
+//    private fun successToast(text:String){
+//        val inflate: LayoutInflater = layoutInflater
+//        val layout: View =
+//            inflate.inflate(
+//                R.layout.custom_toast_green,
+//                view?.findViewById(R.id.custom_toast_container)
+//            )
+//
+////        val toast = Toast(requireContext())
+////        toast.setGravity(Gravity.TOP, 0, 0)
+////        toast.duration = Toast.LENGTH_SHORT
+////        toast.setText(text)
+////        toast.view = layout
+////        toast.show()
+//    }
     private fun collect() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
@@ -105,7 +105,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         if (shared.getRole() == "ADMIN") {
                             activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
                             navController.navigate(R.id.action_logInFragment_to_adminFragment2)
-                            successToast("Welcome")
+//                            successToast("Welcome")
                         } else {
                             navController.navigate(R.id.action_logInFragment_to_defaultFragment)
                         }

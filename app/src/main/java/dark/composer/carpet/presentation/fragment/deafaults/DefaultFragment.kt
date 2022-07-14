@@ -35,8 +35,8 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             this,
             providerFactory
         )[DefaultViewModel::class.java]
-
-
+        val t = 45
+        print(t)
         binding.listSale.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL, false
@@ -77,22 +77,22 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
             navController.navigate(R.id.action_defaultFragment_to_logInFragment)
 //            successToast()
 
-            val inflater: LayoutInflater = layoutInflater
-            val layout: View =
-                inflater.inflate(
-                    R.layout.custom_toast_yellow,
-                    view?.findViewById(R.id.custom_toast_containerY)
-                )
-            var text: TextView? = view!!.findViewById(R.id.toastYellow)
-            val message="Please register first!"
-            text?.text = message
-            var f = text?.text.toString()
+//            val inflater: LayoutInflater = layoutInflater
+//            val layout: View =
+//                inflater.inflate(
+//                    R.layout.custom_toast_yellow,
+//                    view?.findViewById(R.id.custom_toast_containerY)
+//                )
+//            var text: TextView? = view!!.findViewById(R.id.toastYellow)
+//            val message="Please register first!"
+//            text?.text = message
+//            var f = text?.text.toString()
 
-            val toast = Toast(requireContext())
-            toast.setGravity(Gravity.TOP, 0, 0)
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = layout
-            toast.show()
+//            val toast = Toast(requireContext())
+//            toast.setGravity(Gravity.TOP, 0, 0)
+//            toast.duration = Toast.LENGTH_SHORT
+//            toast.view = layout
+//            toast.show()
         }
 
     }
