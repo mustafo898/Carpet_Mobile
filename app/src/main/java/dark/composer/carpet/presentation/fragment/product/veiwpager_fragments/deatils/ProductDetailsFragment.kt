@@ -9,29 +9,16 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
-import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
-import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.databinding.FragmentProductDetailsBinding
-import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -58,17 +45,15 @@ class ProductDetailsFragment :
 
         viewModel.productLiveData.observe(requireActivity()) {
             it?.let { t ->
-                binding.date.text =
-                    "${t.createDate.substring(11, 16)}  ${t.createDate.substring(0, 10)}"
+                binding.name.text = "${t.createDate.substring(11, 16)}  ${t.createDate.substring(0, 10)}"
                 binding.design.text = t.design
                 binding.name.text = t.name
                 binding.factoryName.text = t.factory.name
-                binding.createDate.text = "${t.factory.createdDate.substring(11, 16)
-                }  ${t.factory.createdDate.substring(0, 10)}"
-                binding.pon.text = t.pon
+                binding.createDate.text = "${t.factory.createdDate.substring(11, 16)}  ${t.factory.createdDate.substring(0, 10)}"
+                binding.pon.text = t.amount.toString()
                 attachId = t.attachUUID
                 Log.d("QQQQQQ", "onViewCreate: $attachId")
-                binding.visible.text = t.attachUUID
+                binding.visible.text = t.colour
                 binding.size.text = "${t.weight} x ${t.height}"
             }
         }

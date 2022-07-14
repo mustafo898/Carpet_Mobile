@@ -6,6 +6,8 @@ import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddReque
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
+import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.retrofit.models.request.sale.SaleRequest
 import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.signup.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -15,6 +17,7 @@ import dark.composer.carpet.data.retrofit.models.response.product.ProductRespons
 import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.retrofit.models.response.sale.SaleResponse
 import dark.composer.carpet.utils.Constants
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -30,8 +33,23 @@ interface ApiService {
     @GET("profile/profile")
     suspend fun getProfile(): Response<ProfileResponse>
 
-    @GET("profile/update")
-    suspend fun updateProfile(@Body body:ProfileRequest): Response<ProfileResponse>
+    @GET("profile/adm")
+    suspend fun getListProfile(): Response<List<ProfileResponse>>
+
+    @GET("profile/adm/{id}")
+    suspend fun getListProfileDetails(@Path("id") id:Int): Response<ProfileResponse>
+
+    @PUT("profile/update")
+    suspend fun updateProfile(@Body request:ProfileRequest): Response<ProfileResponse>
+
+    @POST("profile/adm")
+    suspend fun createCustomersProfile(@Body request:ProfileCreateRequest): Response<ProfileResponse>
+
+    @PUT("profile/adm/{id}")
+    suspend fun updateCustomersProfile(@Path("id") id:Int, @Body request:ProfileCreateRequest): Response<ProfileResponse>
+
+    @DELETE("profile/adm")
+    suspend fun deleteCustomersProfile(@Query("id") id:Int): Response<ProfileResponse>
 
     @Multipart
     @POST("attach/upload/profile")
@@ -92,4 +110,7 @@ interface ApiService {
         @Part file: MultipartBody.Part,
         @Path("key") page: String
     ): Response<ProfileFileResponse>
+
+    @POST("sale/emp/create")
+    suspend fun createSale(@Body request: SaleRequest): Response<SaleResponse>
 }

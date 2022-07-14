@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFCFC"
+    android:layout_marginBottom="70dp"
+    android:background="#F1ECEC"
     tools:context=".presentation.fragment.admin.AdminFragment"
     tools:menu="@menu/navigation_drawer">
 
@@ -271,7 +272,6 @@
                 <!--                </com.denzcoskun.imageslider.ImageSlider>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
     </ScrollView>
 

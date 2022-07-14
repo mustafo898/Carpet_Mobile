@@ -1,6 +1,7 @@
 package dark.composer.carpet.presentation.fragment.admin
 
 import android.opengl.Visibility
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -45,6 +46,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
         viewModel.liveDataProfile.observe(requireActivity()) {
             it?.let { t ->
                 Glide.with(requireContext()).load(t.url).into(binding.image)
+                Log.d("RRRRR", "onViewCreate: ${t.name}")
                 binding.userName.text = "${t.name} ${t.surname}"
                 binding.phoneNumber.text = t.phoneNumber
             }

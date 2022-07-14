@@ -91,7 +91,7 @@ class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: Sign
                 nameChannel.send("Name must be entered")
             }
             return false
-        } else if (name.length <= 4) {
+        } else if (name.length < 4) {
             viewModelScope.launch {
                 nameChannel.send("Minimum 4 Characters Name")
             }
@@ -110,7 +110,7 @@ class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: Sign
                 surNameChannel.send("Last Name must be entered")
             }
             return false
-        } else if (surName.length <= 4) {
+        } else if (surName.length < 4) {
             viewModelScope.launch {
                 surNameChannel.send("Minimum 4 Characters LastName")
             }

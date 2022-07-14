@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProfileRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
+import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(private val profileRepository: ProfileRepository) : ViewModel(){
+class ProfileViewModel @Inject constructor(private val profileRepository: ProfileRepository) :
+    ViewModel() {
     private val successChannel = Channel<ProfileFileResponse>()
     val successFlow = successChannel.receiveAsFlow()
 
@@ -25,10 +27,11 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
+
     private val profile = MutableLiveData<ProfileResponse?>()
     val liveDataProfile: MutableLiveData<ProfileResponse?> = profile
 
-    fun changed(file:MultipartBody.Part){
+    fun changed(file: MultipartBody.Part) {
         viewModelScope.launch {
             profileRepository.changeImage(file).catch { t ->
                 Log.d("DDDD", "getServicesResponse: $t")
@@ -52,20 +55,20 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
         }
     }
 
-    fun getProfile(){
+    fun getProfile() {
         viewModelScope.launch {
-            profileRepository.getProfile().observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
+            profileRepository.getProfile().observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
                         profile.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data?.name}")
                     }
-                    is BaseNetworkResult.Error->{
+                    is BaseNetworkResult.Error -> {
                         viewModelScope.launch {
                             _errorChannel.send(it.message)
                         }
                     }
-                    is BaseNetworkResult.Loading->{
+                    is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {
                             _loadingChannel.send(it.isLoading)
                         }
@@ -78,20 +81,46 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
         }
     }
 
-    fun updateProfile(request:ProfileRequest){
+    fun updateProfile(request: ProfileRequest) {
         viewModelScope.launch {
-            profileRepository.updateProfile(request).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
+            profileRepository.updateProfile(request).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
                         profile.value = it.data
                         Log.d("EEEEE", "getPagination: ${it.data?.name}")
                     }
-                    is BaseNetworkResult.Error->{
+                    is BaseNetworkResult.Error -> {
                         viewModelScope.launch {
                             _errorChannel.send(it.message)
                         }
                     }
-                    is BaseNetworkResult.Loading->{
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun createProfile(request: ProfileCreateRequest) {
+        viewModelScope.launch {
+            profileRepository.createProfile(request).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        profile.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {
                             _loadingChannel.send(it.isLoading)
                         }

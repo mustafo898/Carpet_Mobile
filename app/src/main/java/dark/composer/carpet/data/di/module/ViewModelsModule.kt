@@ -16,6 +16,8 @@ import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.co
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableViewModel
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
+import dark.composer.carpet.presentation.fragment.profile.list.customer.ListViewModel
+import dark.composer.carpet.presentation.fragment.profile.list.details.ListDetailsViewModel
 
 @Module
 abstract class ViewModelsModule {
@@ -74,4 +76,14 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(ProductDetailsViewModel::class)
     abstract fun providerProductDetailsViewModel(productDetailsViewModel : ProductDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ListViewModel::class)
+    abstract fun providerListViewModel(listViewModel : ListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ListDetailsViewModel::class)
+    abstract fun providerListDetailsViewModel(listDetailsViewModel : ListDetailsViewModel): ViewModel
 }

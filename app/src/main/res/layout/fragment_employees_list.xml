@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragment.profile.list.employee.EmployeesListFragment">
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_demo_angle="15"
+        app:shimmer_demo_layout="@layout/item_factory_demo_liner"
+        app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+</FrameLayout>

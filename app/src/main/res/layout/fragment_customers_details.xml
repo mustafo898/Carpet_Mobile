@@ -160,80 +160,6 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
-                android:id="@+id/addCustomer"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textColor="@color/text_color_st"
-                    android:text="Add Customer"/>
-
-                <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:src="@drawable/ic_add" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"
-                android:id="@+id/addFactory"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textColor="@color/text_color_st"
-                    android:text="Add Factory"/>
-
-                <ImageView
-                    android:id="@+id/addFactoryImage"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:src="@drawable/ic_add" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:id="@+id/addProduct"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textColor="@color/text_color_st"
-                    android:text="Add Product"/>
-
-                <ImageView
-                    android:id="@+id/addProductImage"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:src="@drawable/ic_add"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"
                 android:id="@+id/ownFactories"
                 android:layout_height="wrap_content">
 
@@ -274,31 +200,6 @@
                     android:layout_height="34dp"
                     android:src="@drawable/ic_arrow_forward"/>
             </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:id="@+id/listCustomers"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textColor="@color/text_color_st"
-                    android:text="List Customers"/>
-
-                <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:src="@drawable/ic_arrow_forward"/>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

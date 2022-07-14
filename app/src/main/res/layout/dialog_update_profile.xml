@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
+                app:helperTextTextColor="#F44336"
                 app:startIconDrawable="@drawable/ic_person"
                 app:startIconTint="@color/black">
 
@@ -38,11 +39,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/usernameInput"
+                android:id="@+id/lastnameInput"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
+                app:helperTextTextColor="#F44336"
                 app:startIconDrawable="@drawable/ic_person"
                 app:startIconTint="@color/black">
 
@@ -54,19 +56,46 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                app:counterEnabled="true"
+                app:counterMaxLength="9"
+                app:helperTextTextColor="#F44336"
+                app:prefixText="+998"
+                app:startIconDrawable="@drawable/ic_phone_android"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumber"
+                    style="@style/editText"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:transitionName="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordInput"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/black"
+                app:helperTextTextColor="#F44336"
                 app:startIconDrawable="@drawable/ic_lock"
                 app:startIconTint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_dialog"
+                    android:id="@+id/password"
                     style="@style/editText"
-                    android:inputType="textPersonName" />
-
+                    android:inputType="textPassword"
+                    android:maxLength="16"
+                    android:transitionName="password" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

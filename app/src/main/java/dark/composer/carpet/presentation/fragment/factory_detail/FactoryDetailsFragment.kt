@@ -35,8 +35,7 @@ import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
-class FactoryDetailsFragment :
-    BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
+class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
     private lateinit var viewModel: FactoryDetailsViewModel
     private val REQUEST_CODE = 100
 

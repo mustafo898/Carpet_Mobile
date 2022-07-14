@@ -13,5 +13,6 @@ data class ProductResponse(
     val urlImageList: List<String>? = null,
     val uuid: String,
     val attachUUID:String,
-    val weight: Double
+    val weight: Double,
+    val visible: Boolean
 )

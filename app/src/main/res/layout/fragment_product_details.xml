@@ -73,7 +73,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:id="@+id/name"
+                   android:id="@+id/status"
                    android:textSize="22sp"
                    android:text="Active"
                    android:textColor="@color/black"/>
@@ -81,9 +81,9 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:id="@+id/date"
+                   android:id="@+id/name"
                    android:textSize="22sp"
-                   android:text="12.12.2020"
+                   android:text="Suares"
                    android:textColor="@color/black"/>
 
                <TextView
@@ -91,7 +91,7 @@
                    android:layout_height="wrap_content"
                    android:id="@+id/size"
                    android:textSize="22sp"
-                   android:text="12:15"
+                   android:text="12x15"
                    android:textColor="@color/black"/>
 
                <TextView
@@ -99,7 +99,7 @@
                    android:layout_height="wrap_content"
                    android:id="@+id/design"
                    android:textSize="22sp"
-                   android:text="12:15"
+                   android:text="Mex"
                    android:textColor="@color/black"/>
 
                <TextView
@@ -115,12 +115,14 @@
                    android:layout_height="wrap_content"
                    android:id="@+id/visible"
                    android:textSize="22sp"
-                   android:text="12:15"
+                   android:text="True"
                    android:textColor="@color/black"/>
            </androidx.appcompat.widget.LinearLayoutCompat>
 
            <androidx.appcompat.widget.LinearLayoutCompat
                android:layout_width="match_parent"
+               android:layout_marginStart="10dp"
+               android:layout_marginEnd="10dp"
                android:layout_height="wrap_content"
                android:orientation="horizontal"
                android:layout_marginTop="5dp">

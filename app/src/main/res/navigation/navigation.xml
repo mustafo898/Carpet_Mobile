@@ -131,6 +131,9 @@
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_customersListFragment"
+            app:destination="@id/customersListFragment" />
     </fragment>
     <fragment
         android:id="@+id/productFragment"
@@ -180,5 +183,22 @@
         <action
             android:id="@+id/action_uncountableFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customersListFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.list.customer.ListFragment"
+        android:label="fragment_cusomers_list"
+        tools:layout="@layout/fragment_cusomers_list" >
+        <action
+            android:id="@+id/action_customersListFragment_to_listDetailsFragment"
+            app:destination="@id/listDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.list.details.ListDetailsFragment"
+        android:label="ListDetailsFragment" >
+        <action
+            android:id="@+id/action_listDetailsFragment_to_customersListFragment"
+            app:destination="@id/customersListFragment" />
     </fragment>
 </navigation>

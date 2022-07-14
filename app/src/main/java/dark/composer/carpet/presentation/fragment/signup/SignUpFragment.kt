@@ -65,21 +65,21 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
         sharedElementReturnTransition = animation
     }
 
-    private fun successToast(text:String){
-        val inflate: LayoutInflater = layoutInflater
-        val layout: View =
-            inflate.inflate(
-                R.layout.custom_toast_green,
-                view?.findViewById(R.id.custom_toast_container)
-            )
-
-        val toast = Toast(requireContext())
-        toast.setGravity(Gravity.TOP, 0, 0)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.setText(text)
-        toast.view = layout
-        toast.show()
-    }
+//    private fun successToast(text:String){
+//        val inflate: LayoutInflater = layoutInflater
+//        val layout: View =
+//            inflate.inflate(
+//                R.layout.custom_toast_green,
+//                view?.findViewById(R.id.custom_toast_container)
+//            )
+//
+//        val toast = Toast(requireContext())
+//        toast.setGravity(Gravity.TOP, 0, 0)
+//        toast.duration = Toast.LENGTH_SHORT
+//        toast.setText(text)
+//        toast.view = layout
+//        toast.show()
+//    }
 
     private fun collect() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -88,7 +88,6 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
                     if (it) {
 //                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
                         activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
-                        successToast("Now you are user, Thanks!")
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
 
                     }

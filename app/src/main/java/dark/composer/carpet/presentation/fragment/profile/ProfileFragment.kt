@@ -2,16 +2,12 @@ package dark.composer.carpet.presentation.fragment.profile
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
@@ -23,8 +19,8 @@ import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
+import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
-import dark.composer.carpet.presentation.dialog.CustomDialog
 import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -48,37 +44,31 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
         observe()
 
-//        binding.backBtn.setOnClickListener {
-//            navController.navigate(R.id.action_profileFragment_to_settingsFragment)
-//        }
-
         binding.changeImage.setOnClickListener {
             checkPermission()
         }
-        
+
         viewModel.getProfile()
 
-        
         binding.more.setOnClickListener {
             val popup = PopupMenu(requireContext(), binding.more)
-
-            //Inflating the Popup using xml file
             popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
-            var d=popup.menu.findItem(R.id.delete_menu)
+            val d = popup.menu.findItem(R.id.delete_menu)
             d.isVisible = false
-            //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
                 PopupMenu.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem): Boolean {
-
                     when (item.itemId) {
                         R.id.editName -> {
-                            val dialog =
-                                UpdateProfileDialog(requireContext(), "Password", name, lastname)
-                            dialog.setOnAddListener { name, lastname, password ->
+                            val dialog = UpdateProfileDialog(requireContext(), name, lastname)
+                            dialog.setPhoneVisible(false)
+                            viewModel.liveDataProfile.observe(requireActivity()) {
+                                dialog.dismiss()
+                            }
+                            dialog.setOnAddListener { name, lastname, password,phone ->
                                 viewModel.updateProfile(ProfileRequest(password, name, lastname))
                             }
-                            CustomDialog(requireContext()).show()
+                            dialog.show()
                         }
                         R.id.logout -> {
                             Toast.makeText(
@@ -87,19 +77,28 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        R.id.share ->{
+                        R.id.share -> {
 
-                        }
-                        else -> {
-                            return false
                         }
                     }
                     return true
                 }
             })
-
             popup.show() //showing popup menu
+        }
 
+        binding.listCustomers.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_customersListFragment)
+        }
+
+        binding.addCustomer.setOnClickListener {
+            val dialog = UpdateProfileDialog(requireContext(), "", "")
+            dialog.setPhoneVisible(true)
+            dialog.setOnAddListener { name, lastname, password,phone ->
+                viewModel.createProfile(ProfileCreateRequest(name,password,phone,"EMPLOYEE",lastname))
+                dialog.dismiss()
+            }
+            dialog.show()
         }
     }
 
@@ -122,7 +121,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 }
             }
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -162,30 +160,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             ActivityCompat.requestPermissions(requireActivity(), permission, 1)
         }
     }
-
-//    fun customDialog(type: String) {
-//        val dialog = Dialog(requireContext())
-//        dialog.setContentView(R.layout.dialog_update_profile)
-//
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
-//
-//        dialog.window?.setWindowAnimations(R.style.AnimationForDialog)
-//        val name: EditText = dialog.findViewById(R.id.name_dialog)
-//        val cancel: ImageButton = dialog.findViewById(R.id.cancelFB)
-//        val accept: ImageButton = dialog.findViewById(R.id.acceptFB)
-//        dialog.setCancelable(false)
-//        cancel.setOnClickListener {
-//            Toast.makeText(requireContext(), "cancel", Toast.LENGTH_SHORT).show()
-//            //            dialog.cancel()
-//            dialog.dismiss()
-//        }
-//
-//        accept.setOnClickListener {
-//            Toast.makeText(requireContext(), "data is changed", Toast.LENGTH_SHORT).show()
-//        }
-//
-//        dialog.show()
-//    }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
