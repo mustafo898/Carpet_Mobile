@@ -21,6 +21,15 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Add"
+                android:gravity="center"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nameInput"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -97,6 +106,70 @@
                     android:maxLength="16"
                     android:transitionName="password" />
             </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:id="@+id/employee"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Employee"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/employeeImage"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_check_box" />-->
+<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/customerRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer"/>
+
+                <RadioButton
+                    android:id="@+id/employeeRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Employee"/>
+
+            </RadioGroup>
+
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:id="@+id/customer"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Customer"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/customerImage"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_check_box" />-->
+<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
 
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.admin
+package dark.composer.carpet.presentation.fragment.profile.add
 
 import android.content.Context
 import android.util.Log
@@ -10,7 +10,7 @@ import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.databinding.ItemFactoryBinding
 
-class FactoryAdapter(val context: Context) : RecyclerView.Adapter<FactoryAdapter.SaleViewHolder>() {
+class FactorySelectAdapter(val context: Context) : RecyclerView.Adapter<FactorySelectAdapter.SaleViewHolder>() {
     private val listFactory = mutableListOf<FactoryResponse>()
 
     inner class SaleViewHolder(val binding: ItemFactoryBinding):RecyclerView.ViewHolder(binding.root){

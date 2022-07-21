@@ -5,7 +5,7 @@ import dark.composer.carpet.data.retrofit.models.response.factory.paginable.Page
 import dark.composer.carpet.data.retrofit.models.response.factory.paginable.SortX
 
 data class PaginationResponse(
-    val content: List<FactoryResponse>,
+    var content: List<FactoryResponse>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,

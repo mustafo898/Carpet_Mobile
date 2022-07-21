@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="70dp"
-    android:background="#F1ECEC"
+    android:layout_marginBottom="75dp"
+    android:background="#F2F4F5"
     tools:context=".presentation.fragment.admin.AdminFragment"
     tools:menu="@menu/navigation_drawer">
 
@@ -84,15 +84,6 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/taken" />
-
-                <ImageView
-                    android:id="@+id/add_factory"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="13dp"
-                    android:src="@drawable/ic_add"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/search" />
 
                 <TextView
                     android:id="@+id/factory_txt"

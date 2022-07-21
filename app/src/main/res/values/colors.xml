@@ -18,6 +18,7 @@
     <color name="textcolor">#131314</color>
 
     <color name="demo_dark_transparent">#40706E6E</color>
+    <color name="lite_mode">#F2F4F5</color>
     <color name="demo_bg">#33EDEDED</color>
     <color name="text_color_st">#676767</color>
 </resources>

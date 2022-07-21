@@ -58,13 +58,22 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
         }
     }
 
-    fun getPagination(page:Int,size: Int){
+    fun getPagination(page:Int,size: Int, id:Int){
         viewModelScope.launch {
             factoryDetailsRepository.getPagination(page,size).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
+                        val d = mutableListOf<FactoryResponse>()
+//                        it.data?.let { t->
+//                            t.content.forEach { s ->
+//                                if (s.id != id) {
+//                                    d.add(s)
+//                                }
+//                            }
+//                            t.content = d
+//                        }
                         listPagination.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.content?.get(0)?.createdDate}")
+                        Log.d("EEEEE", "getPagination: ${it.data?.content}")
                     }
                     is BaseNetworkResult.Error->{
                         viewModelScope.launch {

@@ -64,7 +64,7 @@ class ListDetailsFragment : BaseFragment<FragmentCustomersDetailsBinding>(Fragme
                             viewModel.liveDataProfile.observe(requireActivity()) {
                                 dialog.dismiss()
                             }
-                            dialog.setOnAddListener { name, lastname, password,phone ->
+                            dialog.setOnAddListener { name, lastname, password,phone,role ->
                                 viewModel.updateProfile(id,ProfileCreateRequest(name,password,phone,"EMPLOYEE",lastname))
                             }
                             dialog.show()

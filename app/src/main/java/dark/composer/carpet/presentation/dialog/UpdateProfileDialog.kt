@@ -13,81 +13,104 @@ import dark.composer.carpet.databinding.DialogUpdateProfileBinding
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 
-class UpdateProfileDialog(content: Context,name:String, lastname:String) : AlertDialog(content) {
+class UpdateProfileDialog(content: Context, name: String, lastname: String) : AlertDialog(content) {
     var binding = DialogUpdateProfileBinding.inflate(layoutInflater)
 
-    private var updateListener: ((name: String,surname: String,password:String,phone:String) -> Unit)? = null
+    private var updateListener: ((name: String, surname: String, password: String, phone: String,role:String) -> Unit)? =
+        null
 
-    fun setOnAddListener(f: (name: String,surname: String,password:String,phone:String) -> Unit) {
+    fun setOnAddListener(f: (name: String, surname: String, password: String, phone: String, role:String) -> Unit) {
         updateListener = f
     }
+
     private var phoneVisible = false
 
-    fun setPhoneVisible(phoneVisible: Boolean){
+    fun setPhoneVisible(phoneVisible: Boolean) {
         this.phoneVisible = phoneVisible
-        if (phoneVisible){
+        if (phoneVisible) {
             binding.phoneNumberInput.visibility = View.VISIBLE
-//            binding.phoneNumber.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.phoneNumberInput.visibility = View.GONE
-//            binding.phoneNumber.visibility = View.GONE
         }
     }
+
+    private var title: String = ""
+    fun setTitle(title: String) {
+        this.title = title
+        binding.title.text = title
+    }
+
+    private var customer = false
+    private var employee = false
 
     init {
         window?.setBackgroundDrawable(ColorDrawable(0))
 
         window?.setWindowAnimations(R.style.AnimationForDialog)
+        var statusTxt = ""
+
+        binding.customerRadio.isChecked = true
+
+        if (binding.customerRadio.isChecked){
+            statusTxt = "CUSTOMER"
+        }else if (binding.employeeRadio.isChecked){
+            statusTxt = "EMPLOYEE"
+        }
+
         var n = false
         var s = false
-        setTitle("Update Profile")
         binding.name.setText(name)
         binding.lastName.setText(lastname)
-        binding.name.addTextChangedListener{
-            if (validName(it.toString())){
+
+        binding.name.addTextChangedListener {
+            if (validName(it.toString())) {
                 n = true
                 binding.nameInput.isHelperTextEnabled = false
                 binding.acceptFB.isClickable = true
-            }else{
+            } else {
                 binding.acceptFB.isClickable = false
             }
         }
 
-
-
-        binding.lastName.addTextChangedListener{
-            if (validSurname(it.toString())){
+        binding.lastName.addTextChangedListener {
+            if (validSurname(it.toString())) {
                 s = true
                 binding.lastnameInput.isHelperTextEnabled = false
                 binding.acceptFB.isClickable = true
-            }else{
+            } else {
                 binding.acceptFB.isClickable = false
 
             }
         }
 
-        binding.password.addTextChangedListener{
-            if (validPassword(it.toString())){
+        binding.password.addTextChangedListener {
+            if (validPassword(it.toString())) {
                 s = true
                 binding.passwordInput.isHelperTextEnabled = false
                 binding.acceptFB.isClickable = true
-            }else{
+            } else {
                 binding.acceptFB.isClickable = false
             }
         }
 
-        binding.phoneNumber.addTextChangedListener{
-            if (validPassword(it.toString())){
+        binding.phoneNumber.addTextChangedListener {
+            if (validPhone(it.toString())) {
                 s = true
                 binding.phoneNumberInput.isHelperTextEnabled = false
                 binding.acceptFB.isClickable = true
-            }else{
+            } else {
                 binding.acceptFB.isClickable = false
             }
         }
 
         binding.acceptFB.setOnClickListener {
-            updateListener?.invoke(binding.name.text.toString(),binding.lastName.text.toString(),binding.password.text.toString(),binding.phoneNumber.text.toString())
+            updateListener?.invoke(
+                binding.name.text.toString(),
+                binding.lastName.text.toString(),
+                binding.password.text.toString(),
+                binding.phoneNumber.text.toString(),
+                statusTxt
+            )
         }
 
         binding.cancelFB.setOnClickListener {
@@ -95,7 +118,6 @@ class UpdateProfileDialog(content: Context,name:String, lastname:String) : Alert
         }
         setView(binding.root)
     }
-
 
     private fun validName(name: String): Boolean {
         if (name.isEmpty()) {
@@ -132,17 +154,15 @@ class UpdateProfileDialog(content: Context,name:String, lastname:String) : Alert
         } else if (!password.matches(".*[a-z].*".toRegex())) {
             binding.passwordInput.helperText = "Must Contain 1 Lower-case Character"
             return false
-        }
-        else if (!password.matches(".*[@#\$%^_].*".toRegex())){
+        } else if (!password.matches(".*[@#\$%^_].*".toRegex())) {
             binding.passwordInput.helperText = "Must Contain 1 Special Character (@#\\\$%^_)"
             return false
-        }
-        else {
+        } else {
             return true
         }
     }
 
-    fun validPhone(phone: String): Boolean {
+    private fun validPhone(phone: String): Boolean {
         if (phone.isEmpty()) {
             binding.phoneNumberInput.helperText = "Phone Number must be entered"
             return false

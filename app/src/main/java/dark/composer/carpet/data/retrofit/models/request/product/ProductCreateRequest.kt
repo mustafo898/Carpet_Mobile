@@ -5,10 +5,10 @@ data class ProductCreateRequest(
     val colour: String,
     val design: String,
     val factoryId: Int,
-    val height: Int,
+    val height: Double,
     val name: String,
     val pon: String,
     val price: Double,
     val type: String,
-    val weight: Int
+    val weight: Double
 )

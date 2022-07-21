@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
+import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -19,13 +19,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
-import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.databinding.FragmentFactoryDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.admin.FactoryAdapter
+import dark.composer.carpet.presentation.fragment.deafaults.FactoryAdapter
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -35,16 +35,17 @@ import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
-class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
+class FactoryDetailsFragment :
+    BaseFragment<FragmentFactoryDetailsBinding>(FragmentFactoryDetailsBinding::inflate) {
     private lateinit var viewModel: FactoryDetailsViewModel
     private val REQUEST_CODE = 100
-
     private val factoryAdapter by lazy {
         FactoryAdapter(requireContext())
     }
 
     @Inject
     lateinit var sharedPref: SharedPref
+
     var key = ""
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
@@ -74,7 +75,8 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 
         viewModel.liveDataInfoFactory.observe(requireActivity()) {
             if (it != null) {
-                binding.date.text = "${it.createdDate.substring(0, 10)} ${it.createdDate.substring(11, 16)}"
+                binding.date.text =
+                    "${it.createdDate.substring(0, 10)} ${it.createdDate.substring(11, 16)}"
                 binding.status.text = it.status
                 binding.name.text = it.name
                 key = it.key
@@ -91,25 +93,32 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
             val popup = PopupMenu(requireContext(), binding.more)
 
             //Inflating the Popup using xml file
-            popup.menuInflater.inflate(R.menu.pop_up_menu, popup.menu)
-            popup.menu.findItem(R.id.editName).title = "Edit Product"
-            popup.menu.findItem(R.id.logout).isVisible = false
+            popup.menuInflater.inflate(R.menu.main_menu, popup.menu)
+//            popup.menu.findItem(R.id.editName).title = "Edit Product"
+//            popup.menu.findItem(R.id.logout).isVisible = false
 
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener,
                 PopupMenu.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem): Boolean {
                     when (item.itemId) {
-                        R.id.editName -> {
-                            viewModel.updateInfoFactory(FactoryUpdateRequest(id, "Name", "ACTIVE", true), id)
-                        }
-                        R.id.delete_menu->{
-
-                        }
-                        R.id.changeImage_menu->{
-                            checkPermission()
-                        }
-                        R.id.share -> {
+//                        R.id.editName -> {
+//                            viewModel.updateInfoFactory(
+//                                FactoryUpdateRequest(
+//                                    id,
+//                                    "Name",
+//                                    "ACTIVE",
+//                                    true
+//                                ), id
+//                            )
+//                        }
+//                        R.id.delete_menu -> {
+//
+//                        }
+//                        R.id.changeImage_menu -> {
+//                            checkPermission()
+//                        }
+                        R.id.share_main_menu -> {
 
                         }
                         else -> {
@@ -123,7 +132,7 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
             popup.show() //showing popup menu
         }
 
-        viewModel.getPagination(0, 10)
+        viewModel.getPagination(0, 10, id)
 
         viewModel.getInfoFactory(id)
     }
@@ -204,7 +213,8 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
         return result
     }
 
-    //        binding.update.setOnClickListener {
+//    fun dialog(){
+//        binding.update.setOnClickListener{
 //            val dialog = AlertDialog.Builder(requireContext())
 //
 //            dialog.setTitle("Update Factory")
@@ -217,12 +227,12 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 //            }
 //            dialog.show()
 //        }
-
-//        binding.changeImage.setOnClickListener {
+//
+//        binding.changeImage.setOnClickListener{
 //            checkPermission()
 //        }
-
-//        binding.delete.setOnClickListener {
+//
+//        binding.delete.setOnClickListener{
 //            val dialog = AlertDialog.Builder(requireContext())
 //
 //            dialog.setTitle("Update Factory")
@@ -240,4 +250,5 @@ class FactoryDetailsFragment : BaseFragment<FragmentFactoryDetailsBinding>(Fragm
 //            }
 //            dialog.show()
 //        }
+//    }
 }

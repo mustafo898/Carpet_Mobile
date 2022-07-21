@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProfileRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
@@ -27,6 +29,9 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
+
+    val addFactory = MutableLiveData<FactoryResponse?>()
+    val liveDataAddFactory:MutableLiveData<FactoryResponse?> = addFactory
 
     private val profile = MutableLiveData<ProfileResponse?>()
     val liveDataProfile: MutableLiveData<ProfileResponse?> = profile
@@ -132,4 +137,30 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
             }
         }
     }
+
+//    fun addFactory(addFactoryRequest: FactoryAddRequest){
+//        viewModelScope.launch {
+//            profileRepository.addFactory(addFactoryRequest).observeForever{
+//                when(it){
+//                    is BaseNetworkResult.Success->{
+//                        addFactory.value = it.data
+//                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
+//                    }
+//                    is BaseNetworkResult.Error->{
+//                        viewModelScope.launch {
+//                            _errorChannel.send(it.message)
+//                        }
+//                    }
+//                    is BaseNetworkResult.Loading->{
+//                        viewModelScope.launch {
+//                            _loadingChannel.send(it.isLoading)
+//                        }
+//                    }
+//                    else -> {
+//                        Log.d("Admin", "getPagination: Kemadi")
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

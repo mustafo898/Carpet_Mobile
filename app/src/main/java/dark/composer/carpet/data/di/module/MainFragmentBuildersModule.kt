@@ -11,6 +11,7 @@ import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.co
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsFragment
 import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
+import dark.composer.carpet.presentation.fragment.profile.add.product.AddProductFragment
 import dark.composer.carpet.presentation.fragment.profile.list.customer.ListFragment
 import dark.composer.carpet.presentation.fragment.profile.list.details.ListDetailsFragment
 import dark.composer.carpet.presentation.fragment.settings.SettingsFragment
@@ -61,4 +62,7 @@ public abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun listDetailsFragment():ListDetailsFragment
+
+    @ContributesAndroidInjector
+    abstract fun addProductFragment():AddProductFragment
 }

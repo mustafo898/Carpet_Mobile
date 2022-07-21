@@ -134,6 +134,12 @@
         <action
             android:id="@+id/action_profileFragment_to_customersListFragment"
             app:destination="@id/customersListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addFactoryFragment"
+            app:destination="@id/addFactoryFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/productFragment"
@@ -200,5 +206,22 @@
         <action
             android:id="@+id/action_listDetailsFragment_to_customersListFragment"
             app:destination="@id/customersListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFactoryFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.add.factory.AddFactoryFragment"
+        android:label="fragment_add_factory"
+        tools:layout="@layout/fragment_add_factory" >
+        <action
+            android:id="@+id/action_addFactoryFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.add.product.AddProductFragment"
+        android:label="AddProductFragment" >
+        <action
+            android:id="@+id/action_addProductFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

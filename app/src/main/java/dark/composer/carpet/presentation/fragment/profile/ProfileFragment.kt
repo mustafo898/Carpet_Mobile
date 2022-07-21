@@ -2,6 +2,7 @@ package dark.composer.carpet.presentation.fragment.profile
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -18,9 +19,11 @@ import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
+import dark.composer.carpet.presentation.dialog.AddDialog
 import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
@@ -38,6 +41,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     @Inject
     lateinit var sharedPref: SharedPref
+
+    var name = ""
+    var lastname = ""
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(this, providerFactory)[ProfileViewModel::class.java]
@@ -65,7 +71,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             viewModel.liveDataProfile.observe(requireActivity()) {
                                 dialog.dismiss()
                             }
-                            dialog.setOnAddListener { name, lastname, password,phone ->
+                            dialog.setOnAddListener { name, lastname, password, phone ,role->
                                 viewModel.updateProfile(ProfileRequest(password, name, lastname))
                             }
                             dialog.show()
@@ -84,28 +90,54 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                     return true
                 }
             })
-            popup.show() //showing popup menu
+            popup.show()
         }
 
         binding.listCustomers.setOnClickListener {
             navController.navigate(R.id.action_profileFragment_to_customersListFragment)
         }
 
+        binding.addProduct.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_addProductFragment)
+        }
+
         binding.addCustomer.setOnClickListener {
             val dialog = UpdateProfileDialog(requireContext(), "", "")
             dialog.setPhoneVisible(true)
-            dialog.setOnAddListener { name, lastname, password,phone ->
-                viewModel.createProfile(ProfileCreateRequest(name,password,phone,"EMPLOYEE",lastname))
+            dialog.setOnAddListener { name1, lastname1, password, phone, role ->
+                viewModel.createProfile(
+                    ProfileCreateRequest(
+                        name1,
+                        password,
+                        phone,
+                        role,
+                        lastname1
+                    )
+                )
                 dialog.dismiss()
             }
             dialog.show()
         }
+
+//        binding.addFactory.setOnClickListener {
+//            val dialog = AddDialog(requireContext())
+//            dialog.setTitle("Add Factory")
+//            dialog.setVisible(true)
+//            dialog.setStatus(true)
+//            viewModel.liveDataAddFactory.observe(requireActivity()) {
+//                if (it != null) {
+//                    dialog.dismiss()
+//                }
+//            }
+//            dialog.setOnAddListener { name, status, visible ->
+//                viewModel.addFactory(FactoryAddRequest(name))
+//            }
+//            dialog.show()
+//        }
     }
 
-    var name = ""
-    var lastname = ""
     private fun observe() {
-        viewModel.liveDataProfile.observe(requireActivity()) {
+        viewModel.liveDataProfile.observe(viewLifecycleOwner) {
             it?.let { t ->
                 name = t.name
                 lastname = t.surname
@@ -189,6 +221,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
     }
+
 
     private var imagePath = ""
 

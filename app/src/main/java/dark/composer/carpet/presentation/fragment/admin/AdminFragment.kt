@@ -54,16 +54,6 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 
         viewModel.getProfile()
 
-        binding.addFactory.setOnClickListener {
-            viewModel.addFactory(FactoryAddRequest(name = "Hello"))
-        }
-
-        viewModel.liveDataAddFactory.observe(requireActivity()) {
-            it?.let { t ->
-                factoryAdapter.addFactory(t)
-            }
-        }
-
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { t ->
                 binding.listSale.hideShimmerAdapter()
@@ -79,16 +69,6 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             }
         }
 
-        binding.addFactory.setOnClickListener {
-            val dialog = AddDialog(requireContext())
-            dialog.setStatus(false)
-            dialog.setVisible(false)
-            dialog.setOnAddListener { name, status, visible ->
-                viewModel.addFactory(FactoryAddRequest(name))
-                viewModel.getPagination(0, 10)
-            }
-        }
-
         binding.listPopular.visibility = View.GONE
 
         binding.salesEmpty.visibility = View.VISIBLE
@@ -99,10 +79,10 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             navController.navigate(R.id.action_adminFragment_to_settingsFragment)
         }
 
-        factoryAdapter.setClickListener {
+        factoryAdapter.setClickListener {pos,id->
             navController.navigate(
                 R.id.action_adminFragment_to_factoryDetailsFragment,
-                bundleOf("ID" to it)
+                bundleOf("ID" to id)
             )
         }
     }

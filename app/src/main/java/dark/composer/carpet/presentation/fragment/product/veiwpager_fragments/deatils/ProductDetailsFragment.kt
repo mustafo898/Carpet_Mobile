@@ -77,19 +77,7 @@ class ProductDetailsFragment :
                             viewModel.updateProduct(
                                 id,
                                 type,
-                                ProductCreateRequest(
-                                    1,
-                                    "White",
-                                    "Mex",
-                                    5,
-                                    9,
-                                    "Vinicius",
-                                    "152",
-                                    5.6,
-                                    "COUNTABLE",
-                                    6
-                                )
-                            )
+                                ProductCreateRequest(1, "White", "Mex", 5, 9.0, "Vinicius", "152", 5.6, "COUNTABLE", 6.0))
                         }
                         R.id.delete_menu->{
                             viewModel.deleteProduct(id, type)
@@ -110,17 +98,6 @@ class ProductDetailsFragment :
 
             popup.show() //showing popup menu
         }
-
-//        binding.update.setOnClickListener {
-//
-//        }
-//
-//        binding.delete.setOnClickListener {
-//        }
-//
-//        binding.changeImage.setOnClickListener {
-//            checkPermission()
-//        }
     }
 
     override fun onRequestPermissionsResult(
