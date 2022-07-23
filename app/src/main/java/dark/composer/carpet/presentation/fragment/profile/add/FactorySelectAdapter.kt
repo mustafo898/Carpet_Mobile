@@ -32,39 +32,18 @@ class FactorySelectAdapter(val context: Context) :
 
             Log.d("DDDDD", "bind: ${binding.image}")
 
-//            if (layoutPosition == itemSelection) {
-//                binding.linear.setBackgroundColor(Color.parseColor("#40706E6E"))
-//            } else {
-//                itemSelection = layoutPosition
-//                binding.linear.setBackgroundColor(Color.WHITE)
-//            }
-
-            if (itemSelection == layoutPosition){
+            if (itemSelection == layoutPosition) {
                 itemView.setBackgroundColor(binding.root.resources.getColor(R.color.demo_dark_transparent))
-            }else{
+            } else {
                 itemView.setBackgroundColor(binding.root.resources.getColor(R.color.white))
             }
 
-//            itemView.setOnClickListener {
-                binding.linear.setOnClickListener {
-                    setSelect(layoutPosition)
-                }
-//                if (layoutPosition == itemSelection) {
-//                    binding.linear.setBackgroundColor(Color.parseColor("#40706E6E"))
-//                    clickListener?.invoke(list.content.id)
-//                }else{
-//                    itemSelection = layoutPosition
-//                    binding.linear.setBackgroundColor(Color.WHITE)
-//                }
-//            }
+            itemView.setOnClickListener {
+                clickListener?.invoke(list.id)
+                itemSelection = layoutPosition
+                notifyDataSetChanged();
+            }
         }
-    }
-
-    fun setSelect(int: Int) {
-        if (int == RecyclerView.NO_POSITION) return
-        notifyItemChanged(int)
-        itemSelection = int
-        notifyItemChanged(itemSelection)
     }
 
     private var clickListener: ((position: Int) -> Unit)? = null

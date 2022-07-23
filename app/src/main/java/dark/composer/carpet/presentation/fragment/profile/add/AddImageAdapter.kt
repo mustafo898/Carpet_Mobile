@@ -2,6 +2,7 @@ package dark.composer.carpet.presentation.fragment.profile.add
 
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,11 +15,11 @@ import dark.composer.carpet.databinding.ItemFactoryBinding
 import dark.composer.carpet.databinding.ItemSelectFactoryBinding
 
 class AddImageAdapter(val context: Context) : RecyclerView.Adapter<AddImageAdapter.SaleViewHolder>() {
-    private val listFactory = mutableListOf<String>()
+    private val listFactory = mutableListOf<Uri>()
 
     inner class SaleViewHolder(val binding: ItemAddImageBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(list:String){
-            if(list.isNotEmpty()){
+        fun bind(list:Uri){
+            if(list.toString().isNotEmpty()){
                 Glide.with(context).load(list).into(binding.image)
             }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
@@ -38,9 +39,17 @@ class AddImageAdapter(val context: Context) : RecyclerView.Adapter<AddImageAdapt
         clickListener = f
     }
 
-    fun setListImage(list : String){
+    fun setListImage(list : List<Uri>){
+//        listFactory.clear()
+        listFactory.addAll(list)
+        notifyDataSetChanged()
+//        notifyItemInserted(list.length-1)
+    }
+
+    fun setImage(list : Uri){
+//        listFactory.clear()
         listFactory.add(list)
-        notifyItemInserted(list.length-1)
+        notifyItemInserted(listFactory.size-1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= SaleViewHolder(

@@ -4,33 +4,34 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer.create
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import dark.composer.carpet.data.local.SingleSelectFactory
 import dark.composer.carpet.databinding.FragmentAddProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.profile.add.AddImageAdapter
 import dark.composer.carpet.presentation.fragment.profile.add.FactorySelectAdapter
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddProductBinding::inflate) {
+
+class AddProductFragment :
+    BaseFragment<FragmentAddProductBinding>(FragmentAddProductBinding::inflate) {
     lateinit var viewModel: AddProductViewModel
     private val adapter by lazy {
         FactorySelectAdapter(requireContext())
@@ -53,8 +54,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
 
         binding.factoryList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.factoryList.itemAnimator = DefaultItemAnimator()
-        binding.factoryList.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.HORIZONTAL))
+//        binding.factoryList.itemAnimator = DefaultItemAnimator()
+//        binding.factoryList.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.HORIZONTAL))
         binding.factoryList.adapter = adapter
 
         binding.photoList.layoutManager =
@@ -63,18 +64,17 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
 
         collect()
         textSend()
+
+        adapter.setClickListener {
+            viewModel.validFactoryId(it)
+            factoryId = it
+        }
     }
 
     private fun textSend() {
         viewModel.getPagination(0, 10)
 
-        adapter.setClickListener {
-//            adapter.setSelect(it)
-//            viewModel.validFactoryId(it)
-//            factoryId = it
-//            lastPos = it
-//            adapter.setSelect(it)
-        }
+
 
         binding.add.setOnClickListener {
             checkPermission()
@@ -162,6 +162,12 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
         val file = File(imagePath)
         val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
+
+        val part = ArrayList<MultipartBody.Part>()
+        for (i in 0 until uri.size){
+            val d : MultipartBody.Part = prepareFilePart("$i",uri[i])
+            part.add(d)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
@@ -278,6 +284,19 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
         }
     }
 
+    private fun prepareFilePart(partName: String, fileUri: Uri): MultipartBody.Part {
+        val file = File(fileUri.path)
+        Log.i("here is error", file.absolutePath)
+        // create RequestBody instance from file
+        val requestFile: RequestBody = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            file
+        )
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.Companion.createFormData(partName, file.name, requestFile)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -285,6 +304,35 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
     ) {
         checkPermission()
     }
+
+//    private fun checkPermission() {
+//        val permission = arrayOf(
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        )
+//        if (ContextCompat.checkSelfPermission(
+//                activity!!.applicationContext,
+//                permission[0]
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ContextCompat.checkSelfPermission(
+//                activity!!.applicationContext,
+//                permission[1]
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ContextCompat.checkSelfPermission(
+//                activity!!.applicationContext,
+//                permission[2]
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            Log.d("SSSSS", "checkPermission: Otdi")
+//            Intent(Intent.ACTION_PICK).also {
+//                it.type = "image/*"
+//                startActivityForResult(it, REQUEST_CODE)
+//            }
+//        } else {
+//            ActivityCompat.requestPermissions(requireActivity(), permission, 1)
+//        }
+//    }
 
     private fun checkPermission() {
         val permission = arrayOf(
@@ -306,25 +354,53 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>(FragmentAddPr
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             Log.d("SSSSS", "checkPermission: Otdi")
-            Intent(Intent.ACTION_PICK).also {
+            val intent = Intent(Intent.ACTION_PICK).also {
                 it.type = "image/*"
-                startActivityForResult(it, REQUEST_CODE)
+                it.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                it.action = Intent.ACTION_GET_CONTENT
+//                startActivityForResult(it, REQUEST_CODE)
             }
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE)
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), permission, 1)
+            ActivityCompat.requestPermissions(requireActivity(), permission, REQUEST_CODE)
         }
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == REQUEST_CODE) {
+//                val uri = data?.data
+//                imagePath = uri?.let {
+//                    uploadFile(it)
+//                }.toString()
+//                Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
+//                adapterImage.setImage(imagePath)
+//            }
+//        }
+//    }
+
+    private val uri = mutableListOf<Uri>()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE) {
-                val uri = data?.data
-                imagePath = uri?.let {
-                    uploadFile(it)
-                }.toString()
-                Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
-                adapterImage.setListImage(imagePath)
+                if (data?.clipData != null) {
+                    val x = data.clipData!!.itemCount
+                    for (i in 0 until x) {
+                        val u = data.clipData!!.getItemAt(i).uri
+                        Toast.makeText(requireContext(), "${u.path}", Toast.LENGTH_SHORT).show()
+                        uri.add(u)
+                    }
+
+                    adapterImage.setListImage(uri)
+                } else {
+                    val uri1 = data?.data
+
+                    Toast.makeText(requireContext(), "${uri1?.path}", Toast.LENGTH_SHORT).show()
+                    adapterImage.setImage(uri1!!)
+                }
             }
         }
     }
