@@ -24,29 +24,5 @@ class ProductViewModel @Inject constructor(private val repository:ProductReposit
     private val _loadingChannel = Channel<Boolean?>()
     val loadingFlow = _loadingChannel.receiveAsFlow()
 
-    fun createProduct(createRequest: ProductCreateRequest){
-        viewModelScope.launch {
-            repository.createProduct(createRequest).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
-                        createProduct.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data}")
-                    }
-                    is BaseNetworkResult.Error->{
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
-                    }
-                    is BaseNetworkResult.Loading->{
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
-                    }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
-                    }
-                }
-            }
-        }
-    }
+
 }

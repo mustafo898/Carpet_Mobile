@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.DefaultRepository
+import dark.composer.carpet.data.repositories.FactoryRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import kotlinx.coroutines.channels.Channel
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DefaultViewModel @Inject constructor(private val defaultRepository: DefaultRepository) : ViewModel() {
+class DefaultViewModel @Inject constructor(private val defaultRepository: DefaultRepository,private val factoryRepository: FactoryRepository) : ViewModel() {
     private val listPagination = MutableLiveData<PaginationResponse?>()
     val liveDataListPagination: MutableLiveData<PaginationResponse?> = listPagination
 
@@ -24,7 +25,7 @@ class DefaultViewModel @Inject constructor(private val defaultRepository: Defaul
 
     fun getPagination(page:Int,size: Int){
         viewModelScope.launch {
-            defaultRepository.getPagination(page,size).observeForever{
+            factoryRepository.getPagination(page,size).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
                         listPagination.value = it.data

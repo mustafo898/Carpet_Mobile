@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.FactoryDetailsRepository
+import dark.composer.carpet.data.repositories.FactoryRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepository: FactoryDetailsRepository): ViewModel(){
+class FactoryDetailsViewModel @Inject constructor(private val factoryRepository: FactoryRepository): ViewModel(){
     private val infoFactory = MutableLiveData<FactoryResponse?>()
     val liveDataInfoFactory: MutableLiveData<FactoryResponse?> = infoFactory
 
@@ -34,7 +34,7 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
 
     fun getInfoFactory(id:Int){
         viewModelScope.launch {
-            factoryDetailsRepository.getInfoFactory(id).observeForever{
+            factoryRepository.getInfoFactory(id).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
                         infoFactory.value = it.data
@@ -60,7 +60,7 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
 
     fun getPagination(page:Int,size: Int, id:Int){
         viewModelScope.launch {
-            factoryDetailsRepository.getPagination(page,size).observeForever{
+            factoryRepository.getPagination(page,size).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
                         val d = mutableListOf<FactoryResponse>()
@@ -95,7 +95,7 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
 
     fun updateInfoFactory(factoryUpdateRequest: FactoryUpdateRequest,id:Int){
         viewModelScope.launch {
-            factoryDetailsRepository.updateFactory(id,factoryUpdateRequest).observeForever{
+            factoryRepository.updateFactory(id,factoryUpdateRequest).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
                         infoFactory.value = it.data
@@ -121,7 +121,7 @@ class FactoryDetailsViewModel @Inject constructor(private val factoryDetailsRepo
 
     fun uploadFile(file:MultipartBody.Part,key:String){
         viewModelScope.launch {
-            factoryDetailsRepository.fileUploadFactory(key,file).observeForever{
+            factoryRepository.fileUploadFactory(key,file).observeForever{
                 when(it){
                     is BaseNetworkResult.Success->{
                         viewModelScope.launch {

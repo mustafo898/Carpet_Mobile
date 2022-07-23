@@ -226,6 +226,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/price"
+                    android:layout_marginTop="8dp"
                     style="@style/editText"
                     android:background="@drawable/item_bg"
                     android:inputType="number" />

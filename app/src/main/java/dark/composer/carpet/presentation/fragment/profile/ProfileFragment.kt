@@ -101,6 +101,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             navController.navigate(R.id.action_profileFragment_to_addProductFragment)
         }
 
+        binding.addFactory.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_addFactoryFragment)
+        }
+
         binding.addCustomer.setOnClickListener {
             val dialog = UpdateProfileDialog(requireContext(), "", "")
             dialog.setPhoneVisible(true)

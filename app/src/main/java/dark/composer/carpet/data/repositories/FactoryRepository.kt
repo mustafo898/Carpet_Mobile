@@ -5,14 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dark.composer.carpet.data.retrofit.ApiService
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
+import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class FactoryDetailsRepository @Inject constructor(private val service:ApiService) {
+class FactoryRepository @Inject constructor(private val service:ApiService) {
     suspend fun getInfoFactory(id:Int):LiveData<BaseNetworkResult<FactoryResponse>>{
         val factoryInfo = MutableLiveData<BaseNetworkResult<FactoryResponse>>()
         val response = service.getFactoryInfo(id)
@@ -27,6 +30,23 @@ class FactoryDetailsRepository @Inject constructor(private val service:ApiServic
             factoryInfo.value = BaseNetworkResult.Error(response.message())
         }
         return factoryInfo
+    }
+
+    suspend fun addFactory(addRequest: FactoryAddRequest): Flow<BaseNetworkResult<FactoryResponse>> {
+        return flow {
+            val response = service.addInfoFactory(addRequest)
+            emit(BaseNetworkResult.Loading(true))
+            if (response.code() == 200) {
+                response.body()?.let {
+                    emit(BaseNetworkResult.Loading(false))
+                    emit(BaseNetworkResult.Success(it))
+                    Log.d("EEEEEEE", "getPagination: ${it.name}")
+                }
+            } else {
+                emit(BaseNetworkResult.Loading(false))
+                emit(BaseNetworkResult.Error(response.message()))
+            }
+        }
     }
 
     suspend fun getPagination(page:Int,size:Int):LiveData<BaseNetworkResult<PaginationResponse>>{

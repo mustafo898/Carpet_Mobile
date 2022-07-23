@@ -29,6 +29,7 @@ class ProductDetailsFragment :
     lateinit var viewModel: ProductDetailsViewModel
     private val REQUEST_CODE = 100
     var attachId = ""
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,

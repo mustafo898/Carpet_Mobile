@@ -16,56 +16,7 @@ import javax.inject.Inject
 
 class AdminRepository @Inject constructor(
     private val service: ApiService,
-    private val sharedPref: SharedPref
+    private val sharedPref: SharedPref,
 ){
-    suspend fun getPagination(page:Int,size:Int):LiveData<BaseNetworkResult<PaginationResponse>>{
-        val list = MutableLiveData<BaseNetworkResult<PaginationResponse>>()
-        val response = service.getFactoryPagination(page,size)
-        list.value = BaseNetworkResult.Loading(true)
-        if (response.code() == 200){
-            response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
-                list.value = BaseNetworkResult.Success(it)
-                Log.d("EEEEEEE", "getPagination: ${it.content.size}")
-            }
-        }else{
-            list.value = BaseNetworkResult.Loading(false)
-            list.value = BaseNetworkResult.Error(response.message())
-        }
-        return list
-    }
 
-    suspend fun getProfile():LiveData<BaseNetworkResult<ProfileResponse>>{
-        val list = MutableLiveData<BaseNetworkResult<ProfileResponse>>()
-        val response = service.getProfile()
-        list.value = BaseNetworkResult.Loading(true)
-        if (response.code() == 200){
-            response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
-                list.value = BaseNetworkResult.Success(it)
-                Log.d("EEEEEEE", "getPagination: ${it.name}")
-            }
-        }else{
-            list.value = BaseNetworkResult.Loading(false)
-            list.value = BaseNetworkResult.Error(response.message())
-        }
-        return list
-    }
-
-    suspend fun addFactory(addRequest: FactoryAddRequest):LiveData<BaseNetworkResult<FactoryResponse>>{
-        val list = MutableLiveData<BaseNetworkResult<FactoryResponse>>()
-        val response = service.addInfoFactory(addRequest)
-        list.value = BaseNetworkResult.Loading(true)
-        if (response.code() == 200){
-            response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
-                list.value = BaseNetworkResult.Success(it)
-                Log.d("EEEEEEE", "getPagination: ${it.name}")
-            }
-        }else{
-            list.value = BaseNetworkResult.Loading(false)
-            list.value = BaseNetworkResult.Error(response.message())
-        }
-        return list
-    }
 }

@@ -1,20 +1,27 @@
 package dark.composer.carpet.presentation.fragment.profile.add.product
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dark.composer.carpet.data.repositories.FactoryRepository
 import dark.composer.carpet.data.repositories.ProductRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
+import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import dark.composer.carpet.databinding.ItemFactoryBinding
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class AddProductViewModel @Inject constructor(private val repo: ProductRepository) : ViewModel() {
+class AddProductViewModel @Inject constructor(private val repo: ProductRepository,private val factoryRepo:FactoryRepository) : ViewModel() {
     private val createProduct = MutableLiveData<ProductResponse>()
     val createProductLiveData: MutableLiveData<ProductResponse> = createProduct
 
@@ -24,57 +31,82 @@ class AddProductViewModel @Inject constructor(private val repo: ProductRepositor
     private val _loadingChannel = Channel<Boolean?>()
     val loadingFlow = _loadingChannel.receiveAsFlow()
 
-    private val nameChannel = Channel<String>()
-    val nameFlow = nameChannel.receiveAsFlow()
+    private val nameChannel = MutableLiveData<String>()
+    val nameFlow: LiveData<String> = nameChannel
 
-    private val typeChannel = Channel<String>()
-    val typeFlow = typeChannel.receiveAsFlow()
+    private val typeChannel = MutableLiveData<String>()
+    val typeFlow: LiveData<String> = typeChannel
 
-    private val ponChannel = Channel<String>()
-    val ponFlow = ponChannel.receiveAsFlow()
+    private val ponChannel = MutableLiveData<String>()
+    val ponFlow: LiveData<String> = ponChannel
 
-    private val factoryIdChannel = Channel<String>()
-    val factoryIdFlow = factoryIdChannel.receiveAsFlow()
+    private val factoryIdChannel = MutableLiveData<String>()
+    val factoryIdFlow: LiveData<String> = factoryIdChannel
 
-    private val widthChannel = Channel<String>()
-    val widthFlow = widthChannel.receiveAsFlow()
+    private val widthChannel = MutableLiveData<String>()
+    val widthFlow: LiveData<String> = widthChannel
 
-    private val heightChannel = Channel<String>()
-    val heightFlow = heightChannel.receiveAsFlow()
+    private val heightChannel = MutableLiveData<String>()
+    val heightFlow: LiveData<String> = heightChannel
 
-    private val colorChannel = Channel<String>()
-    val colorFlow = colorChannel.receiveAsFlow()
+    private val colorChannel = MutableLiveData<String>()
+    val colorFlow: LiveData<String> = colorChannel
 
-    private val amountChannel = Channel<String>()
-    val amountFlow = amountChannel.receiveAsFlow()
+    private val amountChannel = MutableLiveData<String>()
+    val amountFlow: LiveData<String> = amountChannel
 
-    private val priceChannel = Channel<String>()
-    val priceFlow = priceChannel.receiveAsFlow()
+    private val priceChannel = MutableLiveData<String>()
+    val priceFlow: LiveData<String> = priceChannel
 
-    private val designChannel = Channel<String>()
-    val designFlow = designChannel.receiveAsFlow()
+    private val designChannel = MutableLiveData<String>()
+    val designFlow: LiveData<String> = designChannel
 
-    fun createProduct(createRequest: ProductCreateRequest, isCount: Int) {
-        if (!validAmount(createRequest.amount.toString()) &&
-            !validColor(createRequest.colour) &&
-            !validDesign(createRequest.design) &&
-            !validFactoryId(createRequest.factoryId, isCount) &&
-            !validName(createRequest.name) && !validPon(createRequest.pon) &&
-            !validPrice(createRequest.price.toString()) &&
-            !validType(isCount) && !validWidth(createRequest.weight.toString()) &&
-            !validHeight(createRequest.height.toString())
-        ){
-            validAmount(createRequest.amount.toString())
-            validColor(createRequest.colour)
-            validWidth(createRequest.weight.toString())
-            validHeight(createRequest.height.toString())
-            validPrice(createRequest.price.toString())
-            validPon(createRequest.pon)
-            validFactoryId(createRequest.factoryId,isCount)
-            validType(isCount)
-        }else{
+    private val successChangeChannel = Channel<ProductFileUploadResponse>()
+    val successChangeFlow = successChangeChannel.receiveAsFlow()
+
+    private val listPagination = MutableLiveData<PaginationResponse?>()
+    val liveDataListPagination: MutableLiveData<PaginationResponse?> = listPagination
+
+    fun createProduct(
+        amount: String,
+        colour: String,
+        design: String,
+        factoryId: Int,
+        height: String,
+        name: String,
+        pon: String,
+        price: String,
+        type: String,
+        weight: String,
+        context: Context
+    ) {
+        if (validAmount(amount) &&
+            validColor(colour) &&
+            validDesign(design) &&
+            validFactoryId(factoryId) &&
+            validName(name) &&
+            validPon(pon) &&
+            validPrice(price) &&
+            validType(type) &&
+            validWidth(weight) &&
+            validHeight(height)
+        ) {
+            Toast.makeText(context, "Yes", Toast.LENGTH_SHORT).show()
             viewModelScope.launch {
-                repo.createProduct(createRequest).observeForever {
+                repo.createProduct(
+                    ProductCreateRequest(
+                        amount.toInt(),
+                        colour,
+                        design,
+                        factoryId,
+                        height.toDouble(),
+                        name,
+                        pon,
+                        price.toDouble(),
+                        type,
+                        weight.toDouble()
+                    )
+                ).observeForever {
                     when (it) {
                         is BaseNetworkResult.Success -> {
                             createProduct.value = it.data
@@ -96,191 +128,192 @@ class AddProductViewModel @Inject constructor(private val repo: ProductRepositor
                     }
                 }
             }
+        } else {
+            validDesign(design)
+            validName(name)
+            validAmount(amount)
+            validColor(colour)
+            validWidth(weight)
+            validHeight(height)
+            validPrice(price)
+            validPon(pon)
+            validFactoryId(factoryId)
+            validType(type)
+        }
+    }
+
+    fun uploadFile(file: MultipartBody.Part, productId: String) {
+        viewModelScope.launch {
+            repo.fileUploadProduct(productId, file).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        viewModelScope.launch {
+                            it.data?.let { it1 -> successChangeChannel.send(it1) }
+                        }
+                        Log.d("EEEEE", "getPagination: ${it.data}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun getPagination(page: Int, size: Int) {
+        viewModelScope.launch {
+            factoryRepo.getPagination(page, size).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        listPagination.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data?.content}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    else -> {
+                        Log.d("Admin", "getPagination: Kemadi")
+                    }
+                }
+            }
         }
     }
 
     fun validName(name: String): Boolean {
         if (name.isEmpty()) {
-            viewModelScope.launch {
-                nameChannel.send("Name must be entered")
-            }
+            nameChannel.value = "Name must be entered"
             return false
         } else if (name.length < 4) {
-            viewModelScope.launch {
-                nameChannel.send("Minimum 4 Characters Name")
-            }
+            nameChannel.value = "Minimum 4 Characters Name"
             return false
         } else {
-            viewModelScope.launch {
-                nameChannel.send("Correct")
-            }
+            nameChannel.value = "Correct"
             return true
         }
     }
 
     fun validDesign(design: String): Boolean {
         if (design.isEmpty()) {
-            viewModelScope.launch {
-                designChannel.send("Name must be entered")
-            }
+            designChannel.value = "Name must be entered"
             return false
         } else if (design.length < 4) {
-            viewModelScope.launch {
-                designChannel.send("Minimum 4 Characters Name")
-            }
+            designChannel.value = "Minimum 4 Characters Name"
             return false
         } else {
-            viewModelScope.launch {
-                designChannel.send("Correct")
-            }
+            designChannel.value = "Correct"
             return true
         }
     }
 
     fun validWidth(width: String): Boolean {
         if (width.isEmpty()) {
-            viewModelScope.launch {
-                widthChannel.send("Width must be entered")
-            }
+            widthChannel.value = "Width must be entered"
             return false
         } else if (width.toDouble() < 0.2) {
-            viewModelScope.launch {
-                widthChannel.send("Width minimum size 0.2 m")
-            }
+            widthChannel.value = "Width minimum size 0.2 m"
             return false
         } else {
-            viewModelScope.launch {
-                widthChannel.send("Correct")
-            }
+            widthChannel.value = "Correct"
             return true
         }
     }
 
     fun validHeight(height: String): Boolean {
         if (height.isEmpty()) {
-            viewModelScope.launch {
-                heightChannel.send("Height must be entered")
-            }
+            heightChannel.value = "Height must be entered"
             return false
         } else if (height.toDouble() < 0.2) {
-            viewModelScope.launch {
-                heightChannel.send("Height minimum size 0.2 m")
-            }
+            heightChannel.value = "Height minimum size 0.2 m"
             return false
         } else {
-            viewModelScope.launch {
-                heightChannel.send("Correct")
-            }
+            heightChannel.value = "Correct"
             return true
         }
     }
 
     fun validPon(pon: String): Boolean {
         if (pon.isEmpty()) {
-            viewModelScope.launch {
-                ponChannel.send("Pon must be entered")
-            }
+            ponChannel.value = "Pon must be entered"
             return false
         } else if (pon.length < 6) {
-            viewModelScope.launch {
-                ponChannel.send("Pon was not entered true")
-            }
+            ponChannel.value = "Pon was not entered true"
             return false
         } else {
-            viewModelScope.launch {
-                ponChannel.send("Correct")
-            }
+            ponChannel.value = "Correct"
             return true
         }
     }
 
     fun validPrice(price: String): Boolean {
         if (price.isEmpty()) {
-            viewModelScope.launch {
-                priceChannel.send("Price must be entered")
-            }
+            priceChannel.value = "Price must be entered"
             return false
         } else {
-            viewModelScope.launch {
-                priceChannel.send("Correct")
-            }
+            priceChannel.value = "Correct"
             return true
         }
     }
 
     fun validColor(color: String): Boolean {
         if (color.isEmpty()) {
-            viewModelScope.launch {
-                colorChannel.send("Color must be entered")
-            }
+            colorChannel.value = "Color must be entered"
             return false
         } else if (color.length <= 2) {
-            viewModelScope.launch {
-                colorChannel.send("Color length minimum 2")
-            }
+            colorChannel.value = "Color length minimum 2"
             return false
         } else {
-            viewModelScope.launch {
-                colorChannel.send("Correct")
-            }
+            colorChannel.value = "Correct"
             return true
         }
     }
 
     fun validAmount(amount: String): Boolean {
         if (amount.isEmpty()) {
-            viewModelScope.launch {
-                amountChannel.send("Color must be entered")
-            }
+            amountChannel.value = "Amount must be entered"
             return false
         } else if (amount.toInt() == 0) {
-            viewModelScope.launch {
-                amountChannel.send("Amount can not be 0")
-            }
+            amountChannel.value = "Amount can not be 0"
             return false
         } else {
-            viewModelScope.launch {
-                amountChannel.send("Correct")
-            }
+            amountChannel.value = "Correct"
             return true
         }
     }
 
-    fun validFactoryId(id: Int, isCount: Int): Boolean {
-        var d = false
-        if (isCount == 2) {
-            d = if (id == -1) {
-                viewModelScope.launch {
-                    factoryIdChannel.send("You must select Factory")
-                }
-                false
-            } else {
-                viewModelScope.launch {
-                    factoryIdChannel.send("Correct")
-                }
-                true
-            }
-        } else if (isCount == 1) {
-            viewModelScope.launch {
-                factoryIdChannel.send("Correct")
-            }
-            d = true
+    fun validFactoryId(id: Int): Boolean {
+        if (id == -1) {
+            factoryIdChannel.value = "You must select Factory"
+            return false
+        } else {
+            factoryIdChannel.value = "Correct"
+            return true
         }
-        return d
     }
 
-    fun validType(id: Int): Boolean {
-        return if (id == -1) {
-            viewModelScope.launch {
-                typeChannel.send("You must select Type")
-            }
-            false
-        } else {
-            viewModelScope.launch {
-                typeChannel.send("Correct")
-            }
+    fun validType(type: String): Boolean {
+        return if (type.isNotEmpty()) {
+            typeChannel.value = type
             true
+        } else {
+            typeChannel.value = "You must select Type"
+            false
         }
-
     }
 }
