@@ -4,6 +4,7 @@ import dark.composer.carpet.data.retrofit.models.request.login.LogInRequest
 import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.update.FactoryUpdateRequest
+import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
@@ -55,11 +56,12 @@ interface ApiService {
     @POST("attach/upload/profile")
     suspend fun profileFileUpload(@Part file: MultipartBody.Part): Response<ProfileFileResponse>
 
-    /* product CRUD */
+    /** product CRUD */
+
     @POST("product/emp")
     suspend fun createProduct(@Body productCreateRequest: ProductCreateRequest): Response<ProductResponse>
 
-    @GET("product/adm/{type}")
+    @GET("product/emp/{type}")
     suspend fun productDetails(@Path("type") type:String, @Query("id") id:String): Response<ProductResponse>
 
     @GET("product/adm/pagination/{type}")
@@ -79,7 +81,12 @@ interface ApiService {
     @POST("attach/upload/product")
     suspend fun productFileUpload(@Part file: MultipartBody.Part, @Query("productId") productId:String): Response<ProductFileUploadResponse>
 
-    // factory CRUD
+//    @Multipart
+//    @POST("attach/upload/product")
+//    suspend fun productFileUpload(@Part files:Array<MultipartBody.Part>, @Query("productId") uuid: String): Response<ProductFileUploadResponse>
+
+    /** factory CRUD */
+
     @GET(Constants.FACTORY_PAGINATION_ADM)
     suspend fun getFactoryPaginationAdmin(
         @Query("page") page: Int,
@@ -110,6 +117,13 @@ interface ApiService {
         @Part file: MultipartBody.Part,
         @Path("key") page: String
     ): Response<ProfileFileResponse>
+
+    /** Filter */
+
+    @POST("/product/public/filter")
+    suspend fun filterProduct(@Body filterProduct: ProductFilterRequest): Response<List<ProductPaginationResponse>>
+
+    /** Sale */
 
     @POST("sale/emp/create")
     suspend fun createSale(@Body request: SaleRequest): Response<SaleResponse>

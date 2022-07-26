@@ -106,31 +106,31 @@ class ProductDetailsViewModel @Inject constructor(private val repo:ProductReposi
         }
     }
 
-    fun uploadFile(file: MultipartBody.Part, productId:String){
-        viewModelScope.launch {
-            repo.fileUploadProduct(productId,file).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
-                        viewModelScope.launch {
-                            it.data?.let { it1 -> successChangeChannel.send(it1) }
-                        }
-                        Log.d("EEEEE", "getPagination: ${it.data}")
-                    }
-                    is BaseNetworkResult.Error->{
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
-                    }
-                    is BaseNetworkResult.Loading->{
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
-                    }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
-                    }
-                }
-            }
-        }
-    }
+//    fun uploadFile(file: MultipartBody.Part, productId:String){
+//        viewModelScope.launch {
+//            repo.fileUploadProduct(productId,file).observeForever{
+//                when(it){
+//                    is BaseNetworkResult.Success->{
+//                        viewModelScope.launch {
+//                            it.data?.let { it1 -> successChangeChannel.send(it1) }
+//                        }
+//                        Log.d("EEEEE", "getPagination: ${it.data}")
+//                    }
+//                    is BaseNetworkResult.Error->{
+//                        viewModelScope.launch {
+//                            _errorChannel.send(it.message)
+//                        }
+//                    }
+//                    is BaseNetworkResult.Loading->{
+//                        viewModelScope.launch {
+//                            _loadingChannel.send(it.isLoading)
+//                        }
+//                    }
+//                    else -> {
+//                        Log.d("Admin", "getPagination: Kemadi")
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

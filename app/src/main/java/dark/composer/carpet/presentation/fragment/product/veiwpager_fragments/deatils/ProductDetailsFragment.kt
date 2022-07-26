@@ -143,7 +143,7 @@ class ProductDetailsFragment :
                 val requestBody =
                     RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                viewModel.uploadFile(body, attachId)
+//                viewModel.uploadFile(body, attachId)
             }
         }
     }

@@ -13,8 +13,8 @@
     <item
         app:showAsAction="always"
         android:enabled="true"
-        android:id="@+id/favourite"
-        android:icon="@drawable/ic_favorite"
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
         android:title="Saved">
     </item>
 

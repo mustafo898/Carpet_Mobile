@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dark.composer.carpet.data.retrofit.ApiService
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
+import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
@@ -32,23 +33,6 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         }
         return list
     }
-
-//    suspend fun getFactoryPagination(page:Int,size:Int):LiveData<BaseNetworkResult<PaginationResponse>>{
-//        val list = MutableLiveData<BaseNetworkResult<PaginationResponse>>()
-//        val response = service.getFactoryPagination(page,size)
-//        list.value = BaseNetworkResult.Loading(true)
-//        if (response.code() == 200){
-//            response.body()?.let {
-//                list.value = BaseNetworkResult.Loading(false)
-//                list.value = BaseNetworkResult.Success(it)
-//                Log.d("EEEEEEE", "getPagination: ${it.content.size}")
-//            }
-//        }else{
-//            list.value = BaseNetworkResult.Loading(false)
-//            list.value = BaseNetworkResult.Error(response.message())
-//        }
-//        return list
-//    }
 
     suspend fun productDetails(id:String,type:String): LiveData<BaseNetworkResult<ProductResponse>> {
         val list = MutableLiveData<BaseNetworkResult<ProductResponse>>()
@@ -133,4 +117,24 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         }
         return fileProduct
     }
+
+    suspend fun filterProduct(filterProductRequest: ProductFilterRequest): LiveData<BaseNetworkResult<List<ProductPaginationResponse>>> {
+        val list = MutableLiveData<BaseNetworkResult<List<ProductPaginationResponse>>>()
+        val response = service.filterProduct(filterProductRequest)
+        list.value = BaseNetworkResult.Loading(true)
+        if (response.code() == 200){
+            response.body()?.let {
+                list.value = BaseNetworkResult.Loading(false)
+                list.value = BaseNetworkResult.Success(it)
+                it.forEach {t->
+                    Log.d("EEEEEEE", "count: ${t.imageUrlList}")
+                }
+            }
+        }else{
+            list.value = BaseNetworkResult.Loading(false)
+            list.value = BaseNetworkResult.Error(response.message())
+        }
+        return list
+    }
+
 }

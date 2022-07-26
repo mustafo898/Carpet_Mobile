@@ -224,4 +224,21 @@
             android:id="@+id/action_addProductFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="dark.composer.carpet.presentation.fragment.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_filterProductFragment"
+            app:destination="@id/filterProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.search.filter.FilterProductFragment"
+        android:label="FilterProductFragment" >
+        <action
+            android:id="@+id/action_filterProductFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>

@@ -15,10 +15,10 @@ import dark.composer.carpet.databinding.ItemFactoryBinding
 import dark.composer.carpet.databinding.ItemSelectFactoryBinding
 
 class AddImageAdapter(val context: Context) : RecyclerView.Adapter<AddImageAdapter.SaleViewHolder>() {
-    private val listFactory = mutableListOf<Uri>()
+    private val listFactory = mutableListOf<String>()
 
     inner class SaleViewHolder(val binding: ItemAddImageBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(list:Uri){
+        fun bind(list:String){
             if(list.toString().isNotEmpty()){
                 Glide.with(context).load(list).into(binding.image)
             }else{
@@ -39,14 +39,14 @@ class AddImageAdapter(val context: Context) : RecyclerView.Adapter<AddImageAdapt
         clickListener = f
     }
 
-    fun setListImage(list : List<Uri>){
+    fun setListImage(list : List<String>){
 //        listFactory.clear()
         listFactory.addAll(list)
         notifyDataSetChanged()
 //        notifyItemInserted(list.length-1)
     }
 
-    fun setImage(list : Uri){
+    fun setImage(list : String){
 //        listFactory.clear()
         listFactory.add(list)
         notifyItemInserted(listFactory.size-1)

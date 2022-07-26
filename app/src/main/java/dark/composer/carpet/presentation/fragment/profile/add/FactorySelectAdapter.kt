@@ -39,16 +39,16 @@ class FactorySelectAdapter(val context: Context) :
             }
 
             itemView.setOnClickListener {
-                clickListener?.invoke(list.id)
+                clickListener?.invoke(list.id,list.name)
                 itemSelection = layoutPosition
                 notifyDataSetChanged();
             }
         }
     }
 
-    private var clickListener: ((position: Int) -> Unit)? = null
+    private var clickListener: ((position: Int,name:String) -> Unit)? = null
 
-    fun setClickListener(f: (position: Int) -> Unit) {
+    fun setClickListener(f: (position: Int, name:String) -> Unit) {
         clickListener = f
     }
 

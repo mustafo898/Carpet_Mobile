@@ -24,7 +24,7 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
             }else{
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
-            binding.date.text = list.createdDate
+            binding.date.text = "${list.createdDate.substring(0,10)} ${list.createdDate.substring(11,16)}"
             binding.rate.text = list.factoryName
 
             Log.d("DDDDD", "bind: ${binding.time}")
@@ -34,7 +34,6 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
             }
         }
     }
-
 
     private var clickListener: ((position: String) -> Unit)? = null
 
