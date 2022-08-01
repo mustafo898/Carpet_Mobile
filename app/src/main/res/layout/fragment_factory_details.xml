@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F4F5"
     android:orientation="vertical"
-    tools:context=".presentation.fragment.factory_detail.FactoryDetailsFragment">
+    tools:context=".presentation.fragment.factory.factory_detail.FactoryDetailsFragment">
 
     <ImageView
         android:id="@+id/back"
@@ -136,8 +137,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/factory_txt"
-                app:shimmer_demo_layout="@layout/item_factory_demo_liner"
-                app:shimmer_demo_layout_manager_type="linear_horizontal" />
+                app:shimmer_demo_layout="@layout/item_factory_demo_grid"
+                app:shimmer_demo_layout_manager_type="linear_vertical" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

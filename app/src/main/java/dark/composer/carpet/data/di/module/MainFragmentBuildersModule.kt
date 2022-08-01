@@ -2,14 +2,15 @@ package dark.composer.carpet.data.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.deafaults.DefaultFragment
 import dark.composer.carpet.presentation.fragment.admin.AdminFragment
-import dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsFragment
+import dark.composer.carpet.presentation.fragment.basket.BasketFragment
+import dark.composer.carpet.presentation.fragment.factory.FactoryFragment
+import dark.composer.carpet.presentation.fragment.factory.factory_detail.FactoryDetailsFragment
 import dark.composer.carpet.presentation.fragment.login.LogInFragment
 import dark.composer.carpet.presentation.fragment.product.ProductFragment
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable.CountableFragment
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsFragment
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableFragment
+import dark.composer.carpet.presentation.fragment.product.deatils.ProductDetailsFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
 import dark.composer.carpet.presentation.fragment.profile.add.factory.AddFactoryFragment
 import dark.composer.carpet.presentation.fragment.profile.add.product.AddProductFragment
@@ -52,12 +53,6 @@ public abstract class MainFragmentBuildersModule {
     abstract fun productFragment():ProductFragment
 
     @ContributesAndroidInjector
-    abstract fun productCountable():CountableFragment
-
-    @ContributesAndroidInjector
-    abstract fun productUncountable():UncountableFragment
-
-    @ContributesAndroidInjector
     abstract fun productDetails():ProductDetailsFragment
 
     @ContributesAndroidInjector
@@ -77,4 +72,10 @@ public abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun addSearchFragment():SearchFragment
+
+    @ContributesAndroidInjector
+    abstract fun FactoryFragment():FactoryFragment
+
+    @ContributesAndroidInjector
+    abstract fun basketFragment():BasketFragment
 }

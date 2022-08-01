@@ -9,5 +9,5 @@ data class ProductPaginationResponse(
     val price: Double,
     val uuid: String,
     val weight: Double,
-    val factoryAttachUrl:String
+    val factoryAttachUrl:String,
 )

@@ -30,8 +30,6 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
         collect()
         textListener()
 
-
-
         binding.register.setOnClickListener {
             viewModel.signUp(
                 binding.name.text.toString().trim(),

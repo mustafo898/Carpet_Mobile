@@ -9,12 +9,12 @@ import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 import dark.composer.carpet.presentation.fragment.splash.SplashViewModel
 import dark.composer.carpet.data.scopes.ViewModelKey
 import dark.composer.carpet.presentation.fragment.admin.AdminViewModel
+import dark.composer.carpet.presentation.fragment.basket.BasketViewModel
 import dark.composer.carpet.presentation.fragment.deafaults.DefaultViewModel
-import dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsViewModel
+import dark.composer.carpet.presentation.fragment.factory.FactoryViewModel
+import dark.composer.carpet.presentation.fragment.factory.factory_detail.FactoryDetailsViewModel
+import dark.composer.carpet.presentation.fragment.product.deatils.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.product.ProductViewModel
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable.CountableViewModel
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsViewModel
-import dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableViewModel
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
 import dark.composer.carpet.presentation.fragment.profile.add.factory.AddFactoryViewModel
 import dark.composer.carpet.presentation.fragment.profile.add.product.AddProductViewModel
@@ -61,20 +61,15 @@ abstract class ViewModelsModule {
     @ViewModelKey(FactoryDetailsViewModel::class)
     abstract fun factoryDetailsViewModel(factoryDetailsViewModel : FactoryDetailsViewModel): ViewModel
 
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(CountableViewModel::class)
+//    abstract fun provideCountableViewModel(countableViewModel : CountableViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(ProductViewModel::class)
-    abstract fun provideProductViewModel(productViewModel : ProductViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(CountableViewModel::class)
-    abstract fun provideCountableViewModel(countableViewModel : CountableViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(UncountableViewModel::class)
-    abstract fun provideUncountableViewModel(uncountableViewModel : UncountableViewModel): ViewModel
+    abstract fun provideUncountableViewModel(uncountableViewModel : ProductViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -110,4 +105,14 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(FilterProductViewModel::class)
     abstract fun providerFilterProductViewModel(filterProductViewModel : FilterProductViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FactoryViewModel::class)
+    abstract fun providerFactoryViewModel(factoryViewModel : FactoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BasketViewModel::class)
+    abstract fun providerBasketViewModel(basketViewModel : BasketViewModel): ViewModel
 }

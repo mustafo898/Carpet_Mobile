@@ -15,12 +15,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     override fun onViewCreate() {
         object : CountDownTimer(3000, 100) {
             override fun onFinish() {
-                if (shared.getRole() == "ADMIN") {
-                    navController.navigate(R.id.action_splashFragment_to_adminFragment2)
-                    activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
-                } else {
-                    navController.navigate(R.id.action_splashFragment_to_defaultFragment)
-                }
+                navController.navigate(R.id.action_splashFragment_to_adminFragment2)
+//                if (shared.getRole() == "ADMIN") {
+//                    navController.navigate(R.id.action_splashFragment_to_adminFragment2)
+//                } else {
+//                    navController.navigate(R.id.action_splashFragment_to_defaultFragment)
+//                }
+                activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
             }
 
             override fun onTick(value: Long) {

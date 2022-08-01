@@ -31,6 +31,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         collect()
         textListener()
 
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.GONE
+
 //        val inflate: LayoutInflater = layoutInflater
 //        val layout: View =
 //            inflate.inflate(
@@ -102,12 +104,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.logInFlow.collect {
                     if (it) {
-                        if (shared.getRole() == "ADMIN") {
-                            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
-                            navController.navigate(R.id.action_logInFragment_to_adminFragment2)
-                        } else {
-                            navController.navigate(R.id.action_logInFragment_to_defaultFragment)
-                        }
+//                        if (shared.getRole() == "ADMIN") {
+//                            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+//                        } else {
+//                            navController.navigate(R.id.action_logInFragment_to_defaultFragment)
+//                        }
+                        navController.navigate(R.id.action_logInFragment_to_adminFragment)
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                     }
                 }

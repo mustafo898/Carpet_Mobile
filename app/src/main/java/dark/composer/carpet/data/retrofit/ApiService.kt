@@ -1,5 +1,7 @@
 package dark.composer.carpet.data.retrofit
 
+import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
+import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
 import dark.composer.carpet.data.retrofit.models.request.login.LogInRequest
 import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
 import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
@@ -9,6 +11,8 @@ import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRe
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.retrofit.models.request.sale.SaleRequest
+import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
+import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.signup.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -38,19 +42,22 @@ interface ApiService {
     suspend fun getListProfile(): Response<List<ProfileResponse>>
 
     @GET("profile/adm/{id}")
-    suspend fun getListProfileDetails(@Path("id") id:Int): Response<ProfileResponse>
+    suspend fun getListProfileDetails(@Path("id") id: Int): Response<ProfileResponse>
 
     @PUT("profile/update")
-    suspend fun updateProfile(@Body request:ProfileRequest): Response<ProfileResponse>
+    suspend fun updateProfile(@Body request: ProfileRequest): Response<ProfileResponse>
 
     @POST("profile/adm")
-    suspend fun createCustomersProfile(@Body request:ProfileCreateRequest): Response<ProfileResponse>
+    suspend fun createCustomersProfile(@Body request: ProfileCreateRequest): Response<ProfileResponse>
 
     @PUT("profile/adm/{id}")
-    suspend fun updateCustomersProfile(@Path("id") id:Int, @Body request:ProfileCreateRequest): Response<ProfileResponse>
+    suspend fun updateCustomersProfile(
+        @Path("id") id: Int,
+        @Body request: ProfileCreateRequest
+    ): Response<ProfileResponse>
 
     @DELETE("profile/adm")
-    suspend fun deleteCustomersProfile(@Query("id") id:Int): Response<ProfileResponse>
+    suspend fun deleteCustomersProfile(@Query("id") id: Int): Response<ProfileResponse>
 
     @Multipart
     @POST("attach/upload/profile")
@@ -62,9 +69,19 @@ interface ApiService {
     suspend fun createProduct(@Body productCreateRequest: ProductCreateRequest): Response<ProductResponse>
 
     @GET("product/emp/{type}")
-    suspend fun productDetails(@Path("type") type:String, @Query("id") id:String): Response<ProductResponse>
+    suspend fun productDetails(
+        @Path("type") type: String,
+        @Query("id") id: String
+    ): Response<ProductResponse>
 
-    @GET("product/adm/pagination/{type}")
+//    @GET("product/adm/pagination/{type}")
+//    suspend fun getProductPagination(
+//        @Path("type") type: String,
+//        @Query("page") page: Int,
+//        @Query("size") size: Int
+//    ): Response<List<ProductPaginationResponse>>
+
+    @GET("product/public/pagination/{type}")
     suspend fun getProductPagination(
         @Path("type") type: String,
         @Query("page") page: Int,
@@ -72,14 +89,24 @@ interface ApiService {
     ): Response<List<ProductPaginationResponse>>
 
     @PUT("product/emp/{type}")
-    suspend fun updateProduct(@Path("type") type:String,@Body productCreateRequest: ProductCreateRequest, @Query("id") id:String): Response<ProductResponse>
+    suspend fun updateProduct(
+        @Path("type") type: String,
+        @Body productCreateRequest: ProductCreateRequest,
+        @Query("id") id: String
+    ): Response<ProductResponse>
 
     @DELETE("product/adm/{type}")
-    suspend fun deleteProduct(@Path("type") type:String, @Query("id") id:String) : Response<ProductResponse>
+    suspend fun deleteProduct(
+        @Path("type") type: String,
+        @Query("id") id: String
+    ): Response<ProductResponse>
 
     @Multipart
     @POST("attach/upload/product")
-    suspend fun productFileUpload(@Part file: MultipartBody.Part, @Query("productId") productId:String): Response<ProductFileUploadResponse>
+    suspend fun productFileUpload(
+        @Part file: MultipartBody.Part,
+        @Query("productId") productId: String
+    ): Response<ProductFileUploadResponse>
 
 //    @Multipart
 //    @POST("attach/upload/product")
@@ -123,8 +150,17 @@ interface ApiService {
     @POST("/product/public/filter")
     suspend fun filterProduct(@Body filterProduct: ProductFilterRequest): Response<List<ProductPaginationResponse>>
 
-    /** Sale */
+    /** Basket */
+    @POST("/basket/emp/created")
+    suspend fun createBasket(@Body create: BasketCreateRequest): Response<BasketCreateResponse>
 
+    @PUT("/basket/emp/update")
+    suspend fun updateBasket(@Body update: BasketUpdateRequest): Response<BasketCreateResponse>
+
+    @GET("/basket/emp/pagination/{status}")
+    suspend fun getPaginationBasket(@Path("status") status:String, @Query("page") page: Int, @Query("size") size: Int): Response<List<BasketPaginationResponse>>
+
+    /** Sale */
     @POST("sale/emp/create")
     suspend fun createSale(@Body request: SaleRequest): Response<SaleResponse>
 }

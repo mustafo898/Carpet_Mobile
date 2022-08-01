@@ -43,7 +43,7 @@ class FilterProductFragment :
 
         binding.factoryList.adapter = adapter
 
-        var t = ""
+        var t = "COUNTABLE"
         var s = ""
         adapter.setClickListener { position, name ->
             s = name
@@ -55,10 +55,10 @@ class FilterProductFragment :
                         .uppercase() || it == binding.countable.text.toString().uppercase()
                 ) {
                     t = it
-                    Toast.makeText(requireContext(), "True", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     binding.requireType.visibility = View.GONE
                 } else {
-                    Toast.makeText(requireContext(), "False", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     binding.requireType.visibility = View.VISIBLE
                     binding.requireType.text = it
                 }
@@ -67,6 +67,10 @@ class FilterProductFragment :
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.content?.let { it1 -> adapter.setListFactory(it1) }
+        }
+
+        binding.imageBack.setOnClickListener {
+            navController.navigate(R.id.action_filterProductFragment_to_searchFragment)
         }
 
         viewModel.getPagination(0, 15)
@@ -82,7 +86,19 @@ class FilterProductFragment :
         }
 
         binding.accept.setOnClickListener {
-            navController.navigate(R.id.action_filterProductFragment_to_searchFragment, bundleOf("PON" to binding.pon.text,"NAME" to binding.name.text, "DESIGN" to binding.design.text,"WIDTH" to binding.width.text,"HEIGHT" to binding.height.text,"TYPE" to t, "FACTORY_NAME" to s, "COLOR" to binding.colour.text))
+            navController.navigate(
+                R.id.action_filterProductFragment_to_searchFragment,
+                bundleOf(
+                    "PON" to binding.pon.text.toString(),
+                    "NAME" to binding.name.text.toString(),
+                    "DESIGN" to binding.design.text.toString(),
+                    "WIDTH" to binding.width.text.toString(),
+                    "HEIGHT" to binding.height.text.toString(),
+                    "TYPE" to t,
+                    "FACTORY_NAME" to s,
+                    "COLOR" to binding.colour.text.toString()
+                )
+            )
         }
     }
 }

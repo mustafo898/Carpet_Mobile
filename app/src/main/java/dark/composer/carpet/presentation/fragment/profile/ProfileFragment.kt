@@ -122,22 +122,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
             dialog.show()
         }
-
-//        binding.addFactory.setOnClickListener {
-//            val dialog = AddDialog(requireContext())
-//            dialog.setTitle("Add Factory")
-//            dialog.setVisible(true)
-//            dialog.setStatus(true)
-//            viewModel.liveDataAddFactory.observe(requireActivity()) {
-//                if (it != null) {
-//                    dialog.dismiss()
-//                }
-//            }
-//            dialog.setOnAddListener { name, status, visible ->
-//                viewModel.addFactory(FactoryAddRequest(name))
-//            }
-//            dialog.show()
-//        }
     }
 
     private fun observe() {

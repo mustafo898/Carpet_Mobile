@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#F2F4F5"
     android:layout_height="match_parent"
-    android:layout_marginBottom="70dp"
     tools:context=".presentation.fragment.profile.ProfileFragment">
 
     <ScrollView
@@ -58,7 +58,8 @@
                     android:src="@drawable/bgshape"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tint="#F2F4F5" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"

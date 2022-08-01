@@ -13,24 +13,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     lateinit var sharedPref: SharedPref
 
     override fun onViewCreate() {
-
-//        binding.backBtn.setOnClickListener {
-//            checkRole()
-//        }
-
         binding.profile.setOnClickListener {
-            navController.navigate(R.id.action_settingsFragment_to_profileFragment)
+            if (sharedPref.getToken().isNullOrEmpty()){
+                navController.navigate(R.id.action_settingsFragment_to_logInFragment)
+            }else{
+                navController.navigate(R.id.action_settingsFragment_to_profileFragment)
+            }
         }
 
         binding.version.text = BuildConfig.VERSION_NAME
-
-    }
-
-    private fun checkRole() {
-        if (sharedPref.getRole() == "ADMIN") {
-            navController.navigate(R.id.action_settingsFragment_to_adminFragment)
-        } else {
-            navController.navigate(R.id.action_settingsFragment_to_defaultFragment)
-        }
     }
 }

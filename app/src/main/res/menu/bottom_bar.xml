@@ -21,7 +21,7 @@
     <item
         app:showAsAction="always"
         android:enabled="true"
-        android:id="@+id/factory"
+        android:id="@+id/factoryFragment"
         android:icon="@drawable/ic_factory"
         android:title="Factories">
     </item>
@@ -29,7 +29,7 @@
     <item
         app:showAsAction="always"
         android:enabled="true"
-        android:id="@+id/productFragment"
+        android:id="@+id/basketFragment"
         android:icon="@drawable/ic_shopping_cart"
         android:title="Products">
     </item>

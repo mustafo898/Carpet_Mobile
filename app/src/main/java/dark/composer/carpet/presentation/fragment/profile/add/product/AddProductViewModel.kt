@@ -109,7 +109,9 @@ class AddProductViewModel @Inject constructor(private val repo: ProductRepositor
                 ).observeForever {
                     when (it) {
                         is BaseNetworkResult.Success -> {
-                            createProduct.value = it.data
+                            it.data?.let {t->
+                                createProduct.value = t
+                            }
                             Log.d("EEEEE", "getPagination: ${it.data}")
                         }
                         is BaseNetworkResult.Error -> {

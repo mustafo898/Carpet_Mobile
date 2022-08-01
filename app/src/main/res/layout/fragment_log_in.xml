@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_color_8"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="#F2F4F5"
     tools:context=".presentation.fragment.login.LogInFragment">
 
     <LinearLayout

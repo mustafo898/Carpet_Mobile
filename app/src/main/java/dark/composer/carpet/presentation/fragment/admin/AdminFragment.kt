@@ -1,23 +1,18 @@
 package dark.composer.carpet.presentation.fragment.admin
 
-import android.opengl.Visibility
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenCreated
 import androidx.lifecycle.whenStarted
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayoutMediator
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.databinding.FragmentAdminBinding
-import dark.composer.carpet.presentation.dialog.AddDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.launch
@@ -38,10 +33,12 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             providerFactory
         )[AdminViewModel::class.java]
 
-        binding.listSale.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.listSale.adapter = factoryAdapter
-        binding.listSale.showShimmerAdapter()
+//        binding.listSale.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.listSale.adapter = factoryAdapter
+//        binding.listSale.showShimmerAdapter()
+
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
 
         viewModel.liveDataProfile.observe(requireActivity()) {
             it?.let { t ->
@@ -52,13 +49,28 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             }
         }
 
-        viewModel.getProfile()
+        val pagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = pagerAdapter
+        binding.animateBar.setupWithViewPager2(binding.viewPager)
 
-        viewModel.liveDataListPagination.observe(requireActivity()) {
-            it?.let { t ->
-                binding.listSale.hideShimmerAdapter()
-                factoryAdapter.setListFactory(t.content)
-            }
+        if(shared.getToken().isNullOrEmpty()){
+            binding.userName.text = "Carpet"
+            binding.image.setImageResource(R.drawable.ic_person)
+            binding.phoneNumber.visibility = View.GONE
+            binding.logIn.visibility = View.VISIBLE
+        }else{
+//            binding.userName.visibility = View.VISIBLE
+//            binding.image.visibility = View.VISIBLE
+//            binding.phoneNumber.visibility = View.VISIBLE
+            binding.logIn.visibility = View.GONE
+            viewModel.getProfile()
+        }
+
+        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.move_left)
+        binding.logIn.startAnimation(anim)
+
+        binding.logIn.setOnClickListener {
+            navController.navigate(R.id.action_adminFragment_to_logInFragment)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -69,22 +81,16 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
             }
         }
 
-        binding.listPopular.visibility = View.GONE
-
-        binding.salesEmpty.visibility = View.VISIBLE
-
-        viewModel.getPagination(0, 10)
-
         binding.image.setOnClickListener {
-            navController.navigate(R.id.action_adminFragment_to_settingsFragment)
+            navController.navigate(R.id.action_adminFragment_to_profileFragment)
         }
 
-        factoryAdapter.setClickListener {pos,id->
-            navController.navigate(
-                R.id.action_adminFragment_to_factoryDetailsFragment,
-                bundleOf("ID" to id)
-            )
-        }
+//        factoryAdapter.setClickListener {pos,id->
+//            navController.navigate(
+//                R.id.action_adminFragment_to_factoryDetailsFragment,
+//                bundleOf("ID" to id)
+//            )
+//        }
     }
 
 //    private fun getData(){

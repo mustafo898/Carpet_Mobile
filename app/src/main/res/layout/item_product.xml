@@ -53,7 +53,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/rate"
+            android:id="@+id/factoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -81,6 +81,8 @@
             android:paddingEnd="2dp">
 
             <TextView
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,6 +95,8 @@
             <TextView
                 android:id="@+id/date"
                 android:gravity="end"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

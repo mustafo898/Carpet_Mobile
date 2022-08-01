@@ -16,9 +16,6 @@
             app:destination="@id/adminFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashFragment_to_defaultFragment"
-            app:destination="@id/defaultFragment" />
     </fragment>
 
     <fragment
@@ -31,15 +28,10 @@
             app:destination="@id/sigUpFragment" />
 
         <action
-            android:id="@+id/action_logInFragment_to_adminFragment2"
-            app:destination="@id/adminFragment"
-            app:popUpTo="@id/logInFragment"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_logInFragment_to_defaultFragment"
-            app:destination="@id/defaultFragment"
-            app:popUpTo="@id/logInFragment"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_logInFragment_to_adminFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/action_logInFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
 
     <fragment
@@ -49,35 +41,13 @@
         tools:layout="@layout/fragment_sig_up">
 
         <action
-            android:id="@+id/action_sigUpFragment_to_adminFragment2"
-            app:destination="@id/adminFragment"
-            app:popUpTo="@id/sigUpFragment"
-            app:popUpToInclusive="true"/>
-        <action
             android:id="@+id/action_sigUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/defaultFragment"
-        android:name="dark.composer.carpet.presentation.fragment.deafaults.DefaultFragment"
-        android:label="fragment_default"
-        tools:layout="@layout/fragment_default">
         <action
-            android:id="@+id/action_defaultFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-        <action
-            android:id="@+id/action_defaultFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_defaultFragment_to_factoryDetailsFragment"
-            app:destination="@id/factoryDetailsFragment" />
-        <action
-            android:id="@+id/action_defaultFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_defaultFragment_to_productFragment"
-            app:destination="@id/productFragment" />
+            android:id="@+id/action_sigUpFragment_to_adminFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/action_sigUpFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
 
     <fragment
@@ -86,17 +56,14 @@
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin">
         <action
-            android:id="@+id/action_adminFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_adminFragment_to_factoryDetailsFragment"
-            app:destination="@id/factoryDetailsFragment" />
-        <action
             android:id="@+id/action_adminFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_adminFragment_to_productFragment"
-            app:destination="@id/productFragment" />
+            android:id="@+id/action_adminFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
     <fragment
@@ -105,21 +72,15 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/action_settingsFragment_to_defaultFragment"
-            app:destination="@id/defaultFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_adminFragment"
-            app:destination="@id/adminFragment" />
-        <action
             android:id="@+id/action_settingsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_settingsFragment_to_defaultFragment2"
-            app:destination="@id/defaultFragment" />
+            android:id="@+id/action_settingsFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/factoryDetailsFragment"
-        android:name="dark.composer.carpet.presentation.fragment.factory_detail.FactoryDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.factory_detail.FactoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_factory_details" />
     <fragment
@@ -147,11 +108,6 @@
         android:label="ProductFragment"
         tools:layout="@layout/fragment_product">
         <action
-            android:id="@+id/action_productFragment_to_adminFragment"
-            app:destination="@id/adminFragment"
-            app:popUpTo="@id/productFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_productFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment"
             app:popUpTo="@id/productFragment"
@@ -160,35 +116,14 @@
     <fragment
         tools:layout="@layout/fragment_product_details"
         android:id="@+id/productDetailsFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.deatils.ProductDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.deatils.ProductDetailsFragment"
         android:label="ProductDetailsFragment" >
         <action
             android:id="@+id/action_productDetailsFragment_to_productFragment"
             app:destination="@id/productFragment" />
         <action
-            android:id="@+id/action_productDetailsFragment_to_uncountableFragment"
-            app:destination="@id/uncountableFragment" />
-        <action
-            android:id="@+id/action_productDetailsFragment_to_countableFragment"
-            app:destination="@id/countableFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/countableFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.countable.CountableFragment"
-        android:label="fragment_countable"
-        tools:layout="@layout/fragment_countable" >
-        <action
-            android:id="@+id/action_countableFragment_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/uncountableFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.veiwpager_fragments.uncountable.UncountableFragment"
-        android:label="fragment_uncountable"
-        tools:layout="@layout/fragment_uncountable" >
-        <action
-            android:id="@+id/action_uncountableFragment_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment" />
+            android:id="@+id/action_productDetailsFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
     </fragment>
     <fragment
         android:id="@+id/customersListFragment"
@@ -241,4 +176,17 @@
             android:id="@+id/action_filterProductFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/factoryFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.FactoryFragment"
+        android:label="FactoryFragment" >
+        <action
+            android:id="@+id/action_factoryFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="dark.composer.carpet.presentation.fragment.basket.BasketFragment"
+        android:label="fragment_basket"
+        tools:layout="@layout/fragment_basket" />
 </navigation>

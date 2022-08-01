@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
-import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import dark.composer.carpet.databinding.ItemListCustomersBinding
 import dark.composer.carpet.databinding.ItemProductBinding
@@ -20,7 +18,7 @@ class ListAdapter(private var context: Context) : RecyclerView.Adapter<ListAdapt
         RecyclerView.ViewHolder(binding.root) {
         fun bind(list: ProfileResponse) {
             binding.name.text = list.name
-            if (!list.url.isNullOrEmpty()){
+            if (list.url.isNotEmpty()){
                 Glide.with(context).load(list.url).into(binding.image)
                 Log.d("RRRRR", "bind: ${list.url}")
             }else{

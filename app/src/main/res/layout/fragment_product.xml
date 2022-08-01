@@ -4,31 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#F2F4F5"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+<!--    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Countable"-->
+<!--            android:textSize="18sp"-->
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/bg_round"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:id="@+id/countable"/>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Uncountable"-->
+<!--            android:textSize="18sp"-->
+<!--            android:padding="10dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:id="@+id/uncountable"/>-->
+<!--    </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    <RadioGroup
+        android:padding="5dp"
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:padding="10dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="50dp"
-            android:id="@+id/tab_layout"
-            app:tabIndicatorColor="#B4B2BF"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabTextColor="@color/black"
-            app:tabRippleColor="#B4B2BF"
-            app:tabSelectedTextColor="#B4B2BF"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <RadioButton
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Countable"
+            android:button="@color/transparent"
+            android:padding="15dp"
+            android:elevation="2dp"
+            android:id="@+id/countable"
+            android:background="@drawable/selector_type"/>
 
-    <androidx.viewpager2.widget.ViewPager2
+        <RadioButton
+            android:layout_marginStart="10dp"
+            android:id="@+id/uncountable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uncountable"
+            android:button="@color/transparent"
+            android:padding="15dp"
+            android:elevation="2dp"
+            android:background="@drawable/selector_type"/>
+    </RadioGroup>
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/viewPager"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_demo_angle="15"
+        android:layout_marginTop="10dp"
+        app:shimmer_demo_layout="@layout/item_product_demo_grid"
+        app:shimmer_demo_layout_manager_type="grid" />
 </androidx.appcompat.widget.LinearLayoutCompat>

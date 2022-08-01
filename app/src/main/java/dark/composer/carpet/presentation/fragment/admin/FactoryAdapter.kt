@@ -18,11 +18,11 @@ class FactoryAdapter(val context: Context) : RecyclerView.Adapter<FactoryAdapter
             binding.name.text = list.name
             if(list.photoUrl?.isNotEmpty() == true){
                 Glide.with(context).load(list.photoUrl).into(binding.image)
-            }else{
-                binding.image.setImageResource(R.drawable.ic_image_null)
             }
+
             binding.date.text = list.createdDate.substring(0,10)
             binding.time.text = list.createdDate.substring(11,16)
+            binding.status.text = list.status
             Log.d("DDDDD", "bind: ${binding.time}")
 
             itemView.setOnClickListener {
