@@ -1,5 +1,6 @@
 package dark.composer.carpet.presentation.fragment.product
 
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +26,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
     lateinit var list: List<PaginationResponse>
     var page = 0
     var isLast = false
+    var type = ""
     override fun onViewCreate() {
 
         viewModel = ViewModelProvider(
@@ -42,13 +44,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { it1 ->
                 binding.list.hideShimmerAdapter()
-                productAdapter.setProductListProduct(it1)
-            }
-        }
-
-        viewModel.liveDataListUncountablePagination.observe(requireActivity()) {
-            it?.let { it1 ->
-                binding.list.hideShimmerAdapter()
+                productAdapter.clear()
                 productAdapter.setProductListProduct(it1)
             }
         }
@@ -56,46 +52,41 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         productAdapter.setClickListener {
             navController.navigate(
                 R.id.action_adminFragment_to_productDetailsFragment,
-                bundleOf("ID" to it, "TYPE" to "COUNTABLE")
+                bundleOf("ID" to it, "TYPE" to type)
             )
         }
 
-        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val lm = recyclerView.layoutManager as GridLayoutManager
-                if (!isLast) {
-                    if (lm.findLastVisibleItemPosition() == productAdapter.itemCount - 1) {
-                        isLast = true
-                        page += 1
-//                        viewModel.getPagination(page,20,"UNCOUNTABLE")
-                    }
-                }
-            }
-        })
-
-        var isClick = false
-
-//        binding.uncountable.setOnClickListener {
-//            if (!isClick) {
-//                isClick = true
-//                binding.uncountable.setBackgroundResource(R.drawable.bg_round)
-//                viewModel.getUncountablePagination(page, 20, "UNCOUNTABLE")
-//                binding.countable.setBackgroundColor(R.color.white)
-//            }else{
-//
+//        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                val lm = recyclerView.layoutManager as GridLayoutManager
+//                if (!isLast) {
+//                    if (lm.findLastVisibleItemPosition() == productAdapter.itemCount - 1 && productAdapter.itemCount >= 5) {
+//                        isLast = true
+//                        page += 1
+//                        if (binding.countable.isActivated){
+//                            viewModel.getCountPagination(page,20,"COUNTABLE","")
+//                        }
+//                        if (binding.uncountable.isActivated){
+//                            viewModel.getCountPagination(page,20,"UNCOUNTABLE","")
+//                        }
+//                    }
+//                }
 //            }
-//        }
-//
-//        binding.countable.setOnClickListener {
-//            if (!isClick){
-//                isClick = true
-//                binding.countable.setBackgroundResource(R.drawable.bg_round)
-//                viewModel.getCountPagination(page, 20, "COUNTABLE")
-//                binding.uncountable.setBackgroundColor(R.color.white)
-//            }
-//        }
+//        })
 
-        viewModel.getCountPagination(page, 20, "COUNTABLE")
+        binding.countable.isChecked = true
+
+        binding.countable.setOnClickListener {
+            viewModel.getCountPagination(page, 20, "COUNTABLE", "")
+            type = "COUNTABLE"
+        }
+
+        binding.uncountable.setOnClickListener {
+            viewModel.getCountPagination(page, 20, "UNCOUNTABLE", "")
+            type = "UNCOUNTABLE"
+        }
+
+        viewModel.getCountPagination(page, 20, "COUNTABLE", "")
     }
 }

@@ -1,6 +1,7 @@
 package dark.composer.carpet.presentation.fragment.basket
 
 import android.content.Context
+import android.content.LocusId
 import android.util.Log
 import androidx.core.widget.ListViewAutoScrollHelper
 import androidx.lifecycle.LiveData
@@ -35,6 +36,28 @@ class BasketViewModel @Inject constructor(private val repo: BasketRepository) : 
     fun updateBasket(updateRequest: BasketUpdateRequest) {
         viewModelScope.launch {
             repo.updateBasket(updateRequest).observeForever{
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        basketChannel.value = it.data!!
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun getByIdBasket(id: Int) {
+        viewModelScope.launch {
+            repo.getByIdBasket(id).observeForever{
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         basketChannel.value = it.data!!

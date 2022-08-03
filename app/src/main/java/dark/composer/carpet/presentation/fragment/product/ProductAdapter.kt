@@ -39,10 +39,13 @@ class ProductAdapter(private var context: Context) : RecyclerView.Adapter<Produc
     }
 
     fun setProductListProduct(list: List<ProductPaginationResponse>) {
-        this.listProduct.clear()
         this.listProduct.addAll(list)
         this.listProduct.shuffle()
         notifyDataSetChanged()
+    }
+
+    fun clear(){
+        this.listProduct.clear()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SaleViewHolder(

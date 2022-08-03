@@ -10,7 +10,8 @@ import dark.composer.carpet.databinding.SheetUpdateBasketBinding
 class UpdateBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
     private val binding = SheetUpdateBasketBinding.inflate(layoutInflater)
 
-    private var updateListener: ((amount: Int, price: Double, height: Double) -> Unit)? = null
+    private var updateListener: ((amount: Int, price: Double, height: Double) -> Unit)? =
+        null
 
     fun setOnUpdateListener(f: (amount: Int, price: Double, height: Double) -> Unit) {
         updateListener = f
@@ -20,29 +21,14 @@ class UpdateBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
     var price = 1.0
     var height = 1.0
 
-    //    fun setAmount1(s:Int){
-//        amount = s
-//    }
-//
-//    fun setPrice1(s:Double){
-//
-//    }
-//
-//    fun setHeight1(){
-//
-//    }
-//
     init {
         binding.add.setOnClickListener {
             amount++
             binding.amount.text = amount.toString()
         }
+
         binding.minus.setOnClickListener {
-            if (amount == 0) {
-                binding.amount.text = 0.toString()
-                Toast.makeText(binding.root.context, "You can not add basket", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (amount > 0) {
+            if (amount > 1) {
                 amount--
                 binding.amount.text = amount.toString()
             }
@@ -53,12 +39,12 @@ class UpdateBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
         binding.height.setText(height.toString())
 
         binding.updateBasket.setOnClickListener {
-//            if (binding.price.text.toString().length >= )
-            updateListener?.invoke(amount,
+            updateListener?.invoke(
+                amount,
                 if (binding.price.text.toString().isNotEmpty()) binding.price.text.toString()
                     .toDouble() else 0.0,
                 if (binding.height.text.toString().isNotEmpty()) binding.height.text.toString()
-                    .toDouble() else 0.0
+                    .toDouble() else 0.0,
             )
         }
         setContentView(binding.root)

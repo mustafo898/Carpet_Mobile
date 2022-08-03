@@ -46,6 +46,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
                 Log.d("RRRRR", "onViewCreate: ${t.name}")
                 binding.userName.text = "${t.name} ${t.surname}"
                 binding.phoneNumber.text = t.phoneNumber
+                binding.phoneNumber.visibility = View.VISIBLE
             }
         }
 

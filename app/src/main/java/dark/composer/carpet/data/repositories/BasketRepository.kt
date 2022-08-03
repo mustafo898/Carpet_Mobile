@@ -51,6 +51,23 @@ class BasketRepository @Inject constructor(private val service: ApiService) {
         return liveData
     }
 
+    suspend fun getByIdBasket(id:Int): LiveData<BaseNetworkResult<BasketCreateResponse>> {
+        val liveData = MutableLiveData<BaseNetworkResult<BasketCreateResponse>>()
+        val response = service.getByIdBasket(id)
+        liveData.value = BaseNetworkResult.Loading(true)
+        if (response.code() == 200) {
+            liveData.value = BaseNetworkResult.Loading(false)
+            response.body()?.let {
+                liveData.value = BaseNetworkResult.Success(it)
+            }
+        } else {
+            Log.d("RRRRRR", "createBasket: ${response.message()}")
+            liveData.value = BaseNetworkResult.Loading(false)
+            liveData.value = BaseNetworkResult.Error(response.message().toString())
+        }
+        return liveData
+    }
+
     suspend fun getPaginationBasket(
         status: String, page: Int, size: Int, context: Context
     ): LiveData<BaseNetworkResult<List<BasketPaginationResponse>>> {

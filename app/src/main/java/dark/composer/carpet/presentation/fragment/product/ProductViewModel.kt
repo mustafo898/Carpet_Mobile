@@ -46,7 +46,7 @@ class ProductViewModel @Inject constructor(
             repoBasket.createBasket(createRequest).observeForever {
                 when (it) {
                     is BaseNetworkResult.Success -> {
-                        basketChannel.value = it.data
+                        basketChannel.value = it.data!!
                     }
                     is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {
@@ -63,15 +63,19 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun getCountPagination(page: Int, size: Int, count: String) {
+    fun getCountPagination(page: Int, size: Int, count: String,id: String) {
         val list = mutableListOf<ProductPaginationResponse>()
         viewModelScope.launch {
             repo.getPagination(page, size, count).observeForever {
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         it.data?.let { t ->
-//                            list.addAll(t)
-                            listPagination.value = t
+                            t.forEach {e->
+                                if (e.uuid != id){
+                                    list.add(e)
+                                }
+                            }
+                            listPagination.value = list
                         }
                         Log.d("EEEEE", "countable: ${it.data}")
                     }
@@ -90,36 +94,6 @@ class ProductViewModel @Inject constructor(
                     }
                 }
             }
-        }
-    }
-
-    fun getUncountablePagination(page: Int, size: Int, uncountable: String) {
-        viewModelScope.launch {
-            repo.getPagination(page, size, uncountable).observeForever {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        it.data?.let { t ->
-//                            list.addAll(t)
-                            listUncountablePagination.value = t
-                        }
-                        Log.d("EEEEE", "uncountable: ${it.data}")
-                    }
-                    is BaseNetworkResult.Error -> {
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
-                    }
-                    is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
-                    }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
-                    }
-                }
-            }
-//            Log.d("WWWWW","$list")
         }
     }
 

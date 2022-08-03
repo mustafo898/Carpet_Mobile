@@ -35,7 +35,7 @@ interface ApiService {
     @POST(Constants.LOGIN)
     suspend fun logIn(@Body logInRequest: LogInRequest): Response<LogInResponse>
 
-    @GET("profile/profile")
+    @GET("profile/profile/addminver")
     suspend fun getProfile(): Response<ProfileResponse>
 
     @GET("profile/adm")
@@ -156,6 +156,9 @@ interface ApiService {
 
     @PUT("/basket/emp/update")
     suspend fun updateBasket(@Body update: BasketUpdateRequest): Response<BasketCreateResponse>
+
+    @PUT("/basket/emp/{id}")
+    suspend fun getByIdBasket(@Path("id") id:Int): Response<BasketCreateResponse>
 
     @GET("/basket/emp/pagination/{status}")
     suspend fun getPaginationBasket(@Path("status") status:String, @Query("page") page: Int, @Query("size") size: Int): Response<List<BasketPaginationResponse>>

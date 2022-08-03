@@ -8,11 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.databinding.FragmentProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.presentation.fragment.basket.BasketViewModel
 import dark.composer.carpet.presentation.fragment.basket.dialog.BottomSheetDialog1
 import dark.composer.carpet.presentation.fragment.product.ProductAdapter
 import dark.composer.carpet.presentation.fragment.product.ProductDetailsAdapter
@@ -24,6 +26,7 @@ import kotlinx.coroutines.runBlocking
 class ProductDetailsFragment :
     BaseFragment<FragmentProductDetailsBinding>(FragmentProductDetailsBinding::inflate) {
     lateinit var viewModel: ProductViewModel
+    lateinit var basketViewModel: BasketViewModel
     private val REQUEST_CODE = 100
     var attachId = ""
 
@@ -41,8 +44,13 @@ class ProductDetailsFragment :
             providerFactory
         )[ProductViewModel::class.java]
 
+        basketViewModel = ViewModelProvider(
+            this,
+            providerFactory
+        )[BasketViewModel::class.java]
+
         binding.list.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.list.adapter = productAdapter
         binding.list.showShimmerAdapter()
 
@@ -53,6 +61,7 @@ class ProductDetailsFragment :
             id = it.getString("ID", "")
             type = it.getString("TYPE", "")
         }
+        Toast.makeText(requireContext(), type, Toast.LENGTH_SHORT).show()
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { it1 ->
@@ -78,9 +87,12 @@ class ProductDetailsFragment :
                 attachId = t.uuid
                 Log.d("QQQQQQ", "onViewCreate: $attachId")
                 binding.visible.text = t.colour
+//                Toast.makeText(requireContext(), t.uuid, Toast.LENGTH_SHORT).show()
                 binding.size.text = "${t.weight} x ${t.height}"
             }
         }
+
+//        Toast.makeText(requireContext(), attachId, Toast.LENGTH_SHORT).show()
 
         val page = 0
 
@@ -93,25 +105,15 @@ class ProductDetailsFragment :
             }
         }
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.basketFlow.observe(viewLifecycleOwner) {
-                    bottomDialog.dismiss()
-                    Toast.makeText(requireContext(), "Success Add to Basket", Toast.LENGTH_SHORT)
-                        .show()
-                }
-//            }
-//        }
+        viewModel.basketFlow.observe(viewLifecycleOwner) {
+            bottomDialog.dismiss()
+            Toast.makeText(requireContext(), "Success Add to Basket", Toast.LENGTH_SHORT)
+                .show()
+        }
 
         binding.addBasket.setOnClickListener {
             bottomDialog.setOnAddListener { amount, info ->
-//                if (attachId == "8a8a8359824005730182401094330002"){
-//                    viewModel.createBasket(BasketCreateRequest(amount, info, attachId, type))
-//                    Toast.makeText(requireContext(), "Teng", Toast.LENGTH_SHORT).show()
-//                }else{
-                Toast.makeText(requireContext(), type, Toast.LENGTH_SHORT).show()
-                    viewModel.createBasket(BasketCreateRequest(amount, info, attachId, type))
-//                }
+                viewModel.createBasket(BasketCreateRequest(amount, info, attachId, type))
             }
             bottomDialog.show()
         }
@@ -122,7 +124,7 @@ class ProductDetailsFragment :
         }
 
         viewModel.productDetails(id, type)
-        viewModel.getCountPagination(page, 20, type)
+        viewModel.getCountPagination(page, 20, type,attachId)
 
         binding.more.setOnClickListener {
             val popup = PopupMenu(requireContext(), binding.more)

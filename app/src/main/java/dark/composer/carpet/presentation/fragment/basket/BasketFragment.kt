@@ -44,7 +44,12 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
                 .show()
         }
 
+        viewModel.basketFlow.observe(viewLifecycleOwner){
+            bottomSheetDialog.amount = it.amount
+        }
+
         basketAdapter.setEditClickListener {
+            viewModel.getByIdBasket(it)
             bottomSheetDialog.setOnUpdateListener { amount, price, height ->
                 viewModel.updateBasket(BasketUpdateRequest(it, "GIVEN", price, amount, height))
             }

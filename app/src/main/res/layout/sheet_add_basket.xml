@@ -5,11 +5,10 @@
     android:gravity="top"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_bottom"
         android:padding="20dp">
 
         <LinearLayout
@@ -44,8 +43,8 @@
                     app:tint="@color/black" />
 
                 <TextView
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:id="@+id/amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +56,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_delete"
+                    android:src="@drawable/ic_remove"
                     android:id="@+id/minus"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -87,5 +86,5 @@
                 android:text="Add Basket"
                 android:textSize="20sp"/>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -44,8 +43,8 @@
                     app:tint="@color/black" />
 
                 <TextView
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:id="@+id/amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +56,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_delete"
+                    android:src="@drawable/ic_remove"
                     android:id="@+id/minus"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -82,7 +81,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
+                android:hint="Height"
                 app:helperTextTextColor="#F44336">
 
                 <com.google.android.material.textfield.TextInputEditText
