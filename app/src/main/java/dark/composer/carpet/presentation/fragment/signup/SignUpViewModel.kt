@@ -8,12 +8,12 @@ import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: SignUpRepositoryImpl) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: SignUpRepositoryImpl) :
+    ViewModel() {
     private val signUpChannel = Channel<Boolean>()
     val signUpFlow = signUpChannel.receiveAsFlow()
 
@@ -176,7 +176,7 @@ class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: Sign
                 passwordChannel.send("Password must be Entered")
             }
             return false
-        }else if (configPassword != password) {
+        } else if (configPassword != password) {
             viewModelScope.launch {
                 confirmPasswordChannel.send("Confirm Password must be Equal Password")
             }

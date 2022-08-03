@@ -22,23 +22,23 @@ class ProfileRepository @Inject constructor(
     private var service: ApiService,
     private var sharedPref: SharedPref
 ) {
-    suspend fun changeImage(fileMultipartBody: MultipartBody.Part): Flow<BaseNetworkResult<ProfileFileResponse>> {
-        return flow {
-            Log.d("OOOOO", "changeImage: ishladi")
-            val response = service.profileFileUpload(fileMultipartBody)
-            if (response.code() == 200) {
-                response.body()?.let {
-                    Log.d("FFFFF", "changeImage: ${it.url}")
-                    emit(BaseNetworkResult.Success(it))
-                }
-            } else if (response.code() == 400) {
-                emit(BaseNetworkResult.Error("No access"))
-                Log.d("OOOOO", "changeImage: xatolik")
-            } else if (response.code() == 404) {
-                Log.d("OOOOO", "changeImage: xatolik")
-                emit(BaseNetworkResult.Error("User not found"))
+    suspend fun changeImage(fileMultipartBody: MultipartBody.Part): LiveData<BaseNetworkResult<ProfileFileResponse>> {
+        val liveData = MutableLiveData<BaseNetworkResult<ProfileFileResponse>>()
+        Log.d("OOOOO", "changeImage: ishladi")
+        val response = service.profileFileUpload(fileMultipartBody)
+        if (response.code() == 200) {
+            response.body()?.let {
+                Log.d("FFFFF", "changeImage: ${it.url}")
+                liveData.value = BaseNetworkResult.Success(it)
             }
+        } else if (response.code() == 400) {
+            liveData.value = BaseNetworkResult.Error("No access")
+            Log.d("OOOOO", "changeImage: xatolik")
+        } else if (response.code() == 404) {
+            Log.d("OOOOO", "changeImage: xatolik")
+            liveData.value = BaseNetworkResult.Error("User not found")
         }
+        return liveData
     }
 
     suspend fun getProfile(): LiveData<BaseNetworkResult<ProfileResponse>> {

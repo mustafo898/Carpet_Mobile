@@ -56,5 +56,6 @@ class SharedPref(context: Context) {
         editor.putString("ROLE", role)
         editor.apply()
     }
+
     fun getRole() = preferences.getString("ROLE", "")
 }

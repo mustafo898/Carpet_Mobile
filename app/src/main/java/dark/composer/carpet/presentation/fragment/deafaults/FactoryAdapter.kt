@@ -23,8 +23,8 @@ class FactoryAdapter(private var context: Context) :
             } else {
                 binding.image.setImageResource(R.drawable.ic_image_null)
             }
-            binding.date.text = list.createdDate.substring(0,10)
-            binding.time.text = list.createdDate.substring(11,16)
+            binding.date.text = list.createdDate.substring(0, 10)
+            binding.time.text = list.createdDate.substring(11, 16)
             Log.d("DDDDD", "bind: ${binding.time}")
 
             itemView.setOnClickListener {

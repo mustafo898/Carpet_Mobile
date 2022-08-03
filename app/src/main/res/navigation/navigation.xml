@@ -3,20 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/splashFragment">
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="dark.composer.carpet.presentation.fragment.splash.SplashFragment"
-        android:label="fragment_default"
-        tools:layout="@layout/fragment_splash">
-
-        <action
-            android:id="@+id/action_splashFragment_to_adminFragment2"
-            app:destination="@id/adminFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+    app:startDestination="@id/adminFragment">
 
     <fragment
         android:id="@+id/logInFragment"

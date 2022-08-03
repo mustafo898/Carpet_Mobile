@@ -1,19 +1,18 @@
 package dark.composer.carpet.presentation.fragment.profile
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProfileRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -21,8 +20,8 @@ import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(private val profileRepository: ProfileRepository) :
     ViewModel() {
-    private val successChannel = Channel<ProfileFileResponse>()
-    val successFlow = successChannel.receiveAsFlow()
+    private val successMLD = MutableLiveData<ProfileFileResponse>()
+    val successLD: LiveData<ProfileFileResponse> = successMLD
 
     private val _loadingChannel = Channel<Boolean?>()
     val loadingFlow = _loadingChannel.receiveAsFlow()
@@ -31,25 +30,25 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
     val errorFlow = _errorChannel.receiveAsFlow()
 
     val addFactory = MutableLiveData<FactoryResponse?>()
-    val liveDataAddFactory:MutableLiveData<FactoryResponse?> = addFactory
+    val liveDataAddFactory: MutableLiveData<FactoryResponse?> = addFactory
 
     private val profile = MutableLiveData<ProfileResponse?>()
     val liveDataProfile: MutableLiveData<ProfileResponse?> = profile
 
     fun changed(file: MultipartBody.Part) {
         viewModelScope.launch {
-            profileRepository.changeImage(file).catch { t ->
-                Log.d("DDDD", "getServicesResponse: $t")
-            }.collect {
+            profileRepository.changeImage(file).observeForever {
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         it.data?.let { d ->
-                            successChannel.send(d)
+                            successMLD.value = d
                         }
                     }
                     is BaseNetworkResult.Error -> {
                         it.message?.let { d ->
-                            _errorChannel.send(d)
+                            viewModelScope.launch {
+                                _errorChannel.send(d)
+                            }
                         }
                     }
                     else -> {
@@ -58,7 +57,9 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
                 }
             }
         }
+
     }
+
 
     fun getProfile() {
         viewModelScope.launch {

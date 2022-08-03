@@ -13,7 +13,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DefaultViewModel @Inject constructor(private val defaultRepository: DefaultRepository,private val factoryRepository: FactoryRepository) : ViewModel() {
+class DefaultViewModel @Inject constructor(
+    private val defaultRepository: DefaultRepository,
+    private val factoryRepository: FactoryRepository
+) : ViewModel() {
     private val listPagination = MutableLiveData<PaginationResponse?>()
     val liveDataListPagination: MutableLiveData<PaginationResponse?> = listPagination
 
@@ -23,22 +26,22 @@ class DefaultViewModel @Inject constructor(private val defaultRepository: Defaul
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
 
-    fun getPagination(page:Int,size: Int){
+    fun getPagination(page: Int, size: Int) {
         viewModelScope.launch {
-            factoryRepository.getPagination(page,size).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
+            factoryRepository.getPagination(page, size).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
                         listPagination.value = it.data
-                        if (it.data != null){
+                        if (it.data != null) {
 //                            Log.d("EEEEE", "getPagination: ${it.data.content[0].createdDate}")
                         }
                     }
-                    is BaseNetworkResult.Error->{
+                    is BaseNetworkResult.Error -> {
                         viewModelScope.launch {
                             _errorChannel.send(it.message)
                         }
                     }
-                    is BaseNetworkResult.Loading->{
+                    is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {
                             _loadingChannel.send(it.isLoading)
                         }

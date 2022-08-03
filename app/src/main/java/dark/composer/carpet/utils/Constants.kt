@@ -5,7 +5,8 @@ object Constants {
     const val LOGIN = "auth/login"
     const val SIGNUP = "auth/registration"
     const val FACTORY_INFO = "factory/{id}"
-//    const val FACTORY_INFO_ADM = "factory/adm/{id}"
+
+    //    const val FACTORY_INFO_ADM = "factory/adm/{id}"
 //    const val FACTORY_LIST = "factory/list"
     const val FACTORY_PAGINATION = "factory/public/pagination"
     const val FACTORY_PAGINATION_ADM = "factory/adm/pagination"

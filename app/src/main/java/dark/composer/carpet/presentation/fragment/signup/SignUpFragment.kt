@@ -1,8 +1,6 @@
 package dark.composer.carpet.presentation.fragment.signup
 
 import android.transition.TransitionInflater
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -15,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentSigUpBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::inflate) {
@@ -85,7 +82,8 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
                 viewModel.signUpFlow.collect {
                     if (it) {
 //                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
-                        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+                        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility =
+                            View.VISIBLE
                         Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
 
                     }

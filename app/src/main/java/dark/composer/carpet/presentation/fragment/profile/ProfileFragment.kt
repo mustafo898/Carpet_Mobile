@@ -2,7 +2,6 @@ package dark.composer.carpet.presentation.fragment.profile
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -19,20 +18,18 @@ import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
-import dark.composer.carpet.presentation.dialog.AddDialog
 import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
@@ -52,9 +49,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
         binding.changeImage.setOnClickListener {
             checkPermission()
+            viewModel.getProfile()
         }
 
-        viewModel.getProfile()
+        try {
+            viewModel.getProfile()
+
+        }catch (ste:SocketTimeoutException){
+            Log.d("GETPROFILE LOG", "observe: $ste")
+
+        }
 
         binding.more.setOnClickListener {
             val popup = PopupMenu(requireContext(), binding.more)
@@ -71,7 +75,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             viewModel.liveDataProfile.observe(requireActivity()) {
                                 dialog.dismiss()
                             }
-                            dialog.setOnAddListener { name, lastname, password, phone ,role->
+                            dialog.setOnAddListener { name, lastname, password, phone, role ->
                                 viewModel.updateProfile(ProfileRequest(password, name, lastname))
                             }
                             dialog.show()
@@ -141,6 +145,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 }
             }
         }
+
+        try {
+            viewModel.successLD.observe(viewLifecycleOwner) {
+                Glide.with(requireContext()).load(it.url)
+                    .into(binding.image)
+                Toast.makeText(requireContext(), "image is changed", Toast.LENGTH_SHORT).show()
+            }
+        }catch (e:SocketTimeoutException){
+            Log.d("IMAGE LOG", "observe: $e")
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -179,6 +193,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         } else {
             ActivityCompat.requestPermissions(requireActivity(), permission, 1)
         }
+
     }
 
     @Deprecated("Deprecated in Java")
@@ -190,17 +205,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 val uri = data?.data
                 imagePath = uri?.let { uploadFile(it) }.toString()
                 Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.lifecycle.whenStarted {
-                        viewModel.successFlow.catch {
-                            Log.d("EEEEEE", "onActivityResult: $this")
-                        }.collect {
-                            sharedPref.setImage(it.url)
-                            Glide.with(requireContext()).load(sharedPref.getImage())
-                                .into(binding.image)
-                        }
-                    }
-                }
+//                viewLifecycleOwner.lifecycleScope.launch {
+//                    viewLifecycleOwner.lifecycle.whenStarted {
+//                        viewModel.successFlow.catch {
+//                            Log.d("EEEEEE", "onActivityResult: $this")
+//                            Toast.makeText(requireContext(), "failed image changing", Toast.LENGTH_SHORT).show()
+//
+//                        }.collect {
+//                            sharedPref.setImage(it.url)
+//                            Toast.makeText(requireContext(), "image is changed", Toast.LENGTH_SHORT).show()
+//                            Glide.with(requireContext()).load(it.url)
+//                                .into(binding.image)
+//                        }
+
+//                    }
+//                }
                 val file = File(imagePath)
                 val requestBody =
                     RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)

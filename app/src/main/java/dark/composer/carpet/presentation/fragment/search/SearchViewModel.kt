@@ -5,20 +5,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.FactoryRepository
 import dark.composer.carpet.data.repositories.ProductRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
 import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val repo:ProductRepository) : ViewModel() {
+class SearchViewModel @Inject constructor(private val repo: ProductRepository) : ViewModel() {
     private val listProductPagination = MutableLiveData<List<ProductPaginationResponse>?>()
-    val liveDataListProductPagination: MutableLiveData<List<ProductPaginationResponse>?> = listProductPagination
+    val liveDataListProductPagination: MutableLiveData<List<ProductPaginationResponse>?> =
+        listProductPagination
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()

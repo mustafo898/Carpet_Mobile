@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -33,6 +34,9 @@ object NetworkModule {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(
                 OkHttpClient.Builder().addNetworkInterceptor(httpLoggingInterceptor)
+                    .connectTimeout(60,TimeUnit.SECONDS)
+                    .readTimeout(60,TimeUnit.SECONDS)
+                    .writeTimeout(60,TimeUnit.SECONDS)
                     .addInterceptor { chain ->
                         val request = chain.request()
                         val newRequest = if (shared.getToken().isNullOrEmpty())

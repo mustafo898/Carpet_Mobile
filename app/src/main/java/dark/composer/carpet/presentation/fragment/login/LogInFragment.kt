@@ -59,7 +59,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         }
 
         binding.logIn.setOnClickListener {
-            Log.d("EEEEE", "onViewCreate: ${binding.phoneNumber.text}")
+            Log.d("EEEEE", "onViewCreate: phone: ${binding.phoneNumber.text}, pass: ${binding.password.text}")
             viewModel.logIn(
                 binding.phoneNumber.text.toString().trim(),
                 binding.password.text.toString().trim()
