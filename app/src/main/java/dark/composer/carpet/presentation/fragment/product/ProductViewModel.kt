@@ -9,6 +9,7 @@ import dark.composer.carpet.data.repositories.BasketRepository
 import dark.composer.carpet.data.repositories.ProductRepository
 import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
+import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
 import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
@@ -92,9 +93,9 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun productDetails(id: String, type: String) {
+    fun updateProduct(id : String, type: String, updateProduct: ProductCreateRequest) {
         viewModelScope.launch {
-            repo.productDetails(id, type).observeForever {
+            repo.updateProduct(id,type,updateProduct).observeForever {
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         product.value = it.data
@@ -106,8 +107,58 @@ class ProductViewModel @Inject constructor(
                         }
                     }
                     is BaseNetworkResult.Loading -> {
+                            _loading.value = it.isLoading!!
+                    }
+                    else -> {
+                        Log.d("ProductDetails", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun deleteProduct(id : String, type: String) {
+        viewModelScope.launch {
+            repo.deleteProduct(id,type).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        product.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loading.value = it.isLoading!!
+                        }
+                    }
+                    else -> {
+                        Log.d("ProductDetails", "getPagination: Kemadi")
+                    }
+                }
+            }
+        }
+    }
+
+    fun productDetails(id: String, type: String) {
+        viewModelScope.launch {
+            repo.productDetails(id, type).observeForever {
+                when (it) {
+                    is BaseNetworkResult.Loading -> {
                         Log.d("MMMMMM", "productDetails: ${it.isLoading}")
-                        _loading1.value = it.isLoading!!
+                        _loading1.postValue ( it.isLoading!!)
+                    }
+                    is BaseNetworkResult.Success -> {
+                        product.value = it.data
+                        Log.d("EEEEE", "getPagination: ${it.data}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
                     }
                     else -> {
                         Log.d("ProductDetails", "getPagination: Kemadi")

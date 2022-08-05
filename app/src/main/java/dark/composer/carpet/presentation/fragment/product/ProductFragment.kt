@@ -40,8 +40,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
 
         list = ArrayList()
 
-        binding.list.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        binding.list.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.list.adapter = productAdapter
         binding.list.showShimmerAdapter()
 
@@ -86,10 +85,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         }
 
         binding.uncountable.setOnClickListener {
-//            viewModel.getCountPagination(page, 20, "UNCOUNTABLE", "")
             isClick("UNCOUNTABLE")
-
-//            type = "UNCOUNTABLE"
         }
         loadingDialog.show()
         viewModel.getCountPagination(page, 20, "COUNTABLE", "")

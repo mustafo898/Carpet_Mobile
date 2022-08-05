@@ -74,6 +74,7 @@ class ProductDetailsFragment :
         }
 
         viewModel.productLiveData.observe(requireActivity()) {
+            loadingDialog.dismiss()
             it?.let { t ->
                 binding.name.text =
                     "${t.createDate.substring(11, 16)}  ${t.createDate.substring(0, 10)}"
@@ -90,17 +91,14 @@ class ProductDetailsFragment :
                 attachId = t.uuid
                 Log.d("QQQQQQ", "onViewCreate: $attachId")
                 binding.visible.text = t.colour
-//                Toast.makeText(requireContext(), t.uuid, Toast.LENGTH_SHORT).show()
                 binding.size.text = "${t.weight} x ${t.height}"
                 imageSlider(t.urlImageList!!, it.name)
             }
         }
 
-//        Toast.makeText(requireContext(), attachId, Toast.LENGTH_SHORT).show()
-
         val page = 0
 
-        viewModel.loadingLiveData1.observe(viewLifecycleOwner){
+        viewModel.loadingLiveData1.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             loadingDialog.dismiss()
         }
@@ -120,9 +118,9 @@ class ProductDetailsFragment :
         }
 
         binding.addBasket.setOnClickListener {
-            if (type=="COUNTABLE"){
+            if (type == "COUNTABLE") {
                 bottomDialog.setAmountVisibility(true)
-            }else if (type=="UNCOUNTABLE"){
+            } else if (type == "UNCOUNTABLE") {
                 bottomDialog.setAmountVisibility(false)
             }
             bottomDialog.setHeightVisibility(false)
@@ -151,9 +149,9 @@ class ProductDetailsFragment :
                 PopupMenu.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem): Boolean {
                     when (item.itemId) {
-//                        R.id.delete_menu -> {
-//                            viewModel.deleteProduct(id, type)
-//                        }
+                        R.id.delete_menu -> {
+                            viewModel.deleteProduct(id, type)
+                        }
                         R.id.share -> {
 
                         }
