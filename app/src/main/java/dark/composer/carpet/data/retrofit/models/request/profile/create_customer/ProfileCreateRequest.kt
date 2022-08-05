@@ -5,5 +5,5 @@ data class ProfileCreateRequest(
     val password: String,
     val phoneNumber: String,
     val role: String,
-    val surname: String
+    val surname: String,
 )

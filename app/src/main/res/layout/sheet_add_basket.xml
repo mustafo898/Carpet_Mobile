@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:id="@+id/linear"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_height="wrap_content">
 
@@ -59,6 +60,36 @@
                     android:src="@drawable/ic_remove"
                     android:id="@+id/minus"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/heightInput"
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Height"
+                app:helperTextTextColor="#F44336">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/height"
+                    style="@style/editText"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priceInput"
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                app:helperTextTextColor="#F44336">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price"
+                    style="@style/editText"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/infoInput"

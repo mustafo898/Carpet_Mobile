@@ -1,10 +1,7 @@
-package dark.composer.carpet.presentation.fragment.basket.dialog
+package dark.composer.carpet.presentation.dialog
 
 import android.content.Context
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import dark.composer.carpet.databinding.SheetAddBasketBinding
 import dark.composer.carpet.databinding.SheetUpdateBasketBinding
 
 class UpdateBottomSheetDialog(context: Context) : BottomSheetDialog(context) {

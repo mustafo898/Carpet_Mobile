@@ -9,19 +9,18 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
 import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.databinding.FragmentProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.basket.BasketViewModel
-import dark.composer.carpet.presentation.fragment.basket.dialog.BottomSheetDialog1
+import dark.composer.carpet.presentation.dialog.BottomSheetDialog1
+import dark.composer.carpet.presentation.dialog.ProgressDialog
 import dark.composer.carpet.presentation.fragment.product.ProductAdapter
-import dark.composer.carpet.presentation.fragment.product.ProductDetailsAdapter
-import dark.composer.carpet.presentation.fragment.product.ProductFragment
 import dark.composer.carpet.presentation.fragment.product.ProductViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class ProductDetailsFragment :
     BaseFragment<FragmentProductDetailsBinding>(FragmentProductDetailsBinding::inflate) {
@@ -36,6 +35,10 @@ class ProductDetailsFragment :
 
     private val bottomDialog by lazy {
         BottomSheetDialog1(requireContext())
+    }
+
+    private val loadingDialog by lazy {
+        ProgressDialog(requireContext())
     }
 
     override fun onViewCreate() {
@@ -89,6 +92,7 @@ class ProductDetailsFragment :
                 binding.visible.text = t.colour
 //                Toast.makeText(requireContext(), t.uuid, Toast.LENGTH_SHORT).show()
                 binding.size.text = "${t.weight} x ${t.height}"
+                imageSlider(t.urlImageList!!, it.name)
             }
         }
 
@@ -96,12 +100,16 @@ class ProductDetailsFragment :
 
         val page = 0
 
+        viewModel.loadingLiveData1.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            loadingDialog.dismiss()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.errorFlow.collect {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
 
@@ -112,7 +120,14 @@ class ProductDetailsFragment :
         }
 
         binding.addBasket.setOnClickListener {
-            bottomDialog.setOnAddListener { amount, info ->
+            if (type=="COUNTABLE"){
+                bottomDialog.setAmountVisibility(true)
+            }else if (type=="UNCOUNTABLE"){
+                bottomDialog.setAmountVisibility(false)
+            }
+            bottomDialog.setHeightVisibility(false)
+            bottomDialog.setPriceVisibility(false)
+            bottomDialog.setOnAddListener { amount, info, height, price ->
                 viewModel.createBasket(BasketCreateRequest(amount, info, attachId, type))
             }
             bottomDialog.show()
@@ -120,11 +135,12 @@ class ProductDetailsFragment :
 
         productAdapter.setClickListener {
             id = it
+            loadingDialog.show()
             viewModel.productDetails(id, type)
         }
 
         viewModel.productDetails(id, type)
-        viewModel.getCountPagination(page, 20, type,attachId)
+        viewModel.getCountPagination(page, 20, type, attachId)
 
         binding.more.setOnClickListener {
             val popup = PopupMenu(requireContext(), binding.more)
@@ -148,8 +164,22 @@ class ProductDetailsFragment :
                     return true
                 }
             })
-
             popup.show() //showing popup menu
         }
+
+        loadingDialog.show()
+    }
+
+    private fun imageSlider(list: List<String>, name: String) {
+        val imageList = ArrayList<SlideModel>()
+        val position = ArrayList<Int>()
+        list.forEachIndexed { i, images ->
+            Log.d("RRRRRRRR", "imageSlider: $images")
+            position.add(i)
+            imageList.add(SlideModel(images, name))
+        }
+        imageList.size
+        binding.imageSlide.setImageList(imageList, ScaleTypes.FIT)
+        binding.imageSlide
     }
 }

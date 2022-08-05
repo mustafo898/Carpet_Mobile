@@ -133,12 +133,13 @@
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/factory_txt"
-                app:shimmer_demo_layout="@layout/item_factory_demo_grid"
-                app:shimmer_demo_layout_manager_type="linear_vertical" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shimmer_demo_angle="15"
+                app:shimmer_demo_layout="@layout/item_product_demo_grid"
+                app:shimmer_demo_layout_manager_type="grid"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

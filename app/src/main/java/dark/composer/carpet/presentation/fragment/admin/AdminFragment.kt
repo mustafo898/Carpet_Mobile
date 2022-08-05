@@ -40,6 +40,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 
         activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
 
+        Toast.makeText(requireContext(), "admin", Toast.LENGTH_SHORT).show()
+
         viewModel.liveDataProfile.observe(requireActivity()) {
             it?.let { t ->
                 Glide.with(requireContext()).load(t.url).into(binding.image)

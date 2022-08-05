@@ -99,7 +99,6 @@ dependencies {
 //    shapepable imageView
     implementation 'com.google.android.material:material:1.6.1'
 
-    // dependency for Loading button
-//    implementation 'br.com.simplepass:loading-button-android:1.14.0'
-
+//    Loader
+//    implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
 }

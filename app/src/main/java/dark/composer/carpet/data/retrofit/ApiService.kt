@@ -13,6 +13,7 @@ import dark.composer.carpet.data.retrofit.models.request.profile.create_customer
 import dark.composer.carpet.data.retrofit.models.request.sale.SaleRequest
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.basket.DeleteResponse
 import dark.composer.carpet.data.retrofit.models.response.login.LogInResponse
 import dark.composer.carpet.data.retrofit.models.response.signup.SignUpResponse
 import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
@@ -159,6 +160,9 @@ interface ApiService {
 
     @PUT("/basket/emp/{id}")
     suspend fun getByIdBasket(@Path("id") id:Int): Response<BasketCreateResponse>
+
+    @DELETE("/basket/emp/{id}")
+    suspend fun deleteByIdBasket(@Path("id") id:Int): Response<DeleteResponse>
 
     @GET("/basket/emp/pagination/{status}")
     suspend fun getPaginationBasket(@Path("status") status:String, @Query("page") page: Int, @Query("size") size: Int): Response<List<BasketPaginationResponse>>

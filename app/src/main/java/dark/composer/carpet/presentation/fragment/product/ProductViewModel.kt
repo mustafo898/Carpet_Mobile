@@ -29,17 +29,16 @@ class ProductViewModel @Inject constructor(
     val liveDataListPagination: MutableLiveData<List<ProductPaginationResponse>?> = listPagination
 
     private val basketChannel = MutableLiveData<BasketCreateResponse>()
-    val basketFlow:LiveData<BasketCreateResponse> = basketChannel
-
-    private val listUncountablePagination = MutableLiveData<List<ProductPaginationResponse>?>()
-    val liveDataListUncountablePagination: MutableLiveData<List<ProductPaginationResponse>?> =
-        listUncountablePagination
+    val basketFlow: LiveData<BasketCreateResponse> = basketChannel
 
     private val _errorChannel = Channel<String?>()
     val errorFlow = _errorChannel.receiveAsFlow()
 
-    private val _loadingChannel = Channel<Boolean?>()
-    val loadingFlow = _loadingChannel.receiveAsFlow()
+    private val _loading = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean> = _loading
+
+    private val _loading1 = MutableLiveData<Boolean>()
+    val loadingLiveData1: LiveData<Boolean> = _loading1
 
     fun createBasket(createRequest: BasketCreateRequest) {
         viewModelScope.launch {
@@ -49,9 +48,7 @@ class ProductViewModel @Inject constructor(
                         basketChannel.value = it.data!!
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        _loading.value = it.isLoading!!
                     }
                     is BaseNetworkResult.Error -> {
                         viewModelScope.launch {
@@ -63,15 +60,15 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun getCountPagination(page: Int, size: Int, count: String,id: String) {
+    fun getCountPagination(page: Int, size: Int, count: String, id: String) {
         val list = mutableListOf<ProductPaginationResponse>()
         viewModelScope.launch {
             repo.getPagination(page, size, count).observeForever {
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         it.data?.let { t ->
-                            t.forEach {e->
-                                if (e.uuid != id){
+                            t.forEach { e ->
+                                if (e.uuid != id) {
                                     list.add(e)
                                 }
                             }
@@ -85,9 +82,7 @@ class ProductViewModel @Inject constructor(
                         }
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        _loading.value = it.isLoading!!
                     }
                     else -> {
                         Log.d("Admin", "getPagination: Kemadi")
@@ -111,9 +106,8 @@ class ProductViewModel @Inject constructor(
                         }
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        Log.d("MMMMMM", "productDetails: ${it.isLoading}")
+                        _loading1.value = it.isLoading!!
                     }
                     else -> {
                         Log.d("ProductDetails", "getPagination: Kemadi")

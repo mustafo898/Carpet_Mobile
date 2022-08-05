@@ -44,7 +44,6 @@ class DefaultFragment : BaseFragment<FragmentDefaultBinding>(FragmentDefaultBind
         binding.viewPager.adapter = pagerAdapter
         binding.animateBar.setupWithViewPager2(binding.viewPager)
 
-
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.move_left)
         binding.logIn.startAnimation(anim)
 

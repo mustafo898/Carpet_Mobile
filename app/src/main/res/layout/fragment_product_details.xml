@@ -43,9 +43,10 @@
                     <com.denzcoskun.imageslider.ImageSlider
                         android:id="@+id/imageSlide"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="280dp"
                         app:iss_delay="0"
-                        app:iss_period="3500"
+                        app:iss_period="1000"
+                        app:iss_title_background="@drawable/gradient"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -165,12 +166,14 @@
                     android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/factory_txt"
-                    app:shimmer_demo_layout="@layout/item_factory_demo_grid"
-                    app:shimmer_demo_layout_manager_type="linear_vertical" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shimmer_demo_angle="15"
+                    android:layout_marginTop="10dp"
+                    app:shimmer_demo_layout="@layout/item_product_demo_grid"
+                    app:shimmer_demo_layout_manager_type="grid" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <Button

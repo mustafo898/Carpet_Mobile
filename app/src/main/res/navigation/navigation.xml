@@ -17,7 +17,7 @@
         <action
             android:id="@+id/action_logInFragment_to_adminFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/action_logInFragment_to_adminFragment"
+            app:popUpTo="@id/adminFragment"
             app:destination="@id/adminFragment" />
     </fragment>
 
@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_adminFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />
     </fragment>
 
     <fragment
@@ -69,7 +72,11 @@
         android:id="@+id/factoryDetailsFragment"
         android:name="dark.composer.carpet.presentation.fragment.factory.factory_detail.FactoryDetailsFragment"
         android:label="fragment_category_details"
-        tools:layout="@layout/fragment_factory_details" />
+        tools:layout="@layout/fragment_factory_details" >
+        <action
+            android:id="@+id/action_factoryDetailsFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
@@ -175,5 +182,9 @@
         android:id="@+id/basketFragment"
         android:name="dark.composer.carpet.presentation.fragment.basket.BasketFragment"
         android:label="fragment_basket"
-        tools:layout="@layout/fragment_basket" />
+        tools:layout="@layout/fragment_basket" >
+        <action
+            android:id="@+id/action_basketFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
 </navigation>

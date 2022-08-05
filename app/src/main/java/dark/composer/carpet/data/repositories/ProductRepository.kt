@@ -20,8 +20,8 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.getProductPagination(type,page,size)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            list.value = BaseNetworkResult.Loading(false)
             response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
                 list.value = BaseNetworkResult.Success(it)
                 it.forEach {t->
                     Log.d("EEEEEEE", "count: ${t.imageUrlList}")
@@ -39,8 +39,9 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.productDetails(type,id)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            list.value = BaseNetworkResult.Loading(false)
+            Log.d("YYYYYY", "filterProduct: ${list.value?.isLoading}")
             response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
                 list.value = BaseNetworkResult.Success(it)
                 Log.d("productDetails", "getPagination: $it")
             }
@@ -56,8 +57,8 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.updateProduct(type,productUpdate,id)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            list.value = BaseNetworkResult.Loading(false)
             response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
                 list.value = BaseNetworkResult.Success(it)
                 Log.d("productDetails", "getPagination: $it")
             }
@@ -90,8 +91,8 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.createProduct(productCreateRequest)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            list.value = BaseNetworkResult.Loading(false)
             response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
                 list.value = BaseNetworkResult.Success(it)
                 Log.d("EEEEEEE", "getPagination: $it")
             }
@@ -107,8 +108,8 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.productFileUpload(file,productId)
         fileProduct.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            fileProduct.value = BaseNetworkResult.Loading(false)
             response.body()?.let {
-                fileProduct.value = BaseNetworkResult.Loading(false)
                 fileProduct.value = BaseNetworkResult.Success(it)
             }
         }else{
@@ -123,8 +124,8 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         val response = service.filterProduct(filterProductRequest)
         list.value = BaseNetworkResult.Loading(true)
         if (response.code() == 200){
+            list.value = BaseNetworkResult.Loading(false)
             response.body()?.let {
-                list.value = BaseNetworkResult.Loading(false)
                 list.value = BaseNetworkResult.Success(it)
                 it.forEach {t->
                     Log.d("EEEEEEE", "count: ${t.imageUrlList}")
@@ -136,5 +137,4 @@ class ProductRepository @Inject constructor(private var service: ApiService) {
         }
         return list
     }
-
 }

@@ -11,6 +11,7 @@ import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequ
 import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.basket.DeleteResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -68,6 +69,23 @@ class BasketRepository @Inject constructor(private val service: ApiService) {
         return liveData
     }
 
+    suspend fun deleteByIdBasket(id:Int): LiveData<BaseNetworkResult<DeleteResponse>> {
+        val liveData = MutableLiveData<BaseNetworkResult<DeleteResponse>>()
+        val response = service.deleteByIdBasket(id)
+        liveData.value = BaseNetworkResult.Loading(true)
+        if (response.code() == 200) {
+            liveData.value = BaseNetworkResult.Loading(false)
+            response.body()?.let {
+                liveData.value = BaseNetworkResult.Success(it)
+            }
+        } else {
+            Log.d("RRRRRR", "createBasket: ${response.message()}")
+            liveData.value = BaseNetworkResult.Loading(false)
+            liveData.value = BaseNetworkResult.Error(response.message().toString())
+        }
+        return liveData
+    }
+
     suspend fun getPaginationBasket(
         status: String, page: Int, size: Int, context: Context
     ): LiveData<BaseNetworkResult<List<BasketPaginationResponse>>> {
@@ -77,12 +95,9 @@ class BasketRepository @Inject constructor(private val service: ApiService) {
         Toast.makeText(context, "Keldi", Toast.LENGTH_SHORT).show()
 
         if (response.isSuccessful) {
-//                emit(BaseNetworkResult.Loading(false))
-//                response.body()?.let {
             liveData.value = BaseNetworkResult.Loading(false)
             Log.d("eeeee", "getPaginationBasket: ${response.body()}")
             liveData.value = BaseNetworkResult.Success(response.body()!!)
-//                }
         } else {
             liveData.value = BaseNetworkResult.Loading(false)
             liveData.value = BaseNetworkResult.Error(response.errorBody().toString())

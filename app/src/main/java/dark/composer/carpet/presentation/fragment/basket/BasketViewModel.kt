@@ -14,6 +14,7 @@ import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequ
 import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
+import dark.composer.carpet.data.retrofit.models.response.basket.DeleteResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -23,6 +24,9 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(private val repo: BasketRepository) : ViewModel() {
     private val basketChannel = MutableLiveData<BasketCreateResponse>()
     val basketFlow : LiveData<BasketCreateResponse> = basketChannel
+
+    private val delete = MutableLiveData<DeleteResponse>()
+    val deleteLiveData : LiveData<DeleteResponse> = delete
 
     private val _basketPagination = MutableLiveData<List<BasketPaginationResponse>>()
     val basketPagination: LiveData<List<BasketPaginationResponse>> = _basketPagination
@@ -61,6 +65,28 @@ class BasketViewModel @Inject constructor(private val repo: BasketRepository) : 
                 when (it) {
                     is BaseNetworkResult.Success -> {
                         basketChannel.value = it.data!!
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        viewModelScope.launch {
+                            _loadingChannel.send(it.isLoading)
+                        }
+                    }
+                    is BaseNetworkResult.Error -> {
+                        viewModelScope.launch {
+                            _errorChannel.send(it.message)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun deleteByIdBasket(id: Int) {
+        viewModelScope.launch {
+            repo.deleteByIdBasket(id).observeForever{
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        delete.value = it.data!!
                     }
                     is BaseNetworkResult.Loading -> {
                         viewModelScope.launch {

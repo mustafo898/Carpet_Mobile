@@ -1,7 +1,9 @@
 package dark.composer.carpet.presentation.fragment.factory
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentFactoryBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.admin.FactoryAdapter
@@ -31,6 +33,10 @@ class FactoryFragment : BaseFragment<FragmentFactoryBinding>(FragmentFactoryBind
                 binding.list.hideShimmerAdapter()
                 factoryAdapter.setListFactory(t.content)
             }
+        }
+
+        factoryAdapter.setClickListener { position, id ->
+            navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to id))
         }
 
         viewModel.getPagination(0,10)

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
@@ -57,7 +58,7 @@ class FactoryDetailsFragment :
         }
 
         binding.list.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(requireContext(),2, GridLayoutManager.VERTICAL, false)
         binding.list.adapter = factoryAdapter
         binding.list.showShimmerAdapter()
 

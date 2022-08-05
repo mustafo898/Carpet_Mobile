@@ -2,10 +2,12 @@ package dark.composer.carpet.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.ActivityMainBinding
@@ -33,55 +35,18 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(controller)
 //        checkPermission()
 
-
-
         val adminFragment = AdminFragment()
         val defaultFragment = DefaultFragment()
         val fragment = Fragment()
 
-        if (shared.getRole() == "ADMIN") {
+//        if (shared.getRole() == "ADMIN") {
 //            startActivityFromFragment(AdminFragment(),Intent(this, MainActivity::class.java))
             supportFragmentManager.beginTransaction().add(adminFragment,"ADMIN")
-
-        } else {
-//            startActivityFromFragment(DefaultFragment(),Intent(this, MainActivity::class.java))
-            supportFragmentManager.beginTransaction().add(defaultFragment,"DEFAULT")
-
-        }
-    }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        checkPermission()
-//    }
+            findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+//        } else {
+////            startActivityFromFragment(DefaultFragment(),Intent(this, MainActivity::class.java))
+//            supportFragmentManager.beginTransaction().add(defaultFragment,"DEFAULT")
 //
-//    private fun checkPermission() {
-//        val permission = arrayOf(
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//            Manifest.permission.CAMERA,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE
-//        )
-//
-//        if (ContextCompat.checkSelfPermission(
-//                this.applicationContext,
-//                permission[0]
-//            ) == PackageManager.PERMISSION_GRANTED &&
-//            ContextCompat.checkSelfPermission(
-//                this.applicationContext,
-//                permission[1]
-//            ) == PackageManager.PERMISSION_GRANTED &&
-//            ContextCompat.checkSelfPermission(
-//                this.applicationContext,
-//                permission[2]
-//            ) == PackageManager.PERMISSION_GRANTED
-//        ){
-//            Log.d("SSSSS", "checkPermission: Otdi")
-//        } else{
-//            ActivityCompat.requestPermissions(this@MainActivity,permission,1)
 //        }
-//    }
-
+    }
 }
