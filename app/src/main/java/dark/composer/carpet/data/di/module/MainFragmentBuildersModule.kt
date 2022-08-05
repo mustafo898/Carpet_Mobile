@@ -15,6 +15,7 @@ import dark.composer.carpet.presentation.fragment.profile.add.factory.AddFactory
 import dark.composer.carpet.presentation.fragment.profile.add.product.AddProductFragment
 import dark.composer.carpet.presentation.fragment.profile.list.customer.ListFragment
 import dark.composer.carpet.presentation.fragment.profile.list.details.ListDetailsFragment
+import dark.composer.carpet.presentation.fragment.sale.SaleFragment
 import dark.composer.carpet.presentation.fragment.search.SearchFragment
 import dark.composer.carpet.presentation.fragment.search.filter.FilterProductFragment
 import dark.composer.carpet.presentation.fragment.settings.SettingsFragment
@@ -73,4 +74,7 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun basketFragment(): BasketFragment
+
+    @ContributesAndroidInjector
+    abstract fun saleFragment(): SaleFragment
 }
