@@ -3,13 +3,11 @@ package dark.composer.carpet.data.repositories
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dark.composer.carpet.data.retrofit.ApiService
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.ApiService
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.utils.SharedPref
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ListRepository @Inject constructor(

@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import dark.composer.carpet.data.retrofit.ApiService
+import dark.composer.carpet.data.remote.ApiService
 import dark.composer.carpet.utils.Constants
 import dark.composer.carpet.utils.SharedPref
 import okhttp3.OkHttpClient

@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
+import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
 import dark.composer.carpet.databinding.FragmentBasketBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.dialog.UpdateBottomSheetDialog

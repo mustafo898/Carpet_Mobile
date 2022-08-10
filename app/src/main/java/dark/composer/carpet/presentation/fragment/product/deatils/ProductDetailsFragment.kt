@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
+import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.databinding.FragmentProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.basket.BasketViewModel
@@ -178,6 +178,5 @@ class ProductDetailsFragment :
         }
         imageList.size
         binding.imageSlide.setImageList(imageList, ScaleTypes.FIT)
-        binding.imageSlide
     }
 }

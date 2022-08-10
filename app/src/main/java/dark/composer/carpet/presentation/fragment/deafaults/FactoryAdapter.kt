@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
+import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.databinding.ItemFactoryBinding
 
 class FactoryAdapter(private var context: Context) :

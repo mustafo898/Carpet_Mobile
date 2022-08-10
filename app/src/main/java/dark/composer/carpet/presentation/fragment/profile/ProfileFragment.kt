@@ -18,8 +18,8 @@ import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
-import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
+import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.databinding.FragmentProfileBinding
 import dark.composer.carpet.presentation.dialog.UpdateProfileDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment

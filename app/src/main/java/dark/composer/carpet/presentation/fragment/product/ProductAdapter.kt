@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.databinding.ItemProduct1Binding
 
 class ProductAdapter(private var context: Context) : RecyclerView.Adapter<ProductAdapter.SaleViewHolder>() {

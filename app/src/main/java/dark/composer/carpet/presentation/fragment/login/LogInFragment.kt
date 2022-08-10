@@ -1,8 +1,6 @@
 package dark.composer.carpet.presentation.fragment.login
 
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -12,7 +10,6 @@ import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
 import dark.composer.carpet.databinding.FragmentLogInBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref

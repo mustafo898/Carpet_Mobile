@@ -4,12 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.LogInRepository
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.login.LogInRequest
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.login.LogInRequest
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,16 +1,16 @@
 package dark.composer.carpet.presentation.fragment.admin
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayoutMediator
 import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentAdminBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -25,7 +25,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 
     @Inject
     lateinit var shared: SharedPref
-    lateinit var viewModel: AdminViewModel
+    private lateinit var viewModel : AdminViewModel
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
@@ -38,7 +38,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::i
 //        binding.listSale.adapter = factoryAdapter
 //        binding.listSale.showShimmerAdapter()
 
-        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+//        ?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
 
         Toast.makeText(requireContext(), "admin", Toast.LENGTH_SHORT).show()
 

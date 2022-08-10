@@ -3,18 +3,14 @@ package dark.composer.carpet.data.repositories
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dark.composer.carpet.data.retrofit.ApiService
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
-import dark.composer.carpet.data.retrofit.models.request.profile.ProfileRequest
-import dark.composer.carpet.data.retrofit.models.request.profile.create_customer.ProfileCreateRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
-import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.ApiService
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
+import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.remote.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
+import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.utils.SharedPref
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

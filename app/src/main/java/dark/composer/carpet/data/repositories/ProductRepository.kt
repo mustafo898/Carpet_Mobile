@@ -3,14 +3,13 @@ package dark.composer.carpet.data.repositories
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dark.composer.carpet.data.retrofit.ApiService
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
-import dark.composer.carpet.data.retrofit.models.request.product.ProductCreateRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.product.ProductFileUploadResponse
-import dark.composer.carpet.data.retrofit.models.response.product.ProductResponse
-import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.data.remote.ApiService
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
+import dark.composer.carpet.data.remote.models.request.product.ProductCreateRequest
+import dark.composer.carpet.data.remote.models.response.product.ProductFileUploadResponse
+import dark.composer.carpet.data.remote.models.response.product.ProductResponse
+import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

@@ -8,10 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.FactoryRepository
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
-import dark.composer.carpet.data.retrofit.models.response.factory.FactoryResponse
-import dark.composer.carpet.data.retrofit.models.response.profile.ProfileFileResponse
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.factory.FactoryAddRequest
+import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
+import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow

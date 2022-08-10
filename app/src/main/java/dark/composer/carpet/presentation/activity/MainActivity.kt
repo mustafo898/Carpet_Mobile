@@ -33,20 +33,20 @@ class MainActivity : DaggerAppCompatActivity() {
 //        setupActionBarWithNavController(controller, appBarConfiguration)
 
         binding.bottomNavigation.setupWithNavController(controller)
-//        checkPermission()
-
-        val adminFragment = AdminFragment()
-        val defaultFragment = DefaultFragment()
-        val fragment = Fragment()
-
-//        if (shared.getRole() == "ADMIN") {
-//            startActivityFromFragment(AdminFragment(),Intent(this, MainActivity::class.java))
-            supportFragmentManager.beginTransaction().add(adminFragment,"ADMIN")
-            findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
-//        } else {
-////            startActivityFromFragment(DefaultFragment(),Intent(this, MainActivity::class.java))
-//            supportFragmentManager.beginTransaction().add(defaultFragment,"DEFAULT")
+////        checkPermission()
 //
-//        }
+//        val adminFragment = AdminFragment()
+//        val defaultFragment = DefaultFragment()
+//        val fragment = Fragment()
+//
+////        if (shared.getRole() == "ADMIN") {
+////            startActivityFromFragment(AdminFragment(),Intent(this, MainActivity::class.java))
+//            supportFragmentManager.beginTransaction().add(adminFragment,"ADMIN")
+//            findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+////        } else {
+//////            startActivityFromFragment(DefaultFragment(),Intent(this, MainActivity::class.java))
+////            supportFragmentManager.beginTransaction().add(defaultFragment,"DEFAULT")
+////
+////        }
     }
 }

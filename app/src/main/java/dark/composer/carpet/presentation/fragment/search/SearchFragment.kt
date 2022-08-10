@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.databinding.FragmentSearchBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.product.ProductAdapter

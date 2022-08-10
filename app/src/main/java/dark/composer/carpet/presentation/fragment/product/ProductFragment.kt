@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.response.factory.PaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.data.remote.models.response.factory.PaginationResponse
+import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.databinding.FragmentProductBinding
 import dark.composer.carpet.presentation.dialog.ProgressDialog
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -46,7 +46,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
 
         viewModel.liveDataListPagination.observe(requireActivity()) {
             it?.let { it1 ->
-                loadingDialog.dismiss()
+//                loadingDialog.dismiss()
                 binding.list.hideShimmerAdapter()
                 productAdapter.setProductListProduct(it1)
             }
@@ -87,7 +87,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
         binding.uncountable.setOnClickListener {
             isClick("UNCOUNTABLE")
         }
-        loadingDialog.show()
+//        loadingDialog.show()
         viewModel.getCountPagination(page, 20, "COUNTABLE", "")
     }
 

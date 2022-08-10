@@ -5,15 +5,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dark.composer.carpet.data.retrofit.ApiService
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
-import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
-import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.basket.DeleteResponse
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import dark.composer.carpet.data.remote.ApiService
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
+import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
+import dark.composer.carpet.data.remote.models.response.basket.BasketCreateResponse
+import dark.composer.carpet.data.remote.models.response.basket.BasketPaginationResponse
+import dark.composer.carpet.data.remote.models.response.basket.DeleteResponse
 import javax.inject.Inject
 
 class BasketRepository @Inject constructor(private val service: ApiService) {

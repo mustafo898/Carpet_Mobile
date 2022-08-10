@@ -1,22 +1,18 @@
 package dark.composer.carpet.presentation.fragment.basket
 
 import android.content.Context
-import android.content.LocusId
 import android.util.Log
-import androidx.core.widget.ListViewAutoScrollHelper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.BasketRepository
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketCreateRequest
-import dark.composer.carpet.data.retrofit.models.request.basket.BasketUpdateRequest
-import dark.composer.carpet.data.retrofit.models.response.basket.BasketCreateResponse
-import dark.composer.carpet.data.retrofit.models.response.basket.BasketPaginationResponse
-import dark.composer.carpet.data.retrofit.models.response.basket.DeleteResponse
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
+import dark.composer.carpet.data.remote.models.response.basket.BasketCreateResponse
+import dark.composer.carpet.data.remote.models.response.basket.BasketPaginationResponse
+import dark.composer.carpet.data.remote.models.response.basket.DeleteResponse
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

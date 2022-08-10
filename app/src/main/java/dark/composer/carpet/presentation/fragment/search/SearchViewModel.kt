@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.repositories.ProductRepository
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.filter.ProductFilterRequest
-import dark.composer.carpet.data.retrofit.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
+import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch

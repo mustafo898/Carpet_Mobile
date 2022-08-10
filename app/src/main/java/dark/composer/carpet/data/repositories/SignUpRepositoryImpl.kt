@@ -1,9 +1,9 @@
 package dark.composer.carpet.data.repositories
 
 import android.util.Log
-import dark.composer.carpet.data.retrofit.ApiService
-import dark.composer.carpet.data.retrofit.models.BaseNetworkResult
-import dark.composer.carpet.data.retrofit.models.request.signup.SignUpRequest
+import dark.composer.carpet.data.remote.ApiService
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.signup.SignUpRequest
 import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

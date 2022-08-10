@@ -19,7 +19,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.retrofit.models.request.factory.FactoryAddRequest
+import dark.composer.carpet.data.remote.models.request.factory.FactoryAddRequest
 import dark.composer.carpet.databinding.FragmentAddFactoryBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.SharedPref
