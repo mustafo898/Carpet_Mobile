@@ -20,6 +20,7 @@ import dark.composer.carpet.presentation.fragment.profile.add.factory.AddFactory
 import dark.composer.carpet.presentation.fragment.profile.add.product.AddProductViewModel
 import dark.composer.carpet.presentation.fragment.profile.list.customer.ListViewModel
 import dark.composer.carpet.presentation.fragment.profile.list.details.ListDetailsViewModel
+import dark.composer.carpet.presentation.fragment.sale.SaleViewModel
 import dark.composer.carpet.presentation.fragment.search.SearchViewModel
 import dark.composer.carpet.presentation.fragment.search.filter.FilterProductViewModel
 
@@ -115,4 +116,9 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(BasketViewModel::class)
     abstract fun providerBasketViewModel(basketViewModel : BasketViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SaleViewModel::class)
+    abstract fun providerSaleViewModel(saleViewModel : SaleViewModel): ViewModel
 }
