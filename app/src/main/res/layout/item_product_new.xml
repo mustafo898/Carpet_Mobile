@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:id="@+id/card"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:id="@+id/image"
+                android:src="@drawable/image"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundImageView"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+<!--            <View-->
+<!--                android:id="@+id/view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:background="@drawable/back_product_item"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@id/image"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/image" />-->
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/factoryImage"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Product"
+                android:id="@+id/productName"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/factoryImage"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@id/productName"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                android:src="@drawable/image"/>
+
+            <TextView
+                android:id="@+id/factoryName"
+                android:layout_width="0dp"
+                android:gravity="end"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="Factory Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:singleLine="true"
+                app:layout_constraintBottom_toBottomOf="@id/factoryImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/factoryImage" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="@id/productName"
+                app:layout_constraintTop_toBottomOf="@id/productName"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="20.12.2005"
+                android:layout_width="wrap_content"
+                android:id="@+id/date"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@id/productName"
+                app:layout_constraintTop_toBottomOf="@id/productName"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="15:10"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/time"
+                android:layout_height="wrap_content"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

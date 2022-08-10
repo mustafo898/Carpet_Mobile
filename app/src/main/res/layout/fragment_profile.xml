@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#F2F4F5"
     android:layout_height="match_parent"
+    android:background="#F2F4F5"
     tools:context=".presentation.fragment.profile.ProfileFragment">
 
     <ScrollView
@@ -29,15 +29,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/backBtn"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="24dp"-->
-<!--                    android:layout_marginTop="24dp"-->
-<!--                    android:src="@drawable/ic_back"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/backBtn"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="24dp"-->
+                <!--                    android:layout_marginTop="24dp"-->
+                <!--                    android:src="@drawable/ic_back"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <ImageView
                     android:id="@+id/more"
@@ -155,22 +155,22 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:id="@+id/addCustomer"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
-                android:id="@+id/addCustomer"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:text="Add Customer"
                     android:textColor="@color/text_color_st"
-                    android:text="Add Customer"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="34dp"
@@ -179,22 +179,22 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:id="@+id/addFactory"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
-                android:id="@+id/addFactory"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:text="Add Factory"
                     android:textColor="@color/text_color_st"
-                    android:text="Add Factory"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:id="@+id/addFactoryImage"
@@ -204,47 +204,47 @@
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:id="@+id/addProduct"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:text="Add Product"
                     android:textColor="@color/text_color_st"
-                    android:text="Add Product"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:id="@+id/addProductImage"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_add" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:id="@+id/ownFactories"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
-                android:id="@+id/ownFactories"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:text="Own Factories"
                     android:textColor="@color/text_color_st"
-                    android:text="Own Factories"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="34dp"
@@ -253,51 +253,51 @@
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ownProducts"
-                    android:textSize="22sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Own Products"
                     android:textColor="@color/text_color_st"
-                    android:text="Own Products"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="34dp"
                     android:layout_height="34dp"
-                    android:src="@drawable/ic_arrow_forward"/>
+                    android:src="@drawable/ic_arrow_forward" />
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:id="@+id/listCustomers"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:text="List Customers"
                     android:textColor="@color/text_color_st"
-                    android:text="List Customers"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="34dp"
                     android:layout_height="34dp"
-                    android:src="@drawable/ic_arrow_forward"/>
+                    android:src="@drawable/ic_arrow_forward" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -7,14 +7,38 @@
     android:background="#F2F4F5"
     android:padding="10dp">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="@id/addProductTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/addProductTxt"
+        android:id="@+id/back"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="Add Product"
+        android:id="@+id/addProductTxt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/addProductTxt">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,12 +51,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/photoList"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/item_add_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -41,8 +69,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_add_photo_alternate"
-                    android:contentDescription="@string/product_image" />
+                    android:src="@drawable/ic_add_photo" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/product_name"
+                android:hint="Product Name"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -61,8 +88,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
+                    android:background="@color/white"
                     style="@style/editText"
-                    android:background="@drawable/item_bg"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/pon"
+                android:hint="Pon"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -82,8 +109,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/pon"
+                    android:background="@color/white"
                     style="@style/editText"
-                    android:background="@drawable/item_bg"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/design"
+                android:hint="Design"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -114,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/color"
+                android:hint="Color"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -134,7 +161,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/amount"
+                android:hint="Amount"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -145,7 +172,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/amount"
                     style="@style/editText"
-                    android:background="@drawable/item_bg"
+                    android:background="@color/white"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +195,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/width"
+                        android:hint="Width"
                         app:helperTextTextColor="#F44336"
                         app:layout_constraintTop_toBottomOf="@+id/amountTxt"
                         app:startIconTint="@color/black"
@@ -177,7 +204,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/width"
                             style="@style/editText"
-                            android:background="@drawable/item_bg"
+                            android:background="@color/white"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -197,7 +224,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/height"
+                        android:hint="Height"
                         app:helperTextTextColor="#F44336"
                         app:layout_constraintTop_toBottomOf="@+id/amountTxt"
                         app:startIconTint="@color/black"
@@ -206,7 +233,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/height"
                             style="@style/editText"
-                            android:background="@drawable/item_bg"
+                            android:background="@color/white"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -217,7 +244,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/price"
+                android:hint="Price"
                 app:counterEnabled="true"
                 app:counterMaxLength="16"
                 app:helperTextTextColor="#F44336"
@@ -228,8 +255,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/price"
                     android:layout_marginTop="8dp"
+                    android:background="@color/white"
                     style="@style/editText"
-                    android:background="@drawable/item_bg"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -263,14 +290,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/countable" />
+                    android:text="Countable" />
 
                 <RadioButton
                     android:id="@+id/unCountable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/uncountable" />
+                    android:text="Uncountable" />
             </RadioGroup>
 
             <TextView
@@ -289,7 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/black"
-                android:text="@string/ok"
+                android:text="Ok"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/requireType" />

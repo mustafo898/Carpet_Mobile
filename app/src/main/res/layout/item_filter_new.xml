@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btn"
+    android:layout_margin="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/no_select"
+    android:button="@color/transparent"
+    android:elevation="4dp"
+    android:gravity="center"
+    android:padding="5dp"
+    android:text="Countable" />
