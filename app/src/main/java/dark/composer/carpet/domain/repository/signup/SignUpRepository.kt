@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SignUpRepository {
     suspend fun register(request: SignUpRequest): Flow<BaseNetworkResult<SignUpResponse>>
+
 }
