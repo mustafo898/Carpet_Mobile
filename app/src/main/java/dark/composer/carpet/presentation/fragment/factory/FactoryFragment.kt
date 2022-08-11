@@ -1,44 +1,75 @@
 package dark.composer.carpet.presentation.fragment.factory
 
+import android.util.Log
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import dark.composer.carpet.R
-import dark.composer.carpet.databinding.FragmentFactoryBinding
+import dark.composer.carpet.databinding.FragmentFactoryNewBinding
+import dark.composer.carpet.presentation.fragment.adapters.FactoryAdapter
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.admin.FactoryAdapter
+import dark.composer.carpet.utils.BaseNetworkResult
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FactoryFragment : BaseFragment<FragmentFactoryBinding>(FragmentFactoryBinding::inflate){
+class FactoryFragment : BaseFragment<FragmentFactoryNewBinding>(FragmentFactoryNewBinding::inflate) {
     @Inject
     lateinit var viewModel: FactoryViewModel
-
     private val factoryAdapter by lazy {
-        FactoryAdapter(requireContext())
+        FactoryAdapter()
     }
-
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
         )[FactoryViewModel::class.java]
 
-        binding.list.layoutManager =
-            GridLayoutManager(requireContext(),2, GridLayoutManager.VERTICAL, false)
-        binding.list.adapter = factoryAdapter
-        binding.list.showShimmerAdapter()
+        setUpUi()
+        observe()
+        send()
+        action()
+    }
 
-        viewModel.liveDataListPagination.observe(requireActivity()) {
-            it?.let { t ->
-                binding.list.hideShimmerAdapter()
-                factoryAdapter.setListFactory(t.content)
+    private fun setUpUi(){
+        binding.factoryList.adapter = factoryAdapter
+    }
+
+    private fun observe(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.whenStarted {
+                viewModel.factory.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            Log.d("EEEEE", "observe: ${it.data}")
+                            factoryAdapter.setList(
+                                it.data?:emptyList()
+                            )
+                        }
+                        is BaseNetworkResult.Loading -> {}
+                        is BaseNetworkResult.Error -> {Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show() }
+                    }
+                }
             }
         }
+    }
 
-        factoryAdapter.setClickListener { position, id ->
-            navController.navigate(R.id.action_adminFragment_to_factoryDetailsFragment, bundleOf("ID" to id))
+    private fun send(){
+        viewModel.getFactoryList(0,20)
+    }
+
+    private fun action(){
+        binding.back.setOnClickListener {
+            navController.popBackStack()
         }
 
-        viewModel.getPagination(0,10)
+        factoryAdapter.setClickListener {
+            navController.navigate(R.id.action_factoryFragment_to_factoryDetailsFragment, bundleOf("ID" to it))
+        }
+
+        binding.add.setOnClickListener {
+            navController.navigate(R.id.action_factoryFragment_to_addFactoryFragment)
+        }
     }
 }

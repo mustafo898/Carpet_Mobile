@@ -1,50 +1,63 @@
 package dark.composer.carpet.presentation.fragment.factory
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.FactoryRepository
-import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
+import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.remote.models.response.factory.PaginationResponse
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
+import dark.composer.carpet.domain.use_case.factory.FactoryUseCase
+import dark.composer.carpet.domain.use_case.product.ProductUseCase
+import dark.composer.carpet.utils.BaseNetworkResult
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FactoryViewModel @Inject constructor(private val factoryRepository: FactoryRepository) : ViewModel() {
-    private val listPagination = MutableLiveData<PaginationResponse?>()
-    val liveDataListPagination: MutableLiveData<PaginationResponse?> = listPagination
+class FactoryViewModel @Inject constructor(
+    private val factoryUseCase:FactoryUseCase,
+    private val productUseCase:ProductUseCase
+) : ViewModel() {
 
-    private val _loadingChannel = Channel<Boolean?>()
-    val loadingFlow = _loadingChannel.receiveAsFlow()
+    private val _factory = MutableSharedFlow<BaseNetworkResult<List<FactoryResponse>>>()
+    val factory = _factory.asSharedFlow()
 
-    private val _errorChannel = Channel<String?>()
-    val errorFlow = _errorChannel.receiveAsFlow()
+    private val _filter = MutableSharedFlow<BaseNetworkResult<List<ProductPaginationResponse>>>()
+    val filter = _filter.asSharedFlow()
 
-    fun getPagination(page:Int,size: Int){
+    fun filterProduct(filterRequest: ProductFilterRequest) {
         viewModelScope.launch {
-            factoryRepository.getPagination(page,size).observeForever{
-                when(it){
-                    is BaseNetworkResult.Success->{
-                        listPagination.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.content}")
+            productUseCase.filterProduct(filterRequest).onEach { result ->
+                when(result){
+                    is BaseNetworkResult.Error -> {
+                        _filter.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
                     }
-                    is BaseNetworkResult.Error->{
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
+                    is BaseNetworkResult.Loading -> {
+                        _filter.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
-                    is BaseNetworkResult.Loading->{
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
-                    }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
+                    is BaseNetworkResult.Success -> {
+                        _filter.emit(BaseNetworkResult.Success(result.data?: emptyList()))
                     }
                 }
-            }
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun getFactoryList(page: Int, size: Int) {
+        viewModelScope.launch {
+            factoryUseCase.getFactoryList(page, size).onEach { result ->
+                when(result){
+                    is BaseNetworkResult.Error -> {
+                        _factory.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _factory.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        _factory.emit(BaseNetworkResult.Success(result.data?.content?: emptyList()))
+                    }
+                }
+            }.launchIn(viewModelScope)
         }
     }
 }

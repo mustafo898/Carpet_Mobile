@@ -1,167 +1,107 @@
 package dark.composer.carpet.presentation.fragment.profile
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.ProfileRepository
-import dark.composer.carpet.utils.BaseNetworkResult
-import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
-import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
-import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import dark.composer.carpet.domain.use_case.profile.ProfileUseCase
+import dark.composer.carpet.utils.BaseNetworkResult
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(private val profileRepository: ProfileRepository) :
-    ViewModel() {
-    private val successMLD = MutableLiveData<ProfileFileResponse>()
-    val successLD: LiveData<ProfileFileResponse> = successMLD
+class ProfileViewModel @Inject constructor(private val useCase:ProfileUseCase) : ViewModel() {
 
-    private val _loadingChannel = Channel<Boolean?>()
-    val loadingFlow = _loadingChannel.receiveAsFlow()
-
-    private val _errorChannel = Channel<String?>()
-    val errorFlow = _errorChannel.receiveAsFlow()
-
-    val addFactory = MutableLiveData<FactoryResponse?>()
-    val liveDataAddFactory: MutableLiveData<FactoryResponse?> = addFactory
-
-    private val profile = MutableLiveData<ProfileResponse?>()
-    val liveDataProfile: MutableLiveData<ProfileResponse?> = profile
-
-    fun changed(file: MultipartBody.Part) {
-        viewModelScope.launch {
-            profileRepository.changeImage(file).observeForever {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        it.data?.let { d ->
-                            successMLD.value = d
-                        }
-                    }
-                    is BaseNetworkResult.Error -> {
-                        it.message?.let { d ->
-                            viewModelScope.launch {
-                                _errorChannel.send(d)
-                            }
-                        }
-                    }
-                    else -> {
-                        Log.d("s", "signUp:")
-                    }
-                }
-            }
-        }
-
-    }
-
+    private val _profile = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
+    val profile = _profile.asSharedFlow()
 
     fun getProfile() {
         viewModelScope.launch {
-            profileRepository.getProfile().observeForever {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        profile.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
-                    }
+            useCase.getProfile().onEach { result ->
+                when(result){
                     is BaseNetworkResult.Error -> {
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
+                        _profile.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        _profile.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
+                    is BaseNetworkResult.Success -> {
+                        _profile.emit(BaseNetworkResult.Success(result.data!!))
                     }
                 }
-            }
+            }.catch {t->
+                Log.d("Mistake", "getProfile: ${t.message}")
+            }.launchIn(viewModelScope)
         }
     }
 
-    fun updateProfile(request: ProfileRequest) {
+    private val _update = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
+    val update = _update.asSharedFlow()
+
+    fun updateProfile() {
         viewModelScope.launch {
-            profileRepository.updateProfile(request).observeForever {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        profile.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
-                    }
+            useCase.getProfile().onEach { result ->
+                when(result){
                     is BaseNetworkResult.Error -> {
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
+                        _update.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        _update.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
+                    is BaseNetworkResult.Success -> {
+                        _update.emit(BaseNetworkResult.Success(result.data!!))
                     }
                 }
-            }
+            }.catch {t->
+                Log.d("Mistake", "getProfile: ${t.message}")
+            }.launchIn(viewModelScope)
         }
     }
 
-    fun createProfile(request: ProfileCreateRequest) {
+    private val _delete = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
+    val delete = _delete.asSharedFlow()
+
+    fun deleteProfile() {
         viewModelScope.launch {
-            profileRepository.createProfile(request).observeForever {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        profile.value = it.data
-                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
-                    }
+            useCase.getProfile().onEach { result ->
+                when(result){
                     is BaseNetworkResult.Error -> {
-                        viewModelScope.launch {
-                            _errorChannel.send(it.message)
-                        }
+                        _delete.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
                     }
                     is BaseNetworkResult.Loading -> {
-                        viewModelScope.launch {
-                            _loadingChannel.send(it.isLoading)
-                        }
+                        _delete.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
+                    is BaseNetworkResult.Success -> {
+                        _delete.emit(BaseNetworkResult.Success(result.data!!))
                     }
                 }
-            }
+            }.catch {t->
+                Log.d("Mistake", "getProfile: ${t.message}")
+            }.launchIn(viewModelScope)
         }
     }
 
-//    fun addFactory(addFactoryRequest: FactoryAddRequest){
-//        viewModelScope.launch {
-//            profileRepository.addFactory(addFactoryRequest).observeForever{
-//                when(it){
-//                    is BaseNetworkResult.Success->{
-//                        addFactory.value = it.data
-//                        Log.d("EEEEE", "getPagination: ${it.data?.name}")
-//                    }
-//                    is BaseNetworkResult.Error->{
-//                        viewModelScope.launch {
-//                            _errorChannel.send(it.message)
-//                        }
-//                    }
-//                    is BaseNetworkResult.Loading->{
-//                        viewModelScope.launch {
-//                            _loadingChannel.send(it.isLoading)
-//                        }
-//                    }
-//                    else -> {
-//                        Log.d("Admin", "getPagination: Kemadi")
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private val _create = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
+    val create = _create.asSharedFlow()
+
+    fun createProfile(create: ProfileCreateRequest) {
+        viewModelScope.launch {
+            useCase.getProfile().onEach { result ->
+                when(result){
+                    is BaseNetworkResult.Error -> {
+                        _create.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _create.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        _create.emit(BaseNetworkResult.Success(result.data!!))
+                    }
+                }
+            }.catch {t->
+                Log.d("Mistake", "getProfile: ${t.message}")
+            }.launchIn(viewModelScope)
+        }
+    }
 }

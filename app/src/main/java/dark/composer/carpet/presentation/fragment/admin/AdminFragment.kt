@@ -1,113 +1,168 @@
 package dark.composer.carpet.presentation.fragment.admin
 
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
-import dark.composer.carpet.databinding.FragmentAdminBinding
+import dark.composer.carpet.databinding.FragmentAdminNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.utils.SharedPref
+import dark.composer.carpet.presentation.fragment.adapters.FactoryAdminAdapter
+import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
+import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AdminFragment : BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inflate) {
-    private val factoryAdapter by lazy {
-        FactoryAdapter(requireContext())
+class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBinding::inflate) {
+    @Inject
+    lateinit var viewModel: AdminViewModel
+
+    private val productAdapter by lazy {
+        ProductAdapter()
     }
 
-    @Inject
-    lateinit var shared: SharedPref
-    private lateinit var viewModel : AdminViewModel
+    private val factoryAdminAdapter by lazy {
+        FactoryAdminAdapter()
+    }
 
+    private var type = "UNCOUNTABLE"
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
         )[AdminViewModel::class.java]
+        Toast.makeText(requireContext(), "Admin", Toast.LENGTH_SHORT).show()
+        setupUi()
+        send()
+        observe()
+        action()
+    }
 
-//        binding.listSale.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.listSale.adapter = factoryAdapter
-//        binding.listSale.showShimmerAdapter()
-
-//        ?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
-
-        Toast.makeText(requireContext(), "admin", Toast.LENGTH_SHORT).show()
-
-        viewModel.liveDataProfile.observe(requireActivity()) {
-            it?.let { t ->
-                Glide.with(requireContext()).load(t.url).into(binding.image)
-                Log.d("RRRRR", "onViewCreate: ${t.name}")
-                binding.userName.text = "${t.name} ${t.surname}"
-                binding.phoneNumber.text = t.phoneNumber
-                binding.phoneNumber.visibility = View.VISIBLE
-            }
-        }
-
-        val pagerAdapter = ViewPagerAdapter(this)
-        binding.viewPager.adapter = pagerAdapter
-        binding.animateBar.setupWithViewPager2(binding.viewPager)
-
-        if(shared.getToken().isNullOrEmpty()){
-            binding.userName.text = "Carpet"
-            binding.image.setImageResource(R.drawable.ic_person)
-            binding.phoneNumber.visibility = View.GONE
-            binding.logIn.visibility = View.VISIBLE
-        }else{
-//            binding.userName.visibility = View.VISIBLE
-//            binding.image.visibility = View.VISIBLE
-//            binding.phoneNumber.visibility = View.VISIBLE
-            binding.logIn.visibility = View.GONE
-            viewModel.getProfile()
-        }
-
-        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.move_left)
-        binding.logIn.startAnimation(anim)
-
-        binding.logIn.setOnClickListener {
-            navController.navigate(R.id.action_adminFragment_to_logInFragment)
-        }
-
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.errorFlow.collect {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            viewLifecycleOwner.whenStarted {
+                viewModel.profile.collect {
+                    when (it) {
+                        is BaseNetworkResult.Error -> {
+                            binding.scroll.visibility = View.VISIBLE
+                            binding.progress.visibility = View.GONE
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+                        is BaseNetworkResult.Loading -> {
+                            binding.progress.visibility = View.VISIBLE
+                            binding.scroll.visibility = View.GONE
+                        }
+                        is BaseNetworkResult.Success -> {
+                            binding.progress.visibility = View.GONE
+                            binding.scroll.visibility = View.VISIBLE
+                            binding.name.text = it.data?.name ?: "Carpet Mobile"
+                            it.data?.let { t ->
+                                Glide.with(requireContext()).load(t.url).into(binding.image)
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        binding.image.setOnClickListener {
-            navController.navigate(R.id.action_adminFragment_to_profileFragment)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.whenStarted {
+                viewModel.product.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            Log.d("EEEEE", "observe: ${it.data}")
+                            binding.progress.visibility = View.GONE
+                            binding.scroll.visibility = View.VISIBLE
+                            productAdapter.setList(it.data ?: emptyList())
+                        }
+                        is BaseNetworkResult.Loading -> {
+                            binding.progress.visibility = View.VISIBLE
+                            binding.scroll.visibility = View.GONE
+                        }
+                        is BaseNetworkResult.Error -> {
+                            binding.progress.visibility = View.GONE
+                            binding.scroll.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
         }
 
-//        factoryAdapter.setClickListener {pos,id->
-//            navController.navigate(
-//                R.id.action_adminFragment_to_factoryDetailsFragment,
-//                bundleOf("ID" to id)
-//            )
-//        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.whenStarted {
+                viewModel.factory.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            Log.d("EEEEE", "observe: ${it.data}")
+                            binding.progress.visibility = View.GONE
+                            binding.scroll.visibility = View.VISIBLE
+                            factoryAdminAdapter.setList(it.data?: emptyList())
+                        }
+                        is BaseNetworkResult.Loading-> {
+                            binding.progress.visibility = View.VISIBLE
+                            binding.scroll.visibility = View.GONE
+                        }
+                        is BaseNetworkResult.Error -> {
+                            binding.progress.visibility = View.GONE
+                            binding.scroll.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
-//    private fun getData(){
-//        val list = ArrayList<FactoryResponse>()
-//        for (i in 0 until 14){
-//            list.add(FactoryResponse("12",i,"key_$i","Name",null,"Active",true))
-//        }
-//        factoryAdapter.setListFactory(list)
-//        binding.listSale.hideShimmerAdapter()
-//    }
+    private fun send() {
+        viewModel.getProfile()
+        viewModel.getFactoryList(0, 20)
+        viewModel.getProductList(type, 0, 20)
+    }
 
-//        viewModel.liveDataListPagination.observe(requireActivity()){
-//            binding.listSale.hideShimmerAdapter()
-//            factoryAdapter.setListFactory(it!!.content)
-//        }
+    private fun action() {
+        binding.seeAll.setOnClickListener {
+            navController.navigate(R.id.action_adminFragment_to_factoryFragment)
+        }
+
+        factoryAdminAdapter.setClickListener {
+            navController.navigate(
+                R.id.action_adminFragment_to_factoryDetailsFragment,
+                bundleOf("ID" to it)
+            )
+        }
+
+        productAdapter.setClickListener {
+            navController.navigate(
+                R.id.action_adminFragment_to_productDetailsFragment,
+                bundleOf("ID" to it, "TYPE" to type)
+            )
+        }
+
+        binding.image.setOnClickListener {
+            navController.navigate(R.id.action_adminFragment_to_logInFragment)
+        }
+    }
+
+    private fun setupUi() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+        binding.list.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        binding.list.adapter = productAdapter
+
+        binding.factoriesList.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.factoriesList.adapter = factoryAdminAdapter
+        val snapper = LinearSnapHelper()
+        snapper.attachToRecyclerView(binding.factoriesList)
+    }
 
 }

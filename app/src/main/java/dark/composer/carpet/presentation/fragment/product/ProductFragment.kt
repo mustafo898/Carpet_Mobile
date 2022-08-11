@@ -2,100 +2,106 @@ package dark.composer.carpet.presentation.fragment.product
 
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import dark.composer.carpet.R
-import dark.composer.carpet.data.remote.models.response.factory.PaginationResponse
-import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
-import dark.composer.carpet.databinding.FragmentProductBinding
-import dark.composer.carpet.presentation.dialog.ProgressDialog
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
+import dark.composer.carpet.databinding.FragmentProductNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.utils.SharedPref
+import dark.composer.carpet.presentation.fragment.adapters.FilterAdapter
+import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
+import dark.composer.carpet.utils.BaseNetworkResult
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBinding::inflate) {
-    @Inject
-    lateinit var shared: SharedPref
-
-    private val productAdapter by lazy {
-        ProductAdapter(requireContext())
-    }
-
-    private val loadingDialog by lazy {
-        ProgressDialog(requireContext())
-    }
-
+class ProductFragment :
+    BaseFragment<FragmentProductNewBinding>(FragmentProductNewBinding::inflate) {
     @Inject
     lateinit var viewModel: ProductViewModel
-    lateinit var list: List<PaginationResponse>
-    var page = 0
-    var isLast = false
-    var type = "COUNTABLE"
+
+    private val productAdapter by lazy {
+        ProductAdapter()
+    }
+
+    private val filterAdapter by lazy {
+        FilterAdapter()
+    }
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
-            this,
-            providerFactory
+            requireActivity(), providerFactory
         )[ProductViewModel::class.java]
 
-        list = ArrayList()
+        setUpUi()
+        observe()
+        send()
+        actions()
+    }
 
-        binding.list.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-        binding.list.adapter = productAdapter
-        binding.list.showShimmerAdapter()
+    private fun setUpUi() {
+        binding.productList.adapter = productAdapter
+        binding.filterList.adapter = filterAdapter
+    }
 
-        viewModel.liveDataListPagination.observe(requireActivity()) {
-            it?.let { it1 ->
-//                loadingDialog.dismiss()
-                binding.list.hideShimmerAdapter()
-                productAdapter.setProductListProduct(it1)
-            }
-        }
-
-        productAdapter.setClickListener {
-            navController.navigate(
-                R.id.action_adminFragment_to_productDetailsFragment,
-                bundleOf("ID" to it, "TYPE" to type)
-            )
-        }
-
-        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val lm = recyclerView.layoutManager as GridLayoutManager
-                if (!isLast) {
-                    if (lm.findLastVisibleItemPosition() == productAdapter.itemCount - 1 && productAdapter.itemCount >= 5) {
-                        isLast = true
-                        page += 1
-                        if (binding.countable.isActivated) {
-                            viewModel.getCountPagination(page, 20, "COUNTABLE", "")
+    private fun observe() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.productList.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            productAdapter.setList(it.data ?: emptyList())
                         }
-                        if (binding.uncountable.isActivated) {
-                            viewModel.getCountPagination(page, 20, "UNCOUNTABLE", "")
+                        is BaseNetworkResult.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                it.message ?: "An unexpected error occurred",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                        is BaseNetworkResult.Loading -> {}
                     }
                 }
             }
-        })
-
-        binding.countable.isChecked = true
-
-        binding.countable.setOnClickListener {
-            isClick("COUNTABLE")
         }
 
-        binding.uncountable.setOnClickListener {
-            isClick("UNCOUNTABLE")
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.filter.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            productAdapter.setList(it.data ?: emptyList())
+                        }
+                        is BaseNetworkResult.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                it.message ?: "An unexpected error occurred",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is BaseNetworkResult.Loading -> {}
+                    }
+                }
+            }
         }
-//        loadingDialog.show()
-        viewModel.getCountPagination(page, 20, "COUNTABLE", "")
     }
 
-    private fun isClick(s:String){
-        viewModel.getCountPagination(page, 20, s, "")
-        productAdapter.clear()
-        page = 0
-        loadingDialog.show()
-        type = s
+    var type = "COUNTABLE"
+
+    private fun send() {
+        binding.search.addTextChangedListener {
+            viewModel.filterProduct(ProductFilterRequest(name = it.toString(), type = type))
+        }
+        viewModel.getProductList(type, 0, 20)
+    }
+
+    private fun actions() {
+        productAdapter.setClickListener {
+            navController.navigate(
+                R.id.action_productFragment_to_productDetailsFragment,
+                bundleOf("ID" to it, "TYPE" to type)
+            )
+        }
     }
 }

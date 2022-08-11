@@ -13,17 +13,9 @@
     <item
         app:showAsAction="always"
         android:enabled="true"
-        android:id="@+id/searchFragment"
+        android:id="@+id/productFragment"
         android:icon="@drawable/ic_search"
         android:title="Saved">
-    </item>
-
-    <item
-        app:showAsAction="always"
-        android:enabled="true"
-        android:id="@+id/factoryFragment"
-        android:icon="@drawable/ic_factory"
-        android:title="Factories">
     </item>
 
     <item

@@ -1,6 +1,6 @@
 package dark.composer.carpet.presentation.fragment.signup
 
-import android.transition.TransitionInflater
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -11,31 +11,25 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
-import dark.composer.carpet.databinding.FragmentSigUpBinding
+import dark.composer.carpet.databinding.FragmentSignNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
+import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.utils.SharedPref
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::inflate) {
+
+class SignUpFragment : BaseFragment<FragmentSignNewBinding>(FragmentSignNewBinding::inflate) {
     lateinit var viewModel: SignUpViewModel
+
+    @Inject
+    lateinit var shared: SharedPref
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
         )[SignUpViewModel::class.java]
-
-        collect()
-        textListener()
-
-        binding.register.setOnClickListener {
-            viewModel.signUp(
-                binding.name.text.toString().trim(),
-                binding.name.text.toString().trim(),
-                binding.phoneNumber.text.toString().trim(),
-                binding.password.text.toString().trim(),
-                binding.confirmPassword.text.toString().trim()
-            )
-        }
 
         binding.logIn.setOnClickListener {
             val extras = FragmentNavigatorExtras(
@@ -47,45 +41,34 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
                 binding.logIn to "logIn"
             )
             findNavController().navigate(
-                R.id.action_sigUpFragment_to_logInFragment,
+                R.id.action_signUpFragment_to_logInFragment,
                 null,
                 null,
                 extras
             )
         }
 
-        val animation =
-            TransitionInflater.from(requireContext()).inflateTransition(R.transition.animate)
-        sharedElementEnterTransition = animation
-        sharedElementReturnTransition = animation
+        collect()
+        textListener()
     }
-
-//    private fun successToast(text:String){
-//        val inflate: LayoutInflater = layoutInflater
-//        val layout: View =
-//            inflate.inflate(
-//                R.layout.custom_toast_green,
-//                view?.findViewById(R.id.custom_toast_container)
-//            )
-//
-//        val toast = Toast(requireContext())
-//        toast.setGravity(Gravity.TOP, 0, 0)
-//        toast.duration = Toast.LENGTH_SHORT
-//        toast.setText(text)
-//        toast.view = layout
-//        toast.show()
-//    }
 
     private fun collect() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.signUpFlow.collect {
-                    if (it) {
-//                        navController.navigate(R.id.action_sigUpFragment_to_customerFragment)
-                        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility =
-                            View.VISIBLE
-                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-
+                    when(it){
+                        is BaseNetworkResult.Success -> {
+                            shared.setToken(it.data?.jwt?:"")
+                            navController.navigate(R.id.action_signUpFragment_to_adminFragment)
+                            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                        }
+                        is BaseNetworkResult.Error -> {
+                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        }
+                        is BaseNetworkResult.Loading -> {
+                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
@@ -160,8 +143,19 @@ class SignUpFragment : BaseFragment<FragmentSigUpBinding>(FragmentSigUpBinding::
         }
     }
 
+
     private fun textListener() {
         var confirm = ""
+        binding.register.setOnClickListener {
+            viewModel.signUp(
+                binding.name.text.toString().trim(),
+                binding.name.text.toString().trim(),
+                binding.phoneNumber.text.toString().trim(),
+                binding.password.text.toString().trim(),
+                binding.confirmPassword.text.toString().trim()
+            )
+        }
+
         binding.passwordInput.isHelperTextEnabled = false
         binding.password.addTextChangedListener {
             viewModel.validPassword(it.toString())

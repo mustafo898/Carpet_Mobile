@@ -1,5 +1,7 @@
 package dark.composer.carpet.utils
 
+import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
+
 sealed class BaseNetworkResult<T>(
     val data: T? = null,
     val message: String? = null,

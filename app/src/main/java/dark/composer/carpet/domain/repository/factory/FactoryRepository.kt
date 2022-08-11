@@ -12,8 +12,6 @@ import okhttp3.MultipartBody
 interface FactoryRepository {
     suspend fun getFactory(id:Int): Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun getFactoryList(page:Int,size:Int):Flow<BaseNetworkResult<PaginationResponse>>
-//    suspend fun getFactoryListAdmin(): Flow<BaseNetworkResult<PaginationResponse>>
-//    suspend fun getFactoryList():Flow<BaseNetworkResult<PaginationResponse>>
     suspend fun updateFactory(factoryUpdateRequest: FactoryUpdateRequest, id: Int):Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun createFactory(factoryAddRequest: FactoryAddRequest):Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun getFactoryPaginationAdmin(page:Int,size:Int):Flow<BaseNetworkResult<PaginationResponse>>

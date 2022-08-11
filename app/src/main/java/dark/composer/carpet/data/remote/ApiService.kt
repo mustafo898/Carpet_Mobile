@@ -36,29 +36,32 @@ interface ApiService {
     @POST(Constants.LOGIN)
     suspend fun logIn(@Body logInRequest: LogInRequest): Response<LogInResponse>
 
+    @DELETE("profile")
+    suspend fun deleteProfile(): Response<ProfileResponse>
+
     @GET("profile/profile/addminver")
     suspend fun getProfile(): Response<ProfileResponse>
 
     @GET("profile/adm")
-    suspend fun getListProfile(): Response<List<ProfileResponse>>
+    suspend fun getUsersProfileList(): Response<List<ProfileResponse>>
 
     @GET("profile/adm/{id}")
-    suspend fun getListProfileDetails(@Path("id") id: Int): Response<ProfileResponse>
+    suspend fun getUsersProfileDetails(@Path("id") id: Int): Response<ProfileResponse>
 
     @PUT("profile/update")
     suspend fun updateProfile(@Body request: ProfileRequest): Response<ProfileResponse>
 
     @POST("profile/adm")
-    suspend fun createCustomersProfile(@Body request: ProfileCreateRequest): Response<ProfileResponse>
+    suspend fun createProfile(@Body request: ProfileCreateRequest): Response<ProfileResponse>
 
     @PUT("profile/adm/{id}")
-    suspend fun updateCustomersProfile(
+    suspend fun updateUsersProfile(
         @Path("id") id: Int,
         @Body request: ProfileCreateRequest
     ): Response<ProfileResponse>
 
     @DELETE("profile/adm")
-    suspend fun deleteCustomersProfile(@Query("id") id: Int): Response<ProfileResponse>
+    suspend fun deleteUsersProfile(@Query("id") id: Int): Response<ProfileResponse>
 
     @Multipart
     @POST("attach/upload/profile")
@@ -131,13 +134,13 @@ interface ApiService {
     suspend fun getFactoryInfo(@Path("id") id: Int): Response<FactoryResponse>
 
     @PUT(Constants.FACTORY_UPDATE)
-    suspend fun updateInfoFactory(
+    suspend fun updateFactory(
         @Body factoryUpdate: FactoryUpdateRequest,
         @Path("id") id: Int
     ): Response<FactoryResponse>
 
     @POST(Constants.FACTORY_ADD)
-    suspend fun addInfoFactory(@Body factoryAddRequest: FactoryAddRequest): Response<FactoryResponse>
+    suspend fun createFactory(@Body factoryAddRequest: FactoryAddRequest): Response<FactoryResponse>
 
     @Multipart
     @POST("attach/adm/upload/factory/{key}")

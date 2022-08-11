@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/editName"
+        android:id="@+id/edit"
+        app:showAsAction="always"
+        android:enabled="true"
         android:icon="@drawable/ic_edit"
-        android:title="Edit Name" />
+        android:title="Edit">
+    </item>
 
     <item
-        android:id="@+id/logout"
-        android:icon="@drawable/ic_exit"
-        android:title="Log Out" />
+        app:showAsAction="always"
+        android:enabled="true"
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete">
+    </item>
 
     <item
-        android:id="@+id/delete_menu"
-        android:icon="@drawable/ic_trash"
-        android:title="Delete" />
-
-    <item
+        app:showAsAction="always"
+        android:enabled="true"
         android:id="@+id/share"
-        android:icon="@drawable/ic_exit"
-        android:title="Share" />
-
-    <item
-        android:id="@+id/changeImage_menu"
-        android:icon="@drawable/ic_sales"
-        android:title="Change Image" />
+        android:icon="@drawable/ic_share"
+        android:title="Share">
+    </item>
 </menu>

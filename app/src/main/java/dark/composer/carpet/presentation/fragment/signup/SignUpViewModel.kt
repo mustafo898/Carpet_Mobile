@@ -3,19 +3,19 @@ package dark.composer.carpet.presentation.fragment.signup
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dark.composer.carpet.data.repositories.SignUpRepositoryImpl
-import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.data.remote.models.request.signup.SignUpRequest
+import dark.composer.carpet.data.remote.models.response.signup.SignUpResponse
+import dark.composer.carpet.domain.use_case.signup.SignUpUseCase
+import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: SignUpRepositoryImpl) :
-    ViewModel() {
-    private val signUpChannel = Channel<Boolean>()
-    val signUpFlow = signUpChannel.receiveAsFlow()
+class SignUpViewModel @Inject constructor(private val useCase: SignUpUseCase) : ViewModel() {
+
+    private val signUpChannel = MutableSharedFlow<BaseNetworkResult<SignUpResponse>>()
+    val signUpFlow = signUpChannel.asSharedFlow()
 
     private val errorChannel = Channel<String>()
     val errorFlow = errorChannel.receiveAsFlow()
@@ -53,33 +53,21 @@ class SignUpViewModel @Inject constructor(private val signUpRepositoryImpl: Sign
                 validPassword(password)
                 validSurname(surname)
             } else {
-                signUpRepositoryImpl.signUp(
-                    SignUpRequest(
-                        name = name,
-                        surname = surname,
-                        phoneNumber = phoneNumber,
-                        password = password,
-                        configPassword = configPassword
-                    )
-                ).catch { t ->
-                    Log.d("DDDD", "getServicesResponse: $t")
-                }.collect {
-                    when (it) {
-                        is BaseNetworkResult.Success -> {
-                            it.data?.let { d ->
-                                signUpChannel.send(d)
-                            }
-                        }
+                useCase.sigUp(SignUpRequest(name, surname, phoneNumber, password, configPassword)).onEach { result ->
+                    when(result){
                         is BaseNetworkResult.Error -> {
-                            it.message?.let { d ->
-                                errorChannel.send(d)
-                            }
+                            signUpChannel.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))
                         }
-                        else -> {
-                            Log.d("s", "signUp:")
+                        is BaseNetworkResult.Loading -> {
+                            signUpChannel.emit(BaseNetworkResult.Loading(result.isLoading))
+                        }
+                        is BaseNetworkResult.Success -> {
+                            signUpChannel.emit(BaseNetworkResult.Success(result.data!!))
                         }
                     }
-                }
+                }.catch { t ->
+                    Log.d("Mistake", "getProfile: ${t.message}")
+                }.launchIn(viewModelScope)
             }
         }
     }

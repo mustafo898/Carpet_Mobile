@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/adminFragment">
+
+    <fragment
+        android:id="@+id/adminFragment"
+        tools:layout="@layout/fragment_admin_new"
+        android:name="dark.composer.carpet.presentation.fragment.admin.AdminFragment"
+        android:label="AdminFragment" >
+        <action
+            android:id="@+id/action_adminFragment_to_factoryFragment"
+            app:destination="@id/factoryFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product_new" >
+        <action
+            android:id="@+id/action_productFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.details.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details_new" />
+    <fragment
+        android:id="@+id/addFactoryFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryFragment"
+        android:label="fragment_add_factory"
+        tools:layout="@layout/fragment_add_factory_new" />
+    <fragment
+        tools:layout="@layout/fragment_add_product_new"
+        android:id="@+id/addProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.add.product.AddProductFragment"
+        android:label="AddProductFragment" />
+    <fragment
+        tools:layout="@layout/fragment_factory_new"
+        android:id="@+id/factoryFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.FactoryFragment"
+        android:label="FactoryFragment" >
+        <action
+            android:id="@+id/action_factoryFragment_to_factoryDetailsFragment"
+            app:destination="@id/factoryDetailsFragment" />
+        <action
+            android:id="@+id/action_factoryFragment_to_addFactoryFragment"
+            app:destination="@id/addFactoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile_new"/>
+    <fragment
+        tools:layout="@layout/fragment_factory_datails_new"
+        android:id="@+id/factoryDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.details.FactoryDetailsFragment"
+        android:label="FactoryDetailsFragment" >
+        <action
+            android:id="@+id/action_factoryDetailsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="dark.composer.carpet.presentation.fragment.login.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in_new" >
+        <action
+            android:id="@+id/action_logInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="dark.composer.carpet.presentation.fragment.signup.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_new" >
+        <action
+            android:id="@+id/action_signUpFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+</navigation>
