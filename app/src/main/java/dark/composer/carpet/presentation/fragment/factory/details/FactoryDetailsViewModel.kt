@@ -3,6 +3,7 @@ package dark.composer.carpet.presentation.fragment.factory.details
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dark.composer.carpet.data.remote.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.domain.use_case.factory.FactoryUseCase
@@ -34,7 +35,7 @@ class FactoryDetailsViewModel @Inject constructor(private val productUseCase: Pr
                     }
                 }
             }.catch {t->
-                Log.d("OOOOOOO", "getProductList: ")
+                Log.d("OOOOOOO", "getProductList: ${t.message}")
             }.launchIn(viewModelScope)
         }
     }
@@ -42,6 +43,26 @@ class FactoryDetailsViewModel @Inject constructor(private val productUseCase: Pr
     fun getFactory(id:Int) {
         viewModelScope.launch {
             factoryUseCase.getFactory(id).onEach { result ->
+                when(result){
+                    is BaseNetworkResult.Error -> {
+                        _factory.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _factory.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        _factory.emit(BaseNetworkResult.Success(result.data!!))
+                    }
+                }
+            }.catch {t->
+                Log.d("OOOOOOO", "getProductList: ")
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun deleteFactory(id:Int) {
+        viewModelScope.launch {
+            factoryUseCase.deleteFactory(id).onEach { result ->
                 when(result){
                     is BaseNetworkResult.Error -> {
                         _factory.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))

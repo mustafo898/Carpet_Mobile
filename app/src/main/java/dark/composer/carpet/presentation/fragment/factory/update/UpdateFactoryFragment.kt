@@ -1,10 +1,11 @@
-package dark.composer.carpet.presentation.fragment.factory.add.factory
+package dark.composer.carpet.presentation.fragment.factory.update
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import dark.composer.carpet.data.remote.models.request.factory.update.FactoryUpdateRequest
 import dark.composer.carpet.databinding.FragmentAddFactoryNewBinding
+import dark.composer.carpet.databinding.FragmentUpdateFactoryNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.utils.SharedPref
@@ -27,19 +30,21 @@ import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
-class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAddFactoryNewBinding::inflate) {
-    lateinit var viewModel: AddFactoryViewModel
+class UpdateFactoryFragment :
+    BaseFragment<FragmentUpdateFactoryNewBinding>(FragmentUpdateFactoryNewBinding::inflate) {
+    lateinit var viewModel: UpdateFactoryViewModel
     private val REQUEST_CODE = 100
 
     @Inject
     lateinit var sharedPref: SharedPref
-
+    var d = 0
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
-        )[AddFactoryViewModel::class.java]
+        )[UpdateFactoryViewModel::class.java]
 
+        setUpUi()
         observe()
         send()
         binding.add.setOnClickListener {
@@ -47,16 +52,23 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
         }
     }
 
-    private fun observe(){
+    private fun setUpUi() {
+        val bundle: Bundle? = this.arguments
+        bundle?.let {
+            d = it.getInt("ID", 0)
+        }
+    }
+
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.whenStarted {
-                viewModel.name.collect{
+                viewModel.name.collect {
                     Log.d("UUUUU", "observe: $it")
-                    it.forEach {t->
-                        if (!t.value){
+                    it.forEach { t ->
+                        if (!t.value) {
                             binding.factoryInput.isHelperTextEnabled = true
                             binding.factoryInput.helperText = it.keys.toString()
-                        }else{
+                        } else {
                             binding.factoryInput.isHelperTextEnabled = false
                         }
                     }
@@ -69,14 +81,38 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
                 viewModel.factory.collect {
                     when (it) {
                         is BaseNetworkResult.Success -> {
-                            Toast.makeText(requireContext(), "${it.data?.key}", Toast.LENGTH_SHORT).show()
-                            if (imagePath.isNotEmpty()){
-                                viewModel.uploadFile(body,it.data?.key!!)
+                            if (!it.data?.photoUrl.isNullOrEmpty()) {
+                                Glide.with(requireContext()).load(it.data?.photoUrl)
+                                    .into(binding.image)
+                            }
+                            binding.visible.isChecked = it.data?.visible!!
+                            binding.status.isChecked = it.data.status == "ACTIVE"
+                            binding.factory.setText(it.data.name)
+                            Log.d("EEEEE", "observe: ${it.data}")
+                        }
+                        is BaseNetworkResult.Loading -> {}
+                        is BaseNetworkResult.Error -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.whenStarted {
+                viewModel.update.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            Toast.makeText(requireContext(), "${it.data?.key}", Toast.LENGTH_SHORT)
+                                .show()
+                            if (imagePath.isNotEmpty()) {
+                                viewModel.uploadFile(body, it.data?.key!!)
                             }
                             Log.d("EEEEE", "observe: ${it.data}")
                         }
                         is BaseNetworkResult.Loading -> {}
-                        is BaseNetworkResult.Error-> {
+                        is BaseNetworkResult.Error -> {
                             Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         }
                     }
@@ -92,7 +128,7 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
                             navController
                         }
                         is BaseNetworkResult.Loading -> {}
-                        is BaseNetworkResult.Error-> {
+                        is BaseNetworkResult.Error -> {
                             Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         }
                     }
@@ -101,16 +137,41 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
         }
     }
 
-    private fun send(){
+    private fun send() {
         binding.factory.addTextChangedListener {
             viewModel.validName(it.toString())
         }
+
         binding.accept.setOnClickListener {
-            viewModel.createFactory(binding.factory.text.toString())
+            val status = if (binding.status.isChecked){
+                "ACTIVE"
+            }else{
+                "BLOCKED"
+            }
+            Toast.makeText(requireContext(), "${binding.visible.isChecked}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show()
+            viewModel.updateFactory(
+                FactoryUpdateRequest(
+                    binding.factory.text.toString().trim(),
+                    status,
+                    binding.visible.isChecked
+                ), d
+            )
         }
+        viewModel.getFactory(d)
         binding.add.setOnClickListener {
             Toast.makeText(requireContext(), "Click", Toast.LENGTH_SHORT).show()
             checkPermission()
+        }
+    }
+
+    private fun clickStatus(): String {
+        return if (binding.status.isChecked) {
+            Toast.makeText(requireContext(), "ACTIVE", Toast.LENGTH_SHORT).show()
+            "ACTIVE"
+        } else {
+            Toast.makeText(requireContext(), "BLOCKED", Toast.LENGTH_SHORT).show()
+            "BLOCKED"
         }
     }
 

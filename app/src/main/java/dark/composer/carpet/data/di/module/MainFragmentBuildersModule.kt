@@ -7,9 +7,12 @@ import dark.composer.carpet.presentation.fragment.factory.FactoryFragment
 import dark.composer.carpet.presentation.fragment.product.ProductFragment
 import dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryFragment
 import dark.composer.carpet.presentation.fragment.factory.details.FactoryDetailsFragment
+import dark.composer.carpet.presentation.fragment.factory.update.UpdateFactoryFragment
 import dark.composer.carpet.presentation.fragment.login.LogInFragment
 import dark.composer.carpet.presentation.fragment.product.add.product.AddProductFragment
-import dark.composer.carpet.presentation.fragment.product.details.ProductDetailsFragment
+import dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment
+import dark.composer.carpet.presentation.fragment.product.details.ProductCountableFragment
+import dark.composer.carpet.presentation.fragment.product.details.ProductUncountableFragment
 import dark.composer.carpet.presentation.fragment.signup.SignUpFragment
 
 @Module
@@ -22,7 +25,7 @@ abstract class MainFragmentBuildersModule {
     abstract fun productFragment(): ProductFragment
 
     @ContributesAndroidInjector
-    abstract fun productDetailsFragment(): ProductDetailsFragment
+    abstract fun productDetailsFragment(): ProductCountableFragment
 
     @ContributesAndroidInjector
     abstract fun adProductFragment(): AddProductFragment
@@ -41,4 +44,13 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun logInFragment(): LogInFragment
+
+    @ContributesAndroidInjector
+    abstract fun updateFactoryFragment(): UpdateFactoryFragment
+
+    @ContributesAndroidInjector
+    abstract fun productUncountableFragment(): ProductUncountableFragment
+
+    @ContributesAndroidInjector
+    abstract fun updateProductFragment(): UpdateProductFragment
 }

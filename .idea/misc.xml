@@ -33,8 +33,15 @@
         <entry key="..\:/Android/carpet2/app/src/main/res/drawable/ic_filter.xml" value="0.2275" />
         <entry key="..\:/Android/carpet2/app/src/main/res/drawable/ic_search.xml" value="0.2275" />
         <entry key="..\:/Android/carpet2/app/src/main/res/drawable/item_bg.xml" value="0.335" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/drawable/selector_type.xml" value="0.2655" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/fragment_uncount_product_details.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/fragment_uncount_product_details_new.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/fragment_update_product.xml" value="0.16875" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/fragment_update_product_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/item_add_image.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout-v24/item_factory_select.xml" value="0.340625" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v26/fragment_update_factory_new.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout-v26/update_factory.xml" value="0.340625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/activity_main.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/activity_splash_screen.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/custom_toast_green.xml" value="0.3416666666666667" />
@@ -43,51 +50,81 @@
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/dialog_add_product.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/dialog_update_factory.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/dialog_update_profile.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/filter_sheet.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_add_factory.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_add_factory_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_add_product.xml" value="0.33" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_add_product2.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_add_product_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_admin.xml" value="0.16458333333333333" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_admin_new.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_basket.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_count_product_details.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_countable.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_cusomers_list.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_customers_details.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_default.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_employees_list.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_factory.xml" value="0.10833333333333334" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_factory_datails_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_factory_details.xml" value="0.18" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_factory_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_filter.xml" value="0.3265625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_filter_factory.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_filter_product.xml" value="0.12760416666666666" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_list_details.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_log_in.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_log_in_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_product.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_product_details.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_product_details_new.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_product_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_profile.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_profile_new.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_sale.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_search.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_sig_up.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_sign_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_splash.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/fragment_uncountable.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_add_image.xml" value="0.340625" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_basket.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_card_factory_new.xml" value="0.17604166666666668" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory_demo_grid.xml" value="0.17604166666666668" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory_demo_liner.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory_details.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory_grid_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_factory_select.xml" value="0.340625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_fatory.xml" value="0.340625" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_filter_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_list_customers.xml" value="0.340625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product1.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_demo.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_demo_grid.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_details.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_details1.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_linear.xml" value="0.5" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_product_new.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_select.xml" value="0.340625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_select_factory.xml" value="0.12708333333333333" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_shimmer_basket.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/item_shimmer_linear.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/progress_dialog.xml" value="0.16" />
         <entry key="..\:/Android/carpet2/app/src/main/res/layout/sheet_add_basket.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/sheet_update_basket.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/update_factory.xml" value="0.340625" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/layout/update_factory1.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/bottom_bar.xml" value="0.1" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/main_menu.xml" value="0.340625" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/menu.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/navigation_drawer.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/menu/pop_up_factory.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/pop_up_menu.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/menu/pop_up_menu1.xml" value="0.3416666666666667" />
         <entry key="..\:/Android/carpet2/app/src/main/res/menu/pop_up_product.xml" value="0.3416666666666667" />
+        <entry key="..\:/Android/carpet2/app/src/main/res/menu/type_menu.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable-v24/back_product_item.xml" value="0.121" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable-v24/cart_bg.xml" value="0.121" />
         <entry key="..\:/Users/suhro/AndroidStudioProjects/Carpet_Mobile/app/src/main/res/drawable-v24/ic_minus.xml" value="0.121" />

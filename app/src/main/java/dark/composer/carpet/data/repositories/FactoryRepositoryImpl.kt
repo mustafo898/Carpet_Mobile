@@ -13,16 +13,17 @@ import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class FactoryRepositoryImpl @Inject constructor(private val service:ApiService):FactoryRepository {
+class FactoryRepositoryImpl @Inject constructor(private val service: ApiService) :
+    FactoryRepository {
     override suspend fun getFactory(id: Int): Flow<BaseNetworkResult<FactoryResponse>> = flow {
         val response = service.getFactoryInfo(id)
         emit(BaseNetworkResult.Loading(true))
-        if (response.code() == 200){
+        if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
                 emit(BaseNetworkResult.Success(it))
             }
-        }else{
+        } else {
             emit(BaseNetworkResult.Loading(false))
             emit(BaseNetworkResult.Error(response.message()))
         }
@@ -34,12 +35,12 @@ class FactoryRepositoryImpl @Inject constructor(private val service:ApiService):
     ): Flow<BaseNetworkResult<PaginationResponse>> = flow {
         val response = service.getFactoryPagination(page, size)
         emit(BaseNetworkResult.Loading(true))
-        if (response.code() == 200){
+        if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
                 emit(BaseNetworkResult.Success(it))
             }
-        }else{
+        } else {
             emit(BaseNetworkResult.Loading(false))
             emit(BaseNetworkResult.Error(response.message()))
         }
@@ -50,32 +51,47 @@ class FactoryRepositoryImpl @Inject constructor(private val service:ApiService):
         factoryUpdateRequest: FactoryUpdateRequest,
         id: Int
     ): Flow<BaseNetworkResult<FactoryResponse>> = flow {
-        val response = service.updateFactory(factoryUpdateRequest,id)
+        val response = service.updateFactory(factoryUpdateRequest, id)
         emit(BaseNetworkResult.Loading(true))
-        if (response.code() == 200){
+        if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
                 emit(BaseNetworkResult.Success(it))
             }
-        }else {
+        } else {
             emit(BaseNetworkResult.Loading(false))
             emit(BaseNetworkResult.Error(response.message()))
         }
     }
 
-    override suspend fun createFactory(factoryAddRequest: FactoryAddRequest): Flow<BaseNetworkResult<FactoryResponse>> = flow {
-        val response = service.createFactory(factoryAddRequest)
+    override suspend fun deleteFactory(id: Int): Flow<BaseNetworkResult<FactoryResponse>> = flow {
+        val response = service.deleteFactory(id)
         emit(BaseNetworkResult.Loading(true))
-        if (response.code() == 200){
+        if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
                 emit(BaseNetworkResult.Success(it))
             }
-        }else {
+        } else {
             emit(BaseNetworkResult.Loading(false))
             emit(BaseNetworkResult.Error(response.message()))
         }
     }
+
+    override suspend fun createFactory(factoryAddRequest: FactoryAddRequest): Flow<BaseNetworkResult<FactoryResponse>> =
+        flow {
+            val response = service.createFactory(factoryAddRequest)
+            emit(BaseNetworkResult.Loading(true))
+            if (response.code() == 200) {
+                emit(BaseNetworkResult.Loading(false))
+                response.body()?.let {
+                    emit(BaseNetworkResult.Success(it))
+                }
+            } else {
+                emit(BaseNetworkResult.Loading(false))
+                emit(BaseNetworkResult.Error(response.message()))
+            }
+        }
 
     override suspend fun getFactoryPaginationAdmin(
         page: Int,
@@ -98,16 +114,16 @@ class FactoryRepositoryImpl @Inject constructor(private val service:ApiService):
         file: MultipartBody.Part,
         key: String
     ): Flow<BaseNetworkResult<ProfileFileResponse>> = flow {
-        val response = service.factoryFileUpload(file,key)
+        val response = service.factoryFileUpload(file, key)
         emit(BaseNetworkResult.Loading(true))
-        if (response.code() == 200){
+        if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
                 emit(BaseNetworkResult.Success(it))
             }
-        }else {
+        } else {
             emit(BaseNetworkResult.Loading(false))
             emit(BaseNetworkResult.Error(response.message()))
         }
-   }
+    }
 }

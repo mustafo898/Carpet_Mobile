@@ -28,6 +28,10 @@ class FactoryUseCase @Inject constructor(private val repository:FactoryRepositor
         return repository.updateFactory(updateRequest,id)
     }
 
+    suspend fun deleteFactory( id: Int): Flow<BaseNetworkResult<FactoryResponse>> {
+        return repository.deleteFactory(id)
+    }
+
     suspend fun createFactory(addRequest: FactoryAddRequest): Flow<BaseNetworkResult<FactoryResponse>> {
         return repository.createFactory(addRequest)
     }

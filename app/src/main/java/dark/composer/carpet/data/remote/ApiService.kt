@@ -85,7 +85,7 @@ interface ApiService {
 //        @Query("size") size: Int
 //    ): Response<List<ProductPaginationResponse>>
 
-    @GET("product/emp/pagination/{type}")
+    @GET("product/adm/pagination/{type}")
     suspend fun getProductPagination(
         @Path("type") type: String,
         @Query("page") page: Int,
@@ -136,6 +136,11 @@ interface ApiService {
     @PUT(Constants.FACTORY_UPDATE)
     suspend fun updateFactory(
         @Body factoryUpdate: FactoryUpdateRequest,
+        @Path("id") id: Int
+    ): Response<FactoryResponse>
+
+    @DELETE(Constants.FACTORY_UPDATE)
+    suspend fun deleteFactory(
         @Path("id") id: Int
     ): Response<FactoryResponse>
 

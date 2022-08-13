@@ -1,6 +1,5 @@
 package dark.composer.carpet.data.remote.models.response.factory
 
-import dark.composer.carpet.data.remote.models.response.factory.paginable.Content
 import dark.composer.carpet.data.remote.models.response.factory.paginable.Pageable
 import dark.composer.carpet.data.remote.models.response.factory.paginable.SortX
 

@@ -11,6 +11,7 @@
         android:title="Delete" />
 
     <item
+        android:iconTint="@color/black"
         android:id="@+id/share_main_menu"
         android:icon="@drawable/ic_share"
         android:title="Share" />

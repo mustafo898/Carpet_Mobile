@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.product.add.product
+package dark.composer.carpet.presentation.fragment.product.update
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -19,12 +19,15 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class AddProductViewModel @Inject constructor(
+class UpdateViewModel @Inject constructor(
     private val productUseCase: ProductUseCase,
     private val factoryUseCase: FactoryUseCase
 ) : ViewModel() {
-    private val _createProduct = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
-    val createProduct = _createProduct.asSharedFlow()
+    private val _updateProduct = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
+    val updateProduct = _updateProduct.asSharedFlow()
+
+    private val _getProduct = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
+    val getProduct = _getProduct.asSharedFlow()
 
     private val nameChannel = MutableLiveData<String>()
     val nameFlow: LiveData<String> = nameChannel
@@ -62,7 +65,7 @@ class AddProductViewModel @Inject constructor(
     private val _listPagination = MutableSharedFlow<BaseNetworkResult<PaginationResponse?>>()
     val listPagination = _listPagination.asSharedFlow()
 
-    fun createProduct(
+    fun update(
         amount: String,
         colour: String,
         design: String,
@@ -73,6 +76,7 @@ class AddProductViewModel @Inject constructor(
         price: String,
         type: String,
         weight: String,
+        id: String
     ) {
         if (validAmount(amount) &&
             validColor(colour) &&
@@ -86,7 +90,8 @@ class AddProductViewModel @Inject constructor(
             validHeight(height)
         ) {
             viewModelScope.launch {
-                productUseCase.createProduct(
+                productUseCase.updateProduct(
+                    type,
                     ProductCreateRequest(
                         amount.toInt(),
                         colour,
@@ -98,23 +103,24 @@ class AddProductViewModel @Inject constructor(
                         price.toDouble(),
                         type,
                         weight.toDouble()
-                    )
+                    ),
+                    id
                 ).onEach {
                     when (it) {
                         is BaseNetworkResult.Success -> {
                             it.data?.let { t ->
-                                _createProduct.emit(BaseNetworkResult.Success(it.data))
+                                _updateProduct.emit(BaseNetworkResult.Success(it.data))
                             }
                             Log.d("EEEEE", "getPagination: ${it.data}")
                         }
                         is BaseNetworkResult.Error -> {
                             viewModelScope.launch {
-                                _createProduct.emit(BaseNetworkResult.Error(it.message))
+                                _updateProduct.emit(BaseNetworkResult.Error(it.message))
                             }
                         }
                         is BaseNetworkResult.Loading -> {
                             viewModelScope.launch {
-                                _createProduct.emit(BaseNetworkResult.Loading(it.isLoading))
+                                _updateProduct.emit(BaseNetworkResult.Loading(it.isLoading))
                             }
                         }
                     }
@@ -149,6 +155,27 @@ class AddProductViewModel @Inject constructor(
                     }
                     is BaseNetworkResult.Loading -> {
                         _uploadImage.emit(BaseNetworkResult.Loading(it.isLoading))
+                    }
+                }
+            }
+        }
+    }
+
+    fun getProduct(type:String,id: String) {
+        viewModelScope.launch {
+            productUseCase.getProduct(type, id).onEach {
+                when (it) {
+                    is BaseNetworkResult.Success -> {
+                        it.data?.let { it1 ->
+                            _getProduct.emit(BaseNetworkResult.Success(it1))
+                        }
+                        Log.d("EEEEE", "getPagination: ${it.data}")
+                    }
+                    is BaseNetworkResult.Error -> {
+                        _getProduct.emit(BaseNetworkResult.Error(it.message))
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _getProduct.emit(BaseNetworkResult.Loading(it.isLoading))
                     }
                 }
             }

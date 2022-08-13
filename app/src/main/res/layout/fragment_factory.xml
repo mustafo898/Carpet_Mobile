@@ -14,6 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shimmer_demo_angle="15"
-        app:shimmer_demo_layout="@layout/item_product_demo_grid"
+        app:shimmer_demo_layout="@layout/item_product_shimmer_grid"
         app:shimmer_demo_layout_manager_type="grid"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

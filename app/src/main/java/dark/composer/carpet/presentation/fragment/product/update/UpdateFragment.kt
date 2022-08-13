@@ -1,11 +1,10 @@
-package dark.composer.carpet.presentation.fragment.product.add.product
+package dark.composer.carpet.presentation.fragment.product.update
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.provider.MediaStore
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -15,24 +14,22 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import dark.composer.carpet.databinding.FragmentAddProductNewBinding
+import dark.composer.carpet.databinding.FragmentUpdateProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.product.add.FactorySelectAdapter
 import dark.composer.carpet.presentation.fragment.product.add.ImageAdapter
 import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.utils.createRequest
+import dark.composer.carpet.utils.navigateType
+import dark.composer.carpet.utils.uploadFile
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 
-class AddProductFragment :
-    BaseFragment<FragmentAddProductNewBinding>(FragmentAddProductNewBinding::inflate) {
-    lateinit var viewModel: AddProductViewModel
+class UpdateProductFragment :
+    BaseFragment<FragmentUpdateProductBinding>(FragmentUpdateProductBinding::inflate) {
+    lateinit var viewModel: UpdateViewModel
     private val adapter by lazy {
         FactorySelectAdapter(requireContext())
     }
@@ -44,12 +41,14 @@ class AddProductFragment :
     private val REQUEST_CODE = 100
     var t = ""
     private var factoryId = -1
+    private var id = ""
+    private var type = ""
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
             providerFactory
-        )[AddProductViewModel::class.java]
+        )[UpdateViewModel::class.java]
 
         binding.factoryList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -66,8 +65,16 @@ class AddProductFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.photoList.adapter = adapterImage
 
+        val bundle: Bundle? = this.arguments
+        bundle?.let {
+            id = it.getString("ID", "")
+            type = it.getString("TYPE", "")
+        }
+
         collect()
         textSend()
+
+        viewModel.getProduct(type, id)
 
         adapter.setClickListener {it,name->
             viewModel.validFactoryId(it)
@@ -83,7 +90,7 @@ class AddProductFragment :
         }
 
         binding.accept.setOnClickListener {
-            viewModel.createProduct(
+            viewModel.update(
                 binding.amount.text.toString().trim(),
                 binding.colour.text.toString().trim(),
                 binding.design.text.toString().trim(),
@@ -94,6 +101,8 @@ class AddProductFragment :
                 binding.price.text.toString().trim(),
                 t,
                 binding.width.text.toString().trim(),
+                id
+
             )
         }
 
@@ -159,7 +168,7 @@ class AddProductFragment :
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Success -> {
                             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-                            navController
+                            navController.navigateType(type, id)
                         }
                     }
                 }
@@ -168,7 +177,7 @@ class AddProductFragment :
 
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.createProduct.collect {
+                viewModel.updateProduct.collect {
                     when(it){
                         is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
@@ -179,7 +188,38 @@ class AddProductFragment :
                                     viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
                                 }
                             } else {
-                                navController
+                                navController.navigateType(it.data?.type.toString(),it.data?.uuid.toString())
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.getProduct.collect {
+                    when(it){
+                        is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let {t->
+                                binding.name.setText(t.name)
+                                binding.design.setText(t.design)
+                                binding.colour.setText(t.colour)
+                                binding.width.setText(t.weight.toString())
+                                binding.height.setText(t.height.toString())
+                                binding.pon.setText(t.pon)
+                                binding.amount.setText(t.amount)
+                                binding.price.setText(t.price.toString())
+                                adapter.setSelect(t.factory.id)
+                                type = t.type
+                                id = t.uuid
+                                if (t.type == "UNCOUNTABLE"){
+                                    binding.unCountable.isChecked = true
+                                }else{
+                                    binding.countable.isChecked = true
+                                }
                             }
                         }
                     }
@@ -298,11 +338,11 @@ class AddProductFragment :
         }
     }
 
-    private fun createRequest(path:String): MultipartBody.Part {
-        val file = File(path)
-        val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
-        return MultipartBody.Part.createFormData("file", file.name, requestBody)
-    }
+//    private fun createRequest(path:String): MultipartBody.Part {
+//        val file = File(path)
+//        val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+//        return MultipartBody.Part.createFormData("file", file.name, requestBody)
+//    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -347,7 +387,7 @@ class AddProductFragment :
             if (requestCode == REQUEST_CODE) {
                 val uri = data?.data
                 imagePath = uri?.let {
-                    uploadFile(it)
+                    uploadFile(it,requireContext())
                 }.toString()
                 list.add(imagePath)
                 Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
@@ -360,14 +400,14 @@ class AddProductFragment :
 
     var imagePath = ""
 
-    private fun uploadFile(uri: Uri): String? {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val loader = CursorLoader(requireContext(), uri, projection, null, null, null)
-        val cursor = loader.loadInBackground()
-        val columnIdx = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor?.moveToFirst()
-        val result = cursor?.getString(columnIdx!!)
-        cursor?.close()
-        return result
-    }
+//    private fun uploadFile(uri: Uri): String? {
+//        val projection = arrayOf(MediaStore.Images.Media.DATA)
+//        val loader = CursorLoader(requireContext(), uri, projection, null, null, null)
+//        val cursor = loader.loadInBackground()
+//        val columnIdx = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+//        cursor?.moveToFirst()
+//        val result = cursor?.getString(columnIdx!!)
+//        cursor?.close()
+//        return result
+//    }
 }

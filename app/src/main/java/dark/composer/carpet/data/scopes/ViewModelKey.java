@@ -1,4 +1,4 @@
-package dark.composer.carpet.data.di.scopes;
+package dark.composer.carpet.data.scopes;
 
 import androidx.lifecycle.ViewModel;
 

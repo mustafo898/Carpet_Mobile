@@ -48,6 +48,13 @@ class FactorySelectAdapter(val context: Context) :
         clickListener = f
     }
 
+    fun setSelect(id:Int){
+        listFactory.forEachIndexed {i,it->
+            if (it.id == id)
+                itemSelection = i
+        }
+    }
+
     fun setListFactory(list: List<FactoryResponse>) {
         listFactory.clear()
         listFactory.addAll(list)

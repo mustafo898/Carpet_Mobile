@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:shimmer_demo_angle="15"
-        app:shimmer_demo_layout="@layout/item_factory_demo_grid"
+        app:shimmer_demo_layout="@layout/item_factory_shimmer_grid"
         app:shimmer_demo_layout_manager_type="linear_vertical" />
 
 </FrameLayout>

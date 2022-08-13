@@ -13,6 +13,7 @@ interface FactoryRepository {
     suspend fun getFactory(id:Int): Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun getFactoryList(page:Int,size:Int):Flow<BaseNetworkResult<PaginationResponse>>
     suspend fun updateFactory(factoryUpdateRequest: FactoryUpdateRequest, id: Int):Flow<BaseNetworkResult<FactoryResponse>>
+    suspend fun deleteFactory( id: Int):Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun createFactory(factoryAddRequest: FactoryAddRequest):Flow<BaseNetworkResult<FactoryResponse>>
     suspend fun getFactoryPaginationAdmin(page:Int,size:Int):Flow<BaseNetworkResult<PaginationResponse>>
     suspend fun fileUploadFactory(file:MultipartBody.Part,key:String): Flow<BaseNetworkResult<ProfileFileResponse>>

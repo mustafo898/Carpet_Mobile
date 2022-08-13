@@ -10,8 +10,10 @@ import dark.composer.carpet.presentation.fragment.factory.FactoryViewModel
 import dark.composer.carpet.presentation.fragment.product.ProductViewModel
 import dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryViewModel
 import dark.composer.carpet.presentation.fragment.factory.details.FactoryDetailsViewModel
+import dark.composer.carpet.presentation.fragment.factory.update.UpdateFactoryViewModel
 import dark.composer.carpet.presentation.fragment.login.LogInViewModel
 import dark.composer.carpet.presentation.fragment.product.add.product.AddProductViewModel
+import dark.composer.carpet.presentation.fragment.product.update.UpdateViewModel
 import dark.composer.carpet.presentation.fragment.product.details.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 
@@ -62,4 +64,14 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(LogInViewModel::class)
     abstract fun logInViewModel(logInViewModel : LogInViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdateFactoryViewModel::class)
+    abstract fun updateFactoryViewModel(updateFactoryViewModel : UpdateFactoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdateViewModel::class)
+    abstract fun updateProductViewModel(updateViewModel : UpdateViewModel): ViewModel
 }

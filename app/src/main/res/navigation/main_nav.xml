@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_adminFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_productUncountableFragment"
+            app:destination="@id/productUncountableFragment" />
     </fragment>
 
     <fragment
@@ -39,9 +42,13 @@
 
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.details.ProductDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.details.ProductCountableFragment"
         android:label="fragment_product_details"
-        tools:layout="@layout/fragment_product_details_new" />
+        tools:layout="@layout/fragment_count_product_details" >
+        <action
+            android:id="@+id/action_productDetailsFragment_to_updateProductFragment"
+            app:destination="@id/updateProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFactoryFragment"
         android:name="dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryFragment"
@@ -50,7 +57,7 @@
     <fragment
         tools:layout="@layout/fragment_add_product_new"
         android:id="@+id/addProductFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.add.product.AddProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment"
         android:label="AddProductFragment" />
     <fragment
         tools:layout="@layout/fragment_factory_new"
@@ -77,6 +84,12 @@
         <action
             android:id="@+id/action_factoryDetailsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_factoryDetailsFragment_to_updateFactoryFragment"
+            app:destination="@id/updateFactoryFragment" />
+        <action
+            android:id="@+id/action_factoryDetailsFragment_to_productUncountableFragment"
+            app:destination="@id/productUncountableFragment" />
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
@@ -101,5 +114,31 @@
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_update_factory_new"
+        android:id="@+id/updateFactoryFragment"
+        android:name="dark.composer.carpet.presentation.fragment.factory.update.UpdateFactoryFragment"
+        android:label="UpdateFactoryFragment" />
+    <fragment
+        tools:layout="@layout/fragment_uncount_product_details"
+        android:id="@+id/productUncountableFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.details.ProductUncountableFragment"
+        android:label="ProductUncountableFragment" >
+        <action
+            android:id="@+id/action_productUncountableFragment_to_updateProductFragment"
+            app:destination="@id/updateProductFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_update_product"
+        android:id="@+id/updateProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment"
+        android:label="AddProductFragment" >
+        <action
+            android:id="@+id/action_updateProductFragment_to_productUncountableFragment"
+            app:destination="@id/productUncountableFragment" />
+        <action
+            android:id="@+id/action_updateProductFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 </navigation>
