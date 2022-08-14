@@ -37,7 +37,35 @@ fun NavController.navigateType(type:String,id: String){
         )
     }else if (type == "UNCOUNTABLE"){
         navigate(
-            R.id.action_updateProductFragment_to_productDetailsFragment,
+            R.id.action_updateProductFragment_to_productUncountableFragment,
+            bundleOf("ID" to id, "TYPE" to type)
+        )
+    }
+}
+
+fun NavController.navigateP(type:String,id: String){
+    if (type == "COUNTABLE") {
+        navigate(
+            R.id.action_productFragment_to_productDetailsFragment,
+            bundleOf("ID" to id, "TYPE" to type)
+        )
+    }else if (type == "UNCOUNTABLE"){
+        navigate(
+            R.id.action_productFragment_to_productUncountableFragment,
+            bundleOf("ID" to id, "TYPE" to type)
+        )
+    }
+}
+
+fun NavController.navigateA(type:String,id: String){
+    if (type == "COUNTABLE") {
+        navigate(
+            R.id.action_adminFragment_to_productDetailsFragment,
+            bundleOf("ID" to id, "TYPE" to type)
+        )
+    }else if (type == "UNCOUNTABLE"){
+        navigate(
+            R.id.action_adminFragment_to_productUncountableFragment,
             bundleOf("ID" to id, "TYPE" to type)
         )
     }

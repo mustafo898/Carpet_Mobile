@@ -30,16 +30,12 @@ import kotlinx.coroutines.launch
 class UpdateProductFragment :
     BaseFragment<FragmentUpdateProductBinding>(FragmentUpdateProductBinding::inflate) {
     lateinit var viewModel: UpdateViewModel
-    private val adapter by lazy {
-        FactorySelectAdapter(requireContext())
-    }
 
     private val adapterImage by lazy {
         ImageAdapter(requireContext())
     }
 
     private val REQUEST_CODE = 100
-    var t = ""
     private var factoryId = -1
     private var id = ""
     private var type = ""
@@ -50,17 +46,12 @@ class UpdateProductFragment :
             providerFactory
         )[UpdateViewModel::class.java]
 
-        binding.factoryList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.factoryList.itemAnimator = DefaultItemAnimator()
-        binding.factoryList.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL
-            )
-        )
-        binding.factoryList.adapter = adapter
+        setUpUi()
+        collect()
+        textSend()
+    }
 
+    private fun setUpUi(){
         binding.photoList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.photoList.adapter = adapterImage
@@ -70,20 +61,10 @@ class UpdateProductFragment :
             id = it.getString("ID", "")
             type = it.getString("TYPE", "")
         }
-
-        collect()
-        textSend()
-
-        viewModel.getProduct(type, id)
-
-        adapter.setClickListener {it,name->
-            viewModel.validFactoryId(it)
-            factoryId = it
-        }
     }
 
     private fun textSend() {
-        viewModel.getPagination(0, 10)
+        viewModel.getProduct(id,type)
 
         binding.add.setOnClickListener {
             checkPermission()
@@ -99,10 +80,10 @@ class UpdateProductFragment :
                 binding.name.text.toString().trim(),
                 binding.pon.text.toString().trim(),
                 binding.price.text.toString().trim(),
-                t,
+                type,
                 binding.width.text.toString().trim(),
-                id
-
+                id,
+                requireContext()
             )
         }
 
@@ -147,19 +128,12 @@ class UpdateProductFragment :
         }
 
         binding.requireFactory.visibility = View.GONE
-
-        binding.requireType.visibility = View.GONE
-
-        binding.countable.setOnClickListener {
-            viewModel.validType(binding.countable.text.toString().uppercase())
-        }
-
-        binding.unCountable.setOnClickListener {
-            viewModel.validType(binding.unCountable.text.toString().uppercase())
-        }
     }
 
     private fun collect() {
+        binding.back.setOnClickListener {
+            navController.popBackStack()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.uploadImage.collect {
@@ -198,7 +172,7 @@ class UpdateProductFragment :
 
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.getProduct.collect {
+                viewModel.product.collect {
                     when(it){
                         is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
@@ -210,15 +184,16 @@ class UpdateProductFragment :
                                 binding.width.setText(t.weight.toString())
                                 binding.height.setText(t.height.toString())
                                 binding.pon.setText(t.pon)
-                                binding.amount.setText(t.amount)
+                                binding.amount.setText(t.amount.toString())
                                 binding.price.setText(t.price.toString())
-                                adapter.setSelect(t.factory.id)
+                                factoryId = t.factory.id
                                 type = t.type
                                 id = t.uuid
                                 if (t.type == "UNCOUNTABLE"){
-                                    binding.unCountable.isChecked = true
+                                    binding.amount.setText("1")
+                                    binding.amountInput.visibility = View.GONE
                                 }else{
-                                    binding.countable.isChecked = true
+                                    binding.amountInput.visibility = View.VISIBLE
                                 }
                             }
                         }
@@ -233,22 +208,6 @@ class UpdateProductFragment :
             } else {
                 binding.requireFactory.visibility = View.VISIBLE
                 binding.requireFactory.text = it
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.listPagination.collect {
-                    when(it){
-                        is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
-                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
-                        is BaseNetworkResult.Success -> {
-                            it.data?.let { it1 ->
-                                adapter.setListFactory(it1.content)
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -322,18 +281,6 @@ class UpdateProductFragment :
                 binding.priceInput.isHelperTextEnabled = false
             } else {
                 binding.priceInput.helperText = it
-            }
-        }
-
-        viewModel.typeFlow.observe(viewLifecycleOwner) {
-            if (it == binding.unCountable.text.toString().uppercase() || it == binding.countable.text.toString().uppercase()) {
-                t = it
-                Toast.makeText(requireContext(), "True", Toast.LENGTH_SHORT).show()
-                binding.requireType.visibility = View.GONE
-            } else {
-                Toast.makeText(requireContext(), "False", Toast.LENGTH_SHORT).show()
-                binding.requireType.visibility = View.VISIBLE
-                binding.requireType.text = it
             }
         }
     }

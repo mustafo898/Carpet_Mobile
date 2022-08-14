@@ -79,6 +79,8 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
                                 binding.pon.text = t.pon
                                 binding.design.text = t.design
                                 binding.color.text = t.colour
+                                binding.price.text = t.price.toString()
+                                binding.visible.text = t.visible.toString()
                                 binding.date.text = "${t.createDate.substring(11,15)} ${t.createDate.substring(0,10)}"
                                 imageSlider(t.urlImageList?: emptyList(),t.name)
                             }
@@ -114,12 +116,14 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
         }
 
         menuSettings.setDeleteClickListener {
+            viewModel.deleteProduct(type, id)
             Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
         }
 
         menuSettings.setEditClickListener {
             navController.navigate(R.id.action_productDetailsFragment_to_updateProductFragment, bundleOf("ID" to id, "TYPE" to type))
-            Toast.makeText(requireContext(), "Edit", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), type+id, Toast.LENGTH_SHORT).show()
+            Log.d("RRRRR", "action: $id")
         }
 
         menuSettings.setShareClickListener {

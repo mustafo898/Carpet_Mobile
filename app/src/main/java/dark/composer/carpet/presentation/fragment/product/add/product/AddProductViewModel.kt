@@ -1,20 +1,21 @@
 package dark.composer.carpet.presentation.fragment.product.add.product
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.remote.models.request.product.ProductCreateRequest
+import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.remote.models.response.factory.PaginationResponse
 import dark.composer.carpet.data.remote.models.response.product.ProductFileUploadResponse
 import dark.composer.carpet.data.remote.models.response.product.ProductResponse
 import dark.composer.carpet.domain.use_case.factory.FactoryUseCase
 import dark.composer.carpet.domain.use_case.product.ProductUseCase
 import dark.composer.carpet.utils.BaseNetworkResult
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -25,6 +26,9 @@ class AddProductViewModel @Inject constructor(
 ) : ViewModel() {
     private val _createProduct = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
     val createProduct = _createProduct.asSharedFlow()
+
+    private val _factory = MutableSharedFlow<BaseNetworkResult<List<FactoryResponse>>>()
+    val factory = _factory.asSharedFlow()
 
     private val nameChannel = MutableLiveData<String>()
     val nameFlow: LiveData<String> = nameChannel
@@ -59,9 +63,6 @@ class AddProductViewModel @Inject constructor(
     private val _uploadImage = MutableSharedFlow<BaseNetworkResult<ProductFileUploadResponse>>()
     val uploadImage = _uploadImage.asSharedFlow()
 
-    private val _listPagination = MutableSharedFlow<BaseNetworkResult<PaginationResponse?>>()
-    val listPagination = _listPagination.asSharedFlow()
-
     fun createProduct(
         amount: String,
         colour: String,
@@ -73,6 +74,7 @@ class AddProductViewModel @Inject constructor(
         price: String,
         type: String,
         weight: String,
+        context: Context
     ) {
         if (validAmount(amount) &&
             validColor(colour) &&
@@ -85,6 +87,7 @@ class AddProductViewModel @Inject constructor(
             validWidth(weight) &&
             validHeight(height)
         ) {
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
             viewModelScope.launch {
                 productUseCase.createProduct(
                     ProductCreateRequest(
@@ -99,7 +102,7 @@ class AddProductViewModel @Inject constructor(
                         type,
                         weight.toDouble()
                     )
-                ).onEach {
+                ).collect {
                     when (it) {
                         is BaseNetworkResult.Success -> {
                             it.data?.let { t ->
@@ -151,29 +154,25 @@ class AddProductViewModel @Inject constructor(
                         _uploadImage.emit(BaseNetworkResult.Loading(it.isLoading))
                     }
                 }
-            }
+            }.launchIn(viewModelScope)
         }
     }
 
-    fun getPagination(page: Int, size: Int) {
+    fun getFactoryList(page: Int, size: Int) {
         viewModelScope.launch {
-            factoryUseCase.getFactoryList(page, size).onEach {
-                when (it) {
-                    is BaseNetworkResult.Success -> {
-                        _listPagination.emit(BaseNetworkResult.Success(it.data))
-                        Log.d("EEEEE", "getPagination: ${it.data?.content}")
-                    }
+            factoryUseCase.getFactoryList(page, size).onEach { result ->
+                when(result){
                     is BaseNetworkResult.Error -> {
-                        _listPagination.emit(BaseNetworkResult.Error(it.message))
+                        _factory.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
                     }
                     is BaseNetworkResult.Loading -> {
-                        _listPagination.emit(BaseNetworkResult.Loading(it.isLoading))
+                        _factory.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
-                    else -> {
-                        Log.d("Admin", "getPagination: Kemadi")
+                    is BaseNetworkResult.Success -> {
+                        _factory.emit(BaseNetworkResult.Success(result.data?.content?: emptyList()))
                     }
                 }
-            }
+            }.launchIn(viewModelScope)
         }
     }
 

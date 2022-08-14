@@ -75,6 +75,7 @@ class ProductRepositoryImpl @Inject constructor(private var service: ApiService)
 
     override suspend fun createProduct(create: ProductCreateRequest): Flow<BaseNetworkResult<ProductResponse>> =
         flow {
+            Log.d("NNNNN", "updateProduct:\n $create \n")
             val response = service.createProduct(create)
             emit(BaseNetworkResult.Loading(true))
             if (response.code() == 200) {
@@ -94,6 +95,7 @@ class ProductRepositoryImpl @Inject constructor(private var service: ApiService)
         update: ProductCreateRequest,
         id: String
     ): Flow<BaseNetworkResult<ProductResponse>> = flow {
+        Log.d("NNNNN", "updateProduct:\n $update \n type:$type \n id:$id")
         val response = service.updateProduct(type, update, id)
         emit(BaseNetworkResult.Loading(true))
         if (response.code() == 200) {

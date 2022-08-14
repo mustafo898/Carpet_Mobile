@@ -1,7 +1,7 @@
 package dark.composer.carpet.data.remote.models.request.product
 
 data class ProductCreateRequest(
-    val amount: Int,
+    val amount: Int = 1,
     val colour: String,
     val design: String,
     val factoryId: Int,

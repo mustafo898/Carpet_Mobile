@@ -1,5 +1,6 @@
 package dark.composer.carpet.presentation.fragment.product
 
+import android.util.Log
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
@@ -13,6 +14,8 @@ import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.FilterAdapter
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
 import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.utils.navigateP
+import dark.composer.carpet.utils.navigateType
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -93,15 +96,16 @@ class ProductFragment :
         binding.search.addTextChangedListener {
             viewModel.filterProduct(ProductFilterRequest(name = it.toString(), type = type))
         }
-        viewModel.getProductList(type, 0, 20)
+        viewModel.filterProduct(ProductFilterRequest(type = type))
     }
 
     private fun actions() {
+        binding.addProduct.setOnClickListener {
+            navController.navigate(R.id.action_productFragment_to_addProductFragment)
+        }
+
         productAdapter.setClickListener {
-            navController.navigate(
-                R.id.action_productFragment_to_productDetailsFragment,
-                bundleOf("ID" to it, "TYPE" to type)
-            )
+            navController.navigateP(type,it)
         }
     }
 }

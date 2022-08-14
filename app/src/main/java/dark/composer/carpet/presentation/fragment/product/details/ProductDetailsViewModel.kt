@@ -23,9 +23,6 @@ class ProductDetailsViewModel @Inject constructor(
     private val _product = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
     val product = _product.asSharedFlow()
 
-    private val _delete = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
-    val delete = _delete.asSharedFlow()
-
     private val _create = MutableSharedFlow<BaseNetworkResult<BasketCreateResponse>>()
     val create = _create.asSharedFlow()
 
@@ -36,9 +33,13 @@ class ProductDetailsViewModel @Inject constructor(
     fun getProduct(id: String, type: String) {
         viewModelScope.launch {
             useCase.getProduct(type, id).onEach { result ->
-                when(result){
+                when (result) {
                     is BaseNetworkResult.Error -> {
-                        _product.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))
+                        _product.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
                     }
                     is BaseNetworkResult.Loading -> {
                         _product.emit(BaseNetworkResult.Loading(result.isLoading))
@@ -47,7 +48,7 @@ class ProductDetailsViewModel @Inject constructor(
                         _product.emit(BaseNetworkResult.Success(result.data!!))
                     }
                 }
-            }.catch {t->
+            }.catch { t ->
                 Log.d("OOOOOOO", "getProduct: ")
             }.launchIn(viewModelScope)
         }
@@ -56,71 +57,50 @@ class ProductDetailsViewModel @Inject constructor(
     fun getProductList(type: String, page: Int, size: Int) {
         viewModelScope.launch {
             useCase.getProductList(type, page, size).onEach { result ->
-                when(result){
+                when (result) {
                     is BaseNetworkResult.Error -> {
-                        _productList.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))
+                        _productList.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
                     }
                     is BaseNetworkResult.Loading -> {
                         _productList.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
                     is BaseNetworkResult.Success -> {
-                        _productList.emit(BaseNetworkResult.Success(result.data?: emptyList()))
+                        _productList.emit(BaseNetworkResult.Success(result.data ?: emptyList()))
                     }
                 }
-            }.catch {t->
+            }.catch { t ->
                 Log.d("OOOOOOO", "getProduct: ")
             }.launchIn(viewModelScope)
         }
     }
 
-//    fun updateProduct(type:String,id: String,update: ProductCreateRequest) {
-//        viewModelScope.launch {
-//            useCase.updateProduct(type,update,id).onEach { result ->
-//                _update.emit(BaseNetworkResult.loading(null))
-//                _update.emit(BaseNetworkResult.success(result.data))
-//            }.catch { t ->
-//                _update.emit(
-//                    Resource.error(
-//                        msg = t.message ?: "An unexpected error occured",
-//                        null
-//                    )
-//                )
-//                Log.d("Mistake", "updateProduct: ${t.message}")
-//            }.launchIn(viewModelScope)
-//        }
-//    }
-//
-//    fun deleteProduct(type: String,id: String) {
-//        viewModelScope.launch {
-//            useCase.deleteProduct(type,id).onEach { result ->
-//                _delete.emit(Resource.loading(null))
-//                _delete.emit(Resource.success(result.data))
-//            }.catch { t ->
-//                _delete.emit(
-//                    Resource.error(
-//                        msg = t.message ?: "An unexpected error occured",
-//                        null
-//                    )
-//                )
-//                Log.d("Mistake", "deleteProduct: ${t.message}")
-//            }.launchIn(viewModelScope)
-//        }
-//    }
-//
-//    fun createBasket(create:BasketCreateRequest) {
-//        viewModelScope.launch {
-//            useCaseBasket.createBasket(create).onEach { result ->
-//                _create.emit(Resource.loading(null))
-//                _create.emit(Resource.success(result.data))
-//            }.catch { t ->
-//                _create.emit(
-//                    Resource.error(
-//                        msg = t.message ?: "An unexpected error occured",
-//                        null
-//                    )
-//                )
-//                Log.d("Mistake", "deleteProduct: ${t.message}")
-//            }.launchIn(viewModelScope)
-//        }
-//    }
+    fun deleteProduct(type: String, id: String) {
+        viewModelScope.launch {
+            useCase.deleteProduct(type, id).onEach { result ->
+                when (result) {
+                    is BaseNetworkResult.Error -> {
+                        _product.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _product.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        result.data?.let {
+                            _product.emit(BaseNetworkResult.Success(it))
+                        }
+                    }
+                }
+            }.catch { t ->
+                Log.d("OOOOOOO", "getProduct: ")
+            }.launchIn(viewModelScope)
+        }
+    }
 }

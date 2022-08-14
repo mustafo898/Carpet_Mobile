@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
@@ -13,7 +14,7 @@ import dark.composer.carpet.databinding.ItemSelectFactoryBinding
 class FactorySelectAdapter(val context: Context) :
     RecyclerView.Adapter<FactorySelectAdapter.SaleViewHolder>() {
     private val listFactory = mutableListOf<FactoryResponse>()
-    private var itemSelection = -1
+    private var itemSelect = -1
 
     inner class SaleViewHolder(val binding: ItemSelectFactoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,31 +29,25 @@ class FactorySelectAdapter(val context: Context) :
 
             Log.d("DDDDD", "bind: ${binding.image}")
 
-            if (itemSelection == layoutPosition) {
+            if (itemSelect == layoutPosition) {
+                Toast.makeText(binding.root.context, "$itemSelect", Toast.LENGTH_SHORT).show()
                 itemView.setBackgroundColor(binding.root.resources.getColor(R.color.demo_dark_transparent))
             } else {
                 itemView.setBackgroundColor(binding.root.resources.getColor(R.color.white))
             }
 
             itemView.setOnClickListener {
-                clickListener?.invoke(list.id,list.name)
-                itemSelection = layoutPosition
+                clickListener?.invoke(list.id)
+                itemSelect = layoutPosition
                 notifyDataSetChanged();
             }
         }
     }
 
-    private var clickListener: ((position: Int,name:String) -> Unit)? = null
+    private var clickListener: ((position: Int) -> Unit)? = null
 
-    fun setClickListener(f: (position: Int, name:String) -> Unit) {
+    fun setClickListener(f: (position: Int) -> Unit) {
         clickListener = f
-    }
-
-    fun setSelect(id:Int){
-        listFactory.forEachIndexed {i,it->
-            if (it.id == id)
-                itemSelection = i
-        }
     }
 
     fun setListFactory(list: List<FactoryResponse>) {

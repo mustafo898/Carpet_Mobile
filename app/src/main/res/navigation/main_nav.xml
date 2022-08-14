@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_productFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_productUncountableFragment"
+            app:destination="@id/productUncountableFragment" />
     </fragment>
 
     <fragment
@@ -48,6 +51,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_updateProductFragment"
             app:destination="@id/updateProductFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFactoryFragment"
@@ -57,7 +63,7 @@
     <fragment
         tools:layout="@layout/fragment_add_product_new"
         android:id="@+id/addProductFragment"
-        android:name="dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment"
+        android:name="dark.composer.carpet.presentation.fragment.product.add.product.AddProductFragment"
         android:label="AddProductFragment" />
     <fragment
         tools:layout="@layout/fragment_factory_new"
@@ -135,9 +141,13 @@
         android:name="dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment"
         android:label="AddProductFragment" >
         <action
+            app:popUpTo="@id/productUncountableFragment"
+            app:popUpToInclusive="true"
             android:id="@+id/action_updateProductFragment_to_productUncountableFragment"
             app:destination="@id/productUncountableFragment" />
         <action
+            app:popUpTo="@id/productDetailsFragment"
+            app:popUpToInclusive="true"
             android:id="@+id/action_updateProductFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>

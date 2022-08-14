@@ -18,6 +18,9 @@ import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.FactoryAdminAdapter
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
 import dark.composer.carpet.utils.BaseNetworkResult
+import dark.composer.carpet.utils.navigateA
+import dark.composer.carpet.utils.navigateP
+import dark.composer.carpet.utils.navigateType
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,6 +37,7 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
     }
 
     private var type = "UNCOUNTABLE"
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             this,
@@ -141,10 +145,9 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         }
 
         productAdapter.setClickListener {
-            navController.navigate(
-                R.id.action_adminFragment_to_productDetailsFragment,
-                bundleOf("ID" to it, "TYPE" to type)
-            )
+            Log.d("RRRRR", "adapter: $it")
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            navController.navigateA(type,it)
         }
 
         binding.image.setOnClickListener {

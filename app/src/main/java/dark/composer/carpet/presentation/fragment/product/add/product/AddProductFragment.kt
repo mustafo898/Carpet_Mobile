@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -44,6 +45,8 @@ class AddProductFragment :
     private val REQUEST_CODE = 100
     var t = ""
     private var factoryId = -1
+    private var id = ""
+    private var type = ""
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
@@ -66,17 +69,23 @@ class AddProductFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.photoList.adapter = adapterImage
 
+        val bundle: Bundle? = this.arguments
+        bundle?.let {
+            id = it.getString("ID", "")
+            type = it.getString("TYPE", "")
+        }
+
         collect()
         textSend()
 
-        adapter.setClickListener {it,name->
+        adapter.setClickListener {
             viewModel.validFactoryId(it)
             factoryId = it
         }
     }
 
     private fun textSend() {
-        viewModel.getPagination(0, 10)
+        viewModel.getFactoryList(0, 10)
 
         binding.add.setOnClickListener {
             checkPermission()
@@ -94,7 +103,18 @@ class AddProductFragment :
                 binding.price.text.toString().trim(),
                 t,
                 binding.width.text.toString().trim(),
+                requireContext()
             )
+            Log.d("NNNNNN", "amount:${binding.amount.text.toString().trim()} \n" +
+                    "colour: ${binding.colour.text.toString().trim()} \n" +
+                    "design: ${binding.design.text.toString().trim()}\n" +
+                    "factory: $factoryId\n" +
+                    "height: ${binding.height.text.toString().trim()}\n" +
+                    "name: ${binding.name.text.toString().trim()}\n" +
+                    "pon: ${binding.pon.text.toString().trim()}\n" +
+                    "price ${binding.price.text.toString().trim()}\n" +
+                    "type $t\n" +
+                    "width: ${binding.width.text.toString().trim()}\n")
         }
 
         binding.nameInput.isHelperTextEnabled = false
@@ -159,7 +179,7 @@ class AddProductFragment :
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Success -> {
                             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-                            navController
+                            navController.popBackStack()
                         }
                     }
                 }
@@ -179,7 +199,7 @@ class AddProductFragment :
                                     viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
                                 }
                             } else {
-                                navController
+                                navController.popBackStack()
                             }
                         }
                     }
@@ -198,13 +218,13 @@ class AddProductFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.listPagination.collect {
+                viewModel.factory.collect {
                     when(it){
                         is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Success -> {
                             it.data?.let { it1 ->
-                                adapter.setListFactory(it1.content)
+                                adapter.setListFactory(it1)
                             }
                         }
                     }
@@ -288,10 +308,8 @@ class AddProductFragment :
         viewModel.typeFlow.observe(viewLifecycleOwner) {
             if (it == binding.unCountable.text.toString().uppercase() || it == binding.countable.text.toString().uppercase()) {
                 t = it
-                Toast.makeText(requireContext(), "True", Toast.LENGTH_SHORT).show()
                 binding.requireType.visibility = View.GONE
             } else {
-                Toast.makeText(requireContext(), "False", Toast.LENGTH_SHORT).show()
                 binding.requireType.visibility = View.VISIBLE
                 binding.requireType.text = it
             }

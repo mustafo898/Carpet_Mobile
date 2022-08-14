@@ -177,16 +177,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/amountTxt"
+                        android:id="@+id/priceTxt"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Amount : "
+                        android:text="Price : "
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/amount"
+                        android:id="@+id/price"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -202,16 +202,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/sizeTxt"
+                        android:id="@+id/visibleTxt"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Size : "
+                        android:text="Visible : "
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/size"
+                        android:id="@+id/visible"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -285,7 +285,8 @@
                         android:id="@+id/height"
                         style="@style/editText"
                         android:background="@color/white"
-                        android:inputType="number" />
+                        android:digits="0123456789."
+                        android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -301,11 +302,12 @@
                     tools:layout_editor_absoluteX="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/price"
+                        android:id="@+id/priceBasket"
                         android:layout_marginTop="8dp"
                         android:background="@color/white"
                         style="@style/editText"
-                        android:inputType="number" />
+                        android:digits="0123456789."
+                        android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
