@@ -108,6 +108,8 @@ class UpdateFactoryFragment :
                                 .show()
                             if (imagePath.isNotEmpty()) {
                                 viewModel.uploadFile(body, it.data?.key!!)
+                            }else{
+                                navController.popBackStack()
                             }
                             Log.d("EEEEE", "observe: ${it.data}")
                         }
@@ -162,16 +164,6 @@ class UpdateFactoryFragment :
         binding.add.setOnClickListener {
             Toast.makeText(requireContext(), "Click", Toast.LENGTH_SHORT).show()
             checkPermission()
-        }
-    }
-
-    private fun clickStatus(): String {
-        return if (binding.status.isChecked) {
-            Toast.makeText(requireContext(), "ACTIVE", Toast.LENGTH_SHORT).show()
-            "ACTIVE"
-        } else {
-            Toast.makeText(requireContext(), "BLOCKED", Toast.LENGTH_SHORT).show()
-            "BLOCKED"
         }
     }
 
