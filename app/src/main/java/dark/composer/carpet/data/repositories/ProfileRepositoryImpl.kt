@@ -131,6 +131,25 @@ class ProfileRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getUsersProfilePagination(
+        size: Int,
+        page: Int
+    ): Flow<BaseNetworkResult<List<ProfileResponse>>> = flow {
+        val response = service.getUsersPagination(size, page)
+        emit(BaseNetworkResult.Loading(true))
+        if (response.code() == 200) {
+            emit(BaseNetworkResult.Loading(false))
+            response.body()?.let {
+                Log.d("FFFFF", "getUsersProfilePagination: $it")
+                emit(BaseNetworkResult.Success(it))
+            }
+        } else {
+            emit(BaseNetworkResult.Loading(false))
+            emit(BaseNetworkResult.Error("No access"))
+            Log.d("OOOOO", "getUsersProfileList: xatolik")
+        }
+    }
+
     override suspend fun getUsersProfileDetails(id: Int): Flow<BaseNetworkResult<ProfileResponse>> = flow {
         val response = service.getUsersProfileDetails(id)
         emit(BaseNetworkResult.Loading(true))

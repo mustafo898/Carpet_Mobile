@@ -29,6 +29,10 @@ class ProfileUseCase @Inject constructor(
         return repo.getUsersProfileList()
     }
 
+    suspend fun getUsersProfilePagination(size:Int,page:Int):Flow<BaseNetworkResult<List<ProfileResponse>>> {
+        return repo.getUsersProfilePagination(size,page)
+    }
+
     suspend fun getUsersProfileDetails(id:Int):Flow<BaseNetworkResult<ProfileResponse>> {
         return repo.getUsersProfileDetails(id)
     }
