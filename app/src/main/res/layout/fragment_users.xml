@@ -41,8 +41,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/search"
-            android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:background="@drawable/search_bg"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
