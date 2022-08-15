@@ -1,10 +1,10 @@
 package dark.composer.carpet.utils
 
 object Constants {
-    const val BASE_URL = "http:/192.168.0.101:8080/"
+    const val BASE_URL = "http:/10.10.3.60:9001/"
     const val LOGIN = "auth/login"
     const val SIGNUP = "auth/registration"
-    const val FACTORY_INFO = "factory/{id}"
+    const val FACTORY_INFO = "factory/adm/{id}"
 
     //    const val FACTORY_INFO_ADM = "factory/adm/{id}"
 //    const val FACTORY_LIST = "factory/list"

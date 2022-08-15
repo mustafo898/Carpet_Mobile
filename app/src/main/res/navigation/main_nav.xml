@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_adminFragment_to_productUncountableFragment"
             app:destination="@id/productUncountableFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -81,7 +84,14 @@
         android:id="@+id/profileFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile_new"/>
+        tools:layout="@layout/fragment_profile_new">
+        <action
+            android:id="@+id/action_profileFragment_to_createUserFragment"
+            app:destination="@id/createUserFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_updateUserFragment"
+            app:destination="@id/updateUserFragment" />
+    </fragment>
     <fragment
         tools:layout="@layout/fragment_factory_datails_new"
         android:id="@+id/factoryDetailsFragment"
@@ -151,4 +161,13 @@
             android:id="@+id/action_updateProductFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createUserFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.create.CreateUserFragment"
+        android:label="CreateUserFragment" />
+    <fragment
+        android:id="@+id/updateUserFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.update.UpdateUserFragment"
+        android:label="fragment_update_user"
+        tools:layout="@layout/fragment_update_user" />
 </navigation>

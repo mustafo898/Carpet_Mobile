@@ -14,16 +14,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.databinding.FragmentUpdateProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.product.add.FactorySelectAdapter
 import dark.composer.carpet.presentation.fragment.product.add.ImageAdapter
 import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.utils.createRequest
-import dark.composer.carpet.utils.navigateType
 import dark.composer.carpet.utils.uploadFile
 import kotlinx.coroutines.launch
 
@@ -142,7 +138,7 @@ class UpdateProductFragment :
                         is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Success -> {
                             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-                            navController.navigateType(type, id)
+                            navController.popBackStack()
                         }
                     }
                 }
@@ -162,7 +158,7 @@ class UpdateProductFragment :
                                     viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
                                 }
                             } else {
-                                navController.navigateType(it.data?.type.toString(),it.data?.uuid.toString())
+                                navController.popBackStack()
                             }
                         }
                     }

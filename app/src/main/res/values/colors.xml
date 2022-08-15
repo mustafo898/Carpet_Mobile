@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="theme_color">#2178FF</color>
     <color name="theme_color_80">#CC2178FF</color>
-    <color name="theme_color_8">#142176FF</color>
+    <color name="theme_color_8">#F2F4F5</color>
 
     <color name="colorPrimary">#1976D2</color>
     <color name="colorPrimaryDark">#1565C0</color>

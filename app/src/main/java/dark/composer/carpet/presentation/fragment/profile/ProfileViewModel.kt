@@ -3,6 +3,7 @@ package dark.composer.carpet.presentation.fragment.profile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.domain.use_case.profile.ProfileUseCase
@@ -16,7 +17,7 @@ class ProfileViewModel @Inject constructor(private val useCase:ProfileUseCase) :
     private val _profile = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
     val profile = _profile.asSharedFlow()
 
-    fun getProfile() {
+    private fun getProfile() {
         viewModelScope.launch {
             useCase.getProfile().onEach { result ->
                 when(result){
@@ -36,12 +37,16 @@ class ProfileViewModel @Inject constructor(private val useCase:ProfileUseCase) :
         }
     }
 
+    init {
+        getProfile()
+    }
+
     private val _update = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
     val update = _update.asSharedFlow()
 
-    fun updateProfile() {
+    fun updateProfile(update:ProfileRequest) {
         viewModelScope.launch {
-            useCase.getProfile().onEach { result ->
+            useCase.updateProfile(update).onEach { result ->
                 when(result){
                     is BaseNetworkResult.Error -> {
                         _update.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
@@ -74,29 +79,6 @@ class ProfileViewModel @Inject constructor(private val useCase:ProfileUseCase) :
                     }
                     is BaseNetworkResult.Success -> {
                         _delete.emit(BaseNetworkResult.Success(result.data!!))
-                    }
-                }
-            }.catch {t->
-                Log.d("Mistake", "getProfile: ${t.message}")
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    private val _create = MutableSharedFlow<BaseNetworkResult<ProfileResponse>>()
-    val create = _create.asSharedFlow()
-
-    fun createProfile(create: ProfileCreateRequest) {
-        viewModelScope.launch {
-            useCase.getProfile().onEach { result ->
-                when(result){
-                    is BaseNetworkResult.Error -> {
-                        _create.emit(BaseNetworkResult.Error(result.message?:"An unexpected error occurred"))
-                    }
-                    is BaseNetworkResult.Loading -> {
-                        _create.emit(BaseNetworkResult.Loading(result.isLoading))
-                    }
-                    is BaseNetworkResult.Success -> {
-                        _create.emit(BaseNetworkResult.Success(result.data!!))
                     }
                 }
             }.catch {t->

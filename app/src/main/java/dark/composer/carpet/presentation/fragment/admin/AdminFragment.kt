@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -17,16 +18,16 @@ import dark.composer.carpet.databinding.FragmentAdminNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.FactoryAdminAdapter
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
-import dark.composer.carpet.utils.BaseNetworkResult
-import dark.composer.carpet.utils.navigateA
-import dark.composer.carpet.utils.navigateP
-import dark.composer.carpet.utils.navigateType
+import dark.composer.carpet.utils.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBinding::inflate) {
     @Inject
     lateinit var viewModel: AdminViewModel
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     private val productAdapter by lazy {
         ProductAdapter()
@@ -36,7 +37,7 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         FactoryAdminAdapter()
     }
 
-    private var type = "UNCOUNTABLE"
+    private var type = "COUNTABLE"
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
@@ -151,7 +152,11 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         }
 
         binding.image.setOnClickListener {
-            navController.navigate(R.id.action_adminFragment_to_logInFragment)
+            if (sharedPref.getToken().isNullOrEmpty()){
+                navController.navigate(R.id.action_adminFragment_to_logInFragment)
+            }else{
+                navController.navigate(R.id.action_adminFragment_to_profileFragment)
+            }
         }
     }
 

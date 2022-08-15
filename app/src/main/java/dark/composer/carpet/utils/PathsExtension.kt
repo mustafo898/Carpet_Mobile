@@ -29,20 +29,6 @@ fun createRequest(path:String): MultipartBody.Part {
     return MultipartBody.Part.createFormData("file", file.name, requestBody)
 }
 
-fun NavController.navigateType(type:String,id: String){
-    if (type == "COUNTABLE") {
-        navigate(
-            R.id.action_updateProductFragment_to_productDetailsFragment,
-            bundleOf("ID" to id, "TYPE" to type)
-        )
-    }else if (type == "UNCOUNTABLE"){
-        navigate(
-            R.id.action_updateProductFragment_to_productUncountableFragment,
-            bundleOf("ID" to id, "TYPE" to type)
-        )
-    }
-}
-
 fun NavController.navigateP(type:String,id: String){
     if (type == "COUNTABLE") {
         navigate(

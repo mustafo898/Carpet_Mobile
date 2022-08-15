@@ -13,6 +13,8 @@ import dark.composer.carpet.presentation.fragment.product.add.product.AddProduct
 import dark.composer.carpet.presentation.fragment.product.update.UpdateProductFragment
 import dark.composer.carpet.presentation.fragment.product.details.ProductCountableFragment
 import dark.composer.carpet.presentation.fragment.product.details.ProductUncountableFragment
+import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
+import dark.composer.carpet.presentation.fragment.profile.create.CreateUserFragment
 import dark.composer.carpet.presentation.fragment.signup.SignUpFragment
 
 @Module
@@ -53,4 +55,10 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun updateProductFragment(): UpdateProductFragment
+
+    @ContributesAndroidInjector
+    abstract fun profileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun createUserFragment(): CreateUserFragment
 }

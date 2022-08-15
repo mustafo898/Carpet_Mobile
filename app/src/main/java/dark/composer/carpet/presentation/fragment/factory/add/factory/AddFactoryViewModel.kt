@@ -51,7 +51,7 @@ class AddFactoryViewModel @Inject constructor(private val useCase : FactoryUseCa
                     }
                 }
             }.catch {t->
-                Log.d("Add Factory", "createFactory: ")
+                Log.d("Add Factory", "createFactory: ${t.message}")
             }.launchIn(viewModelScope)
         }
     }
@@ -71,7 +71,7 @@ class AddFactoryViewModel @Inject constructor(private val useCase : FactoryUseCa
                     }
                 }
             }.catch {t->
-                Log.d("Add File", "uploadFile: ")
+                Log.d("Add File", "uploadFile: ${t.message}")
             }.launchIn(viewModelScope)
         }
     }

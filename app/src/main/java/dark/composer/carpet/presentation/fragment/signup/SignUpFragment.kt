@@ -64,20 +64,12 @@ class SignUpFragment : BaseFragment<FragmentSignNewBinding>(FragmentSignNewBindi
                             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
                         }
                         is BaseNetworkResult.Error -> {
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         }
                         is BaseNetworkResult.Loading -> {
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.errorFlow.collect {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -149,7 +141,7 @@ class SignUpFragment : BaseFragment<FragmentSignNewBinding>(FragmentSignNewBindi
         binding.register.setOnClickListener {
             viewModel.signUp(
                 binding.name.text.toString().trim(),
-                binding.name.text.toString().trim(),
+                binding.lastName.text.toString().trim(),
                 binding.phoneNumber.text.toString().trim(),
                 binding.password.text.toString().trim(),
                 binding.confirmPassword.text.toString().trim()

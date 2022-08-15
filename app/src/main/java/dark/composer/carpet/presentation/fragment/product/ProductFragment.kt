@@ -15,7 +15,6 @@ import dark.composer.carpet.presentation.fragment.adapters.FilterAdapter
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
 import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.utils.navigateP
-import dark.composer.carpet.utils.navigateType
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

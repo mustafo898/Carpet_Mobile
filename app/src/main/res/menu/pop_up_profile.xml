@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/editName"
+        android:id="@+id/edit_profile"
         android:icon="@drawable/ic_edit"
-        android:title="Edit Name" />
+        android:title="Edit" />
 
     <item
-        android:id="@+id/logout"
+        android:id="@+id/logout_profile"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_exit"
         android:title="Log Out" />
 
     <item
-        android:id="@+id/share"
+        android:id="@+id/share_profile"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_exit"
         android:title="Share" />

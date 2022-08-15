@@ -49,6 +49,12 @@
         <item name="cornerSizeTopRight">80dp</item>
     </style>
 
+    <style name="rounded_profile">
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">80dp</item>
+        <item name="cornerSizeTopRight">80dp</item>
+    </style>
+
     <style name="admin">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

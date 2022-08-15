@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.whenStarted
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
@@ -20,6 +21,9 @@ import dark.composer.carpet.databinding.FragmentAddFactoryNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.utils.SharedPref
+import dark.composer.carpet.utils.uploadFile
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -89,7 +93,7 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
                 viewModel.fileUpload.collect {
                     when (it) {
                         is BaseNetworkResult.Success -> {
-                            navController
+                            navController.popBackStack()
                         }
                         is BaseNetworkResult.Loading -> {}
                         is BaseNetworkResult.Error-> {
@@ -157,7 +161,7 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
 
             if (requestCode == REQUEST_CODE) {
                 val uri = data?.data
-                imagePath = uri?.let { uploadFile(it) }.toString()
+                imagePath = uri?.let { uploadFile(it,requireContext()) }.toString()
                 Glide.with(requireContext()).load(imagePath).into(binding.image)
                 val file = File(imagePath)
                 val requestBody =
@@ -171,15 +175,4 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
     lateinit var body: MultipartBody.Part
 
     var imagePath = ""
-
-    private fun uploadFile(uri: Uri): String? {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val loader = CursorLoader(requireContext(), uri, projection, null, null, null)
-        val cursor = loader.loadInBackground()
-        val columnIdx = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor?.moveToFirst()
-        val result = cursor?.getString(columnIdx!!)
-        cursor?.close()
-        return result
-    }
 }
