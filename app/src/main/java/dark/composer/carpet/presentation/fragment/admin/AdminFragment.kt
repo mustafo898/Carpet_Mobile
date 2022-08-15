@@ -37,7 +37,7 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         FactoryAdminAdapter()
     }
 
-    private var type = "COUNTABLE"
+    private var type = "UNCOUNTABLE"
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(

@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
-import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
-import dark.composer.carpet.databinding.ItemFactoryGridNewBinding
 import dark.composer.carpet.databinding.ItemProfile1Binding
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.FactoryViewHolder>(){
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>(){
     private val usersList = mutableListOf<ProfileResponse>()
 
     private var clickListener: ((id:Int) -> Unit)? = null
@@ -19,7 +17,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.FactoryViewHolder>(){
         clickListener = f
     }
 
-    inner class FactoryViewHolder(private val binding: ItemProfile1Binding):RecyclerView.ViewHolder(binding.root){
+    inner class UsersViewHolder(private val binding: ItemProfile1Binding):RecyclerView.ViewHolder(binding.root){
         fun bind(data:ProfileResponse){
             if (data.url.isNullOrEmpty()){
                 binding.image.setImageResource(R.drawable.image)
@@ -42,10 +40,10 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.FactoryViewHolder>(){
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FactoryViewHolder (
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UsersViewHolder (
         ItemProfile1Binding.inflate(LayoutInflater.from(parent.context),parent,false))
 
-    override fun onBindViewHolder(holder: FactoryViewHolder, position: Int) = holder.bind(usersList[position])
+    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) = holder.bind(usersList[position])
 
     override fun getItemCount() = usersList.size
 }

@@ -27,7 +27,8 @@ class UsersViewModel @Inject constructor(private val profileUseCase: ProfileUseC
                         _usersList.emit(BaseNetworkResult.Loading(result.isLoading))
                     }
                     is BaseNetworkResult.Success -> {
-                        _usersList.emit(BaseNetworkResult.Success(result.data!!))
+                        Log.d("LLLLL", "getList: ${result.data!!}")
+                        _usersList.emit(BaseNetworkResult.Success(result.data))
                     }
                 }
             }.catch {t->

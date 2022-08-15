@@ -48,7 +48,7 @@ interface ApiService {
     @GET("profile/adm/{id}")
     suspend fun getUsersProfileDetails(@Path("id") id: Int): Response<ProfileResponse>
 
-    @GET("product/adm/pagination/{type}")
+    @GET("profile/adm/pagination/list")
     suspend fun getUsersPagination(
         @Query("size") size: Int,
         @Query("page") page: Int

@@ -45,6 +45,10 @@ class ProfileFragment : BaseFragment<FragmentProfileNewBinding>(FragmentProfileN
 
         }
 
+        binding.next.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_usersFragment)
+        }
+
         binding.add.setOnClickListener {
             navController.navigate(R.id.action_profileFragment_to_createUserFragment)
         }

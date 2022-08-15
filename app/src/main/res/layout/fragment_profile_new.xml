@@ -122,6 +122,7 @@
                 app:layout_constraintTop_toTopOf="@id/listTxt"
                 app:layout_constraintBottom_toBottomOf="@id/listTxt"
                 android:src="@drawable/ic_back"
+                android:id="@+id/next"
                 android:rotation="180"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

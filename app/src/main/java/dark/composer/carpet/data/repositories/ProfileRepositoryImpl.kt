@@ -140,12 +140,12 @@ class ProfileRepositoryImpl @Inject constructor(
         if (response.code() == 200) {
             emit(BaseNetworkResult.Loading(false))
             response.body()?.let {
-                Log.d("FFFFF", "getUsersProfilePagination: $it")
+                Log.d("BBBBBB", "getUsersProfilePagination: $it")
                 emit(BaseNetworkResult.Success(it))
             }
         } else {
             emit(BaseNetworkResult.Loading(false))
-            emit(BaseNetworkResult.Error("No access"))
+            emit(BaseNetworkResult.Error(response.message()))
             Log.d("OOOOO", "getUsersProfileList: xatolik")
         }
     }
