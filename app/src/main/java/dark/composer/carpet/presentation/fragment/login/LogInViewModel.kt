@@ -62,7 +62,7 @@ class LogInViewModel @Inject constructor(private val useCase: LogInUseCase) : Vi
                 phoneChannel.send("Phone Number must be entered")
             }
             return false
-        } else if (phone.length != 9) {
+        } else if (phone.length != 8) {
             viewModelScope.launch {
                 phoneChannel.send("Please Enter Correct Phone Number")
             }
