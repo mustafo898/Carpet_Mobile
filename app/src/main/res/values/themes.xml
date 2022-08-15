@@ -61,4 +61,9 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize14Percent" parent="">
+        <item name="cornerSize">45%</item>
+        <!--        <item name="color">@color/white</item>-->
+    </style>
 </resources>
