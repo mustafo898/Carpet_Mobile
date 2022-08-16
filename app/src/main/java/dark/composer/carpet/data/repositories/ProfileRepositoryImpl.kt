@@ -7,6 +7,7 @@ import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
 import dark.composer.carpet.domain.repository.profile.ProfileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -135,7 +136,7 @@ class ProfileRepositoryImpl @Inject constructor(
         size: Int,
         page: Int
 
-    ): Flow<BaseNetworkResult<List<ProfileResponse>>> = flow {
+    ): Flow<BaseNetworkResult<UsersPagination>> = flow {
         val response = service.getUsersPagination(size, page)
         emit(BaseNetworkResult.Loading(true))
         if (response.code() == 200) {

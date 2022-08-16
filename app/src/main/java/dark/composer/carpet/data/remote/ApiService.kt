@@ -23,6 +23,7 @@ import dark.composer.carpet.data.remote.models.response.product.ProductResponse
 import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
 import dark.composer.carpet.data.remote.models.response.sale.SaleResponse
 import dark.composer.carpet.utils.Constants
 import okhttp3.MultipartBody
@@ -52,7 +53,7 @@ interface ApiService {
     suspend fun getUsersPagination(
         @Query("size") size: Int,
         @Query("page") page: Int
-    ): Response<List<ProfileResponse>>
+    ): Response<UsersPagination>
 
     @PUT("profile/update")
     suspend fun updateProfile(@Body request: ProfileRequest): Response<ProfileResponse>

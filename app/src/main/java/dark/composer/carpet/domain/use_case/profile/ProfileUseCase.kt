@@ -4,6 +4,7 @@ import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
 import dark.composer.carpet.domain.repository.profile.ProfileRepository
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +30,7 @@ class ProfileUseCase @Inject constructor(
         return repo.getUsersProfileList()
     }
 
-    suspend fun getUsersProfilePagination(size:Int,page:Int):Flow<BaseNetworkResult<List<ProfileResponse>>> {
+    suspend fun getUsersProfilePagination(size:Int,page:Int):Flow<BaseNetworkResult<UsersPagination>> {
         return repo.getUsersProfilePagination(size,page)
     }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
 import dark.composer.carpet.domain.use_case.profile.ProfileUseCase
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.flow.*
@@ -28,7 +29,7 @@ class UsersViewModel @Inject constructor(private val profileUseCase: ProfileUseC
                     }
                     is BaseNetworkResult.Success -> {
                         Log.d("LLLLL", "getList: ${result.data!!}")
-                        _usersList.emit(BaseNetworkResult.Success(result.data))
+                        _usersList.emit(BaseNetworkResult.Success(result.data.content))
                     }
                 }
             }.catch {t->

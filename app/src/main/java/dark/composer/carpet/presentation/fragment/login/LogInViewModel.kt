@@ -56,8 +56,7 @@ class LogInViewModel @Inject constructor(private val useCase: LogInUseCase) : Vi
                 phoneChannel.send("Correct")
             }
             return true
-        }
-        if (phone.isEmpty()) {
+        }else if (phone.isEmpty()) {
             viewModelScope.launch {
                 phoneChannel.send("Phone Number must be entered")
             }
@@ -81,8 +80,7 @@ class LogInViewModel @Inject constructor(private val useCase: LogInUseCase) : Vi
                 passwordChannel.send("Correct")
             }
             return true
-        }
-        if (password.length <= 6) {
+        }else if (password.length <= 6) {
             viewModelScope.launch {
                 passwordChannel.send("Minimum 6 Character Password")
             }

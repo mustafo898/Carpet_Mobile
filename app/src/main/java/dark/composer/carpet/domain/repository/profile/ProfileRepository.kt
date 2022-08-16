@@ -4,6 +4,7 @@ import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
 import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
+import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -16,7 +17,7 @@ interface ProfileRepository {
     suspend fun deleteUsersProfile(id:Int): Flow<BaseNetworkResult<ProfileResponse>>
     suspend fun updateUsersProfile(id: Int,update: ProfileCreateRequest): Flow<BaseNetworkResult<ProfileResponse>>
     suspend fun getUsersProfileList(): Flow<BaseNetworkResult<List<ProfileResponse>>>
-    suspend fun getUsersProfilePagination(size:Int,page:Int): Flow<BaseNetworkResult<List<ProfileResponse>>>
+    suspend fun getUsersProfilePagination(size:Int,page:Int): Flow<BaseNetworkResult<UsersPagination>>
     suspend fun getUsersProfileDetails(id:Int): Flow<BaseNetworkResult<ProfileResponse>>
     suspend fun createProfile(createRequest: ProfileCreateRequest): Flow<BaseNetworkResult<ProfileResponse>>
 }
