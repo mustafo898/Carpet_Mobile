@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.remote.models.request.factory.update.FactoryUpdateRequest
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.data.remote.models.response.factory.FactoryResponse
 import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
 import dark.composer.carpet.domain.use_case.factory.FactoryUseCase
@@ -20,9 +21,9 @@ class FactoryDetailsViewModel @Inject constructor(private val productUseCase: Pr
     private val _productList = MutableSharedFlow<BaseNetworkResult<List<ProductPaginationResponse>>>()
     val productList = _productList.asSharedFlow()
 
-    fun getProductList(type: String, page: Int, size: Int) {
+    fun getFilterProductList(filterRequest: ProductFilterRequest) {
         viewModelScope.launch {
-            productUseCase.getProductList(type, page, size).onEach { result ->
+            productUseCase.filterProduct(filterRequest).onEach { result ->
                 when(result){
                     is BaseNetworkResult.Error -> {
                         _productList.emit(BaseNetworkResult.Error(result.message ?: "An unexpected error occurred"))

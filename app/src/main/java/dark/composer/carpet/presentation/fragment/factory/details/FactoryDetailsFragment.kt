@@ -9,6 +9,7 @@ import androidx.lifecycle.whenStarted
 import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.remote.models.request.factory.update.FactoryUpdateRequest
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.databinding.FragmentFactoryDatailsNewBinding
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -35,6 +36,7 @@ class FactoryDetailsFragment :
     }
 
     private var d = 0
+    private var name = ""
     private var type = "UNCOUNTABLE"
 
     override fun onViewCreate() {
@@ -90,6 +92,7 @@ class FactoryDetailsFragment :
                                     .into(binding.image)
                             }
                             binding.name.text = it.data?.name
+                            name = it.data?.name.toString()
                             binding.status.text = it.data?.status
                             binding.visible.text = it.data?.visible.toString()
                         }
@@ -109,7 +112,7 @@ class FactoryDetailsFragment :
 
     private fun send() {
         viewModel.getFactory(d)
-        viewModel.getProductList(type, 0, 20)
+        viewModel.getFilterProductList(ProductFilterRequest(type = type, factoryName = name))
     }
 
     private fun action() {
@@ -160,6 +163,6 @@ class FactoryDetailsFragment :
 
     private fun getPagination(type:String){
         this.type = type
-        viewModel.getProductList(type, 0, 20)
+        viewModel.getFilterProductList(ProductFilterRequest(type = type, factoryName = name))
     }
 }

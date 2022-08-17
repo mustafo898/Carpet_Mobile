@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class UsersViewModel @Inject constructor(private val profileUseCase: ProfileUseCase) : ViewModel() {
 
-    private val _usersList = MutableSharedFlow<BaseNetworkResult<List<ProfileResponse>>>()
+    private val _usersList = MutableSharedFlow<BaseNetworkResult<UsersPagination>>()
     val usersList = _usersList.asSharedFlow()
 
     fun getList(size:Int,page:Int) {
@@ -29,7 +29,7 @@ class UsersViewModel @Inject constructor(private val profileUseCase: ProfileUseC
                     }
                     is BaseNetworkResult.Success -> {
                         Log.d("LLLLL", "getList: ${result.data!!}")
-                        _usersList.emit(BaseNetworkResult.Success(result.data.content))
+                        _usersList.emit(BaseNetworkResult.Success(result.data))
                     }
                 }
             }.catch {t->

@@ -16,8 +16,10 @@ import dark.composer.carpet.presentation.fragment.product.add.product.AddProduct
 import dark.composer.carpet.presentation.fragment.product.update.UpdateViewModel
 import dark.composer.carpet.presentation.fragment.product.details.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
-import dark.composer.carpet.presentation.fragment.profile.create.CreateUserViewModel
+import dark.composer.carpet.presentation.fragment.profile.users.create.CreateUserViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.UsersViewModel
+import dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsViewModel
+import dark.composer.carpet.presentation.fragment.profile.users.update.UpdateUserViewModel
 import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 
 @Module
@@ -92,4 +94,14 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(UsersViewModel::class)
     abstract fun usersViewModel(usersViewModel : UsersViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserDetailsViewModel::class)
+    abstract fun userDetailsViewModel(userDetailsViewModel : UserDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdateUserViewModel::class)
+    abstract fun updateUserViewModel(UpdateUserViewModel : UpdateUserViewModel): ViewModel
 }

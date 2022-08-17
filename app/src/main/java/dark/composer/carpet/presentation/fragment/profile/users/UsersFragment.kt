@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +31,7 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
     private val usersAdapter by lazy {
         UsersAdapter()
     }
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             requireActivity(), providerFactory
@@ -51,8 +53,8 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
                             Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show() }
                         is BaseNetworkResult.Success -> {
                             it.data?.let { t->
-                                Log.d("PPPPP", "observe: $t")
-                                usersAdapter.setList(t)
+                                Log.d("PPPPP", "observe: ${t.content}")
+                                usersAdapter.setList(t.content?: emptyList())
                             }
                         }
                     }
@@ -62,6 +64,14 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
     }
 
     fun send(){
+        binding.back.setOnClickListener {
+            navController.popBackStack()
+        }
+
+        usersAdapter.setClickListener {
+            navController.navigate(R.id.action_usersFragment_to_userDetailsFragment, bundleOf("ID" to it))
+        }
+
         viewModel.getList(20,0)
     }
 }

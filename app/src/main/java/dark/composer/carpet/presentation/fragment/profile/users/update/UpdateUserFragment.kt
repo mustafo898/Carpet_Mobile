@@ -1,18 +1,13 @@
-package dark.composer.carpet.presentation.fragment.profile.update
+package dark.composer.carpet.presentation.fragment.profile.users.update
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import dark.composer.carpet.R
 import dark.composer.carpet.databinding.FragmentUpdateUserBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
-import dark.composer.carpet.presentation.fragment.profile.create.CreateUserViewModel
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -135,6 +130,7 @@ class UpdateUserFragment : BaseFragment<FragmentUpdateUserBinding>(FragmentUpdat
 
     private fun send(){
         viewModel.getProfile(d)
+
         binding.update.setOnClickListener {
             viewModel.update(
                 d,

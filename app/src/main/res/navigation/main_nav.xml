@@ -88,9 +88,7 @@
         <action
             android:id="@+id/action_profileFragment_to_createUserFragment"
             app:destination="@id/createUserFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_updateUserFragment"
-            app:destination="@id/updateUserFragment" />
+
         <action
             android:id="@+id/action_profileFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
@@ -166,16 +164,28 @@
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
-        android:name="dark.composer.carpet.presentation.fragment.profile.create.CreateUserFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.users.create.CreateUserFragment"
         android:label="CreateUserFragment" />
     <fragment
         android:id="@+id/updateUserFragment"
-        android:name="dark.composer.carpet.presentation.fragment.profile.update.UpdateUserFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.users.update.UpdateUserFragment"
         android:label="fragment_update_user"
         tools:layout="@layout/fragment_update_user" />
     <fragment
         android:id="@+id/usersFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.users.UsersFragment"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsFragment"
+        android:label="UserDetailsFragment" >
+        <action
+            android:id="@+id/action_userDetailsFragment_to_updateUserFragment"
+            app:destination="@id/updateUserFragment" />
+    </fragment>
 </navigation>

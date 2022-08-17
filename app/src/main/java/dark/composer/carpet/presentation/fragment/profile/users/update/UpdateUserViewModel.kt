@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.profile.update
+package dark.composer.carpet.presentation.fragment.profile.users.update
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

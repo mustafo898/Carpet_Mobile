@@ -1,4 +1,4 @@
-package dark.composer.carpet.presentation.fragment.profile.create
+package dark.composer.carpet.presentation.fragment.profile.users.create
 
 import androidx.lifecycle.ViewModelProvider
 import android.widget.Toast
