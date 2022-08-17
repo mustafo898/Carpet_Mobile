@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import dark.composer.carpet.data.di.scopes.ViewModelKey
 import dark.composer.carpet.presentation.fragment.admin.AdminViewModel
+import dark.composer.carpet.presentation.fragment.basket.BasketViewModel
 import dark.composer.carpet.presentation.fragment.factory.FactoryViewModel
 import dark.composer.carpet.presentation.fragment.product.ProductViewModel
 import dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryViewModel
@@ -16,6 +17,7 @@ import dark.composer.carpet.presentation.fragment.product.add.product.AddProduct
 import dark.composer.carpet.presentation.fragment.product.update.UpdateViewModel
 import dark.composer.carpet.presentation.fragment.product.details.ProductDetailsViewModel
 import dark.composer.carpet.presentation.fragment.profile.ProfileViewModel
+import dark.composer.carpet.presentation.fragment.profile.update.UpdateProfileViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.create.CreateUserViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.UsersViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsViewModel
@@ -104,4 +106,16 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(UpdateUserViewModel::class)
     abstract fun updateUserViewModel(UpdateUserViewModel : UpdateUserViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdateProfileViewModel::class)
+    abstract fun updateProfileViewModel(updateProfileViewModel : UpdateProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdateProfileViewModel::class)
+    abstract fun basketViewModel(basketViewModel : BasketViewModel): ViewModel
+
+
 }

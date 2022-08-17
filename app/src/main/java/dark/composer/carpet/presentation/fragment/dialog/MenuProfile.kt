@@ -19,10 +19,10 @@ class MenuProfile (context: Context, imageView: ImageView) : PopupMenu(context, 
         deleteClickListener = f
     }
 
-    private var shareClickListener: ((id:Int) -> Unit)? = null
+    private var changeClickListener: ((id:Int) -> Unit)? = null
 
-    fun setShareClickListener(f: (id:Int) -> Unit) {
-        shareClickListener = f
+    fun setChangeClickListener(f: (id:Int) -> Unit) {
+        changeClickListener = f
     }
 
     init {
@@ -34,8 +34,8 @@ class MenuProfile (context: Context, imageView: ImageView) : PopupMenu(context, 
                     R.id.logout_profile -> {
                         deleteClickListener?.invoke(item.itemId)
                     }
-                    R.id.share_profile -> {
-                        shareClickListener?.invoke(item.itemId)
+                    R.id.change_profile -> {
+                        changeClickListener?.invoke(item.itemId)
                     }
                     R.id.edit_profile -> {
                         editClickListener?.invoke(item.itemId)

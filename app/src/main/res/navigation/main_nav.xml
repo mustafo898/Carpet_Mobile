@@ -92,6 +92,12 @@
         <action
             android:id="@+id/action_profileFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_factory_datails_new"
@@ -188,4 +194,8 @@
             android:id="@+id/action_userDetailsFragment_to_updateUserFragment"
             app:destination="@id/updateUserFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="dark.composer.carpet.presentation.fragment.profile.update.UpdateProfileFragment"
+        android:label="UpdateProfileFragment" />
 </navigation>

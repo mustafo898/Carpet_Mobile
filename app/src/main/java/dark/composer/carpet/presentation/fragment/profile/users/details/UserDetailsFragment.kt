@@ -55,7 +55,7 @@ class UserDetailsFragment :
                         is BaseNetworkResult.Success -> {
                             it.data?.let { t ->
                                 binding.name.text = t.name + " " + t.surname
-                                binding.number.text = t.phoneNumber
+                                binding.number.text ="+998 " + t.phoneNumber
                                 Glide.with(requireContext()).load(t.url)
                                     .error(R.drawable.ic_person)
                                     .into(binding.image)
@@ -100,7 +100,7 @@ class UserDetailsFragment :
         }
 
         menuSettings.setDeleteClickListener {
-
+            viewModel.deleteProfile(d)
         }
 
         binding.back.setOnClickListener {

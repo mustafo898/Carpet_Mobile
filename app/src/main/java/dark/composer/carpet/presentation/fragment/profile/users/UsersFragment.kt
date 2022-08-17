@@ -39,6 +39,7 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
 
         binding.list.layoutManager = LinearLayoutManager(requireContext())
         binding.list.adapter = usersAdapter
+        action()
         observe()
         send()
     }
@@ -48,10 +49,13 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.usersList.collect{
                     when(it){
-                        is BaseNetworkResult.Error -> { Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show() }
+                        is BaseNetworkResult.Error -> {
+                            Log.d("PPPPPERROR", "ERROR ${it.message}")
+                            Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show() }
                         is BaseNetworkResult.Loading -> {
                             Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show() }
                         is BaseNetworkResult.Success -> {
+                            Log.d("PPPPP", "users ${it.data}")
                             it.data?.let { t->
                                 Log.d("PPPPP", "observe: ${t.content}")
                                 usersAdapter.setList(t.content?: emptyList())
@@ -73,5 +77,11 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
         }
 
         viewModel.getList(20,0)
+    }
+
+    private fun action(){
+//        binding.back.setOnClickListener {
+//            navController.navigate(R.id.action_usersFragment_to_profileFragment)
+//        }
     }
 }

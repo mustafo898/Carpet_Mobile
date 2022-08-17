@@ -44,11 +44,11 @@ object NetworkModule {
                         else request.newBuilder()
                             .header("Authorization", "Bearer ${shared.getToken()}")
                         chain.proceed(newRequest.build())
-                            .also {
+//                            .also {
 //                        if (it.code == 401) {
-////                            Handler(Looper.getMainLooper()).post { shared.setAccessToken("empty") }
+//                              Handler(Looper.getMainLooper()).post { shared.setAccessToken("empty") }
 //                        }
-                        }
+//                        }
                     }
                     .build()
             )

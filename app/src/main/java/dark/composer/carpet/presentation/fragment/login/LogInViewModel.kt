@@ -51,27 +51,29 @@ class LogInViewModel @Inject constructor(private val useCase: LogInUseCase) : Vi
     }
 
     fun validPhone(phone: String): Boolean {
-        if (phone == "90909000"){
-            viewModelScope.launch {
-                phoneChannel.send("Correct")
-            }
-            return true
-        }else if (phone.isEmpty()) {
-            viewModelScope.launch {
-                phoneChannel.send("Phone Number must be entered")
-            }
-            return false
-        } else if (phone.length != 8) {
-            viewModelScope.launch {
-                phoneChannel.send("Please Enter Correct Phone Number")
-            }
-            return false
-        } else {
-            viewModelScope.launch {
-                phoneChannel.send("Correct")
-            }
-            return true
-        }
+//        if (phone == "90909000"){
+//            viewModelScope.launch {
+//                phoneChannel.send("Correct")
+//            }
+//            return true
+//        }
+//        if (phone.isEmpty()) {
+//            viewModelScope.launch {
+//                phoneChannel.send("Phone Number must be entered")
+//            }
+//            return false
+//        } else if (phone.length != 8) {
+//            viewModelScope.launch {
+//                phoneChannel.send("Please Enter Correct Phone Number")
+//            }
+//            return false
+//        } else {
+//            viewModelScope.launch {
+//                phoneChannel.send("Correct")
+//            }
+//            return true
+//        }
+        return true
     }
 
     fun validPassword(password: String): Boolean {

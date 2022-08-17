@@ -152,11 +152,13 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         }
 
         binding.image.setOnClickListener {
+//            sharedPref.clearAllCache()
             if (sharedPref.getToken().isNullOrEmpty()){
                 navController.navigate(R.id.action_adminFragment_to_logInFragment)
             }else{
                 navController.navigate(R.id.action_adminFragment_to_profileFragment)
             }
+
         }
     }
 

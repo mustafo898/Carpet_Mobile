@@ -9,18 +9,19 @@ import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.databinding.ItemProfile1Binding
 import dark.composer.carpet.databinding.ItemProfilesBinding
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>(){
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     private val usersList = mutableListOf<ProfileResponse>()
 
-    private var clickListener: ((id:Int) -> Unit)? = null
+    private var clickListener: ((id: Int) -> Unit)? = null
 
-    fun setClickListener(f: (id:Int) -> Unit) {
+    fun setClickListener(f: (id: Int) -> Unit) {
         clickListener = f
     }
 
-    inner class UsersViewHolder(private val binding: ItemProfile1Binding):RecyclerView.ViewHolder(binding.root){
-        fun bind(data:ProfileResponse){
-            if (data.url.isNullOrEmpty()){
+    inner class UsersViewHolder(private val binding: ItemProfile1Binding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: ProfileResponse) {
+            if (data.url.isNullOrEmpty()) {
                 binding.image.setImageResource(R.drawable.ic_person)
             }else{
                 Glide.with(binding.root).load(data.url).into(binding.image)
@@ -34,16 +35,18 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>(){
         }
     }
 
-    fun setList(list:List<ProfileResponse>){
+    fun setList(list: List<ProfileResponse>) {
         usersList.clear()
         usersList.addAll(list)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UsersViewHolder (
-        ItemProfile1Binding.inflate(LayoutInflater.from(parent.context),parent,false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UsersViewHolder(
+        ItemProfile1Binding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) = holder.bind(usersList[position])
+    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) =
+        holder.bind(usersList[position])
 
     override fun getItemCount() = usersList.size
 }

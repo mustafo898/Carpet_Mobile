@@ -58,4 +58,10 @@ class SharedPref(context: Context) {
     }
 
     fun getRole() = preferences.getString("ROLE", "")
+
+    fun clearAllCache(){
+        editor = preferences.edit()
+        editor.clear().apply()
+        editor.commit()
+    }
 }

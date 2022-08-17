@@ -3,6 +3,7 @@ package dark.composer.carpet.data.di.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dark.composer.carpet.presentation.fragment.admin.AdminFragment
+import dark.composer.carpet.presentation.fragment.basket.BasketFragment
 import dark.composer.carpet.presentation.fragment.factory.FactoryFragment
 import dark.composer.carpet.presentation.fragment.product.ProductFragment
 import dark.composer.carpet.presentation.fragment.factory.add.factory.AddFactoryFragment
@@ -14,6 +15,7 @@ import dark.composer.carpet.presentation.fragment.product.update.UpdateProductFr
 import dark.composer.carpet.presentation.fragment.product.details.ProductCountableFragment
 import dark.composer.carpet.presentation.fragment.product.details.ProductUncountableFragment
 import dark.composer.carpet.presentation.fragment.profile.ProfileFragment
+import dark.composer.carpet.presentation.fragment.profile.update.UpdateProfileFragment
 import dark.composer.carpet.presentation.fragment.profile.users.create.CreateUserFragment
 import dark.composer.carpet.presentation.fragment.profile.users.UsersFragment
 import dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsFragment
@@ -73,4 +75,10 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun updateUserFragment(): UpdateUserFragment
+
+    @ContributesAndroidInjector
+    abstract fun updateProfileFragment(): UpdateProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun basketFragment(): BasketFragment
 }

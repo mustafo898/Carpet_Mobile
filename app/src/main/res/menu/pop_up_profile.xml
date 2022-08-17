@@ -13,8 +13,8 @@
         android:title="Log Out" />
 
     <item
-        android:id="@+id/share_profile"
+        android:id="@+id/change_profile"
         android:iconTint="@color/black"
         android:icon="@drawable/ic_exit"
-        android:title="Share" />
+        android:title="Change Image" />
 </menu>

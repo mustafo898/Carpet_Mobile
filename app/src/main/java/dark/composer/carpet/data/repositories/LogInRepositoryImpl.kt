@@ -29,6 +29,8 @@ class LogInRepositoryImpl @Inject constructor(
                     sharedPref.setPhoneNumber(it.phoneNumber)
                     sharedPref.setRole(it.role)
                     Log.d("QQQQQ", "logIn: ${it.name}")
+                    Log.d("jwtttt","ShareJWT: ${sharedPref.getToken()}")
+                    Log.d("jwtttt","APIJWT: ${it.jwt}")
                     emit(BaseNetworkResult.Success(it))
                 }
             } else {

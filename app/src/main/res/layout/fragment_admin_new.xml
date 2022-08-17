@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_color_8"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/theme_color_8">
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:text="Name"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:id="@+id/name"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/image"
-                android:layout_marginStart="15dp"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/image"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/placeholder"
+                app:civ_border_color="#2196F3"
                 app:civ_border_width="2dp"
-                app:civ_border_color="#2196F3"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!--            <RadioGroup-->
             <!--                android:id="@+id/group"-->
@@ -87,69 +88,69 @@
             <!--            </RadioGroup>-->
 
             <TextView
+                android:id="@+id/seeAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/black"
                 android:text="See All ->"
-                android:id="@+id/seeAll"
-                app:layout_constraintEnd_toEndOf="@id/image"
-                app:layout_constraintBottom_toBottomOf="@id/factory"/>
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/factory"
+                app:layout_constraintEnd_toEndOf="@id/image" />
 
             <TextView
+                android:id="@+id/factory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Factory"
-                android:textSize="18sp"
                 android:layout_marginTop="50dp"
+                android:text="Factory"
                 android:textColor="@color/black"
-                android:id="@+id/factory"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                app:layout_constraintStart_toStartOf="@id/name"/>
+                app:layout_constraintStart_toStartOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/name" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/factoriesList"
-                tools:listitem="@layout/item_card_factory_new"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/factory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_height="wrap_content"/>
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/factory"
+                tools:listitem="@layout/item_card_factory_new" />
 
             <TextView
+                android:id="@+id/product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:text="Products"
-                android:id="@+id/product"
                 android:layout_marginTop="10dp"
+                android:text="Products"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/name"
-                app:layout_constraintTop_toBottomOf="@id/factoriesList"/>
+                app:layout_constraintTop_toBottomOf="@id/factoriesList" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
-                tools:listitem="@layout/item_product"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/product"
-                android:layout_marginTop="10dp"/>
+                app:spanCount="2"
+                tools:listitem="@layout/item_product_new" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <ProgressBar
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:elevation="5dp"
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
