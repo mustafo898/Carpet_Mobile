@@ -198,4 +198,8 @@
         android:id="@+id/updateProfileFragment"
         android:name="dark.composer.carpet.presentation.fragment.profile.update.UpdateProfileFragment"
         android:label="UpdateProfileFragment" />
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="dark.composer.carpet.presentation.fragment.basket.BasketFragment"
+        android:label="BasketFragment" />
 </navigation>

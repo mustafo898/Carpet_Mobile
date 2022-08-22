@@ -10,6 +10,7 @@ import androidx.lifecycle.whenStarted
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
+import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.databinding.FragmentUncountProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
@@ -91,6 +92,23 @@ class ProductUncountableFragment : BaseFragment<FragmentUncountProductDetailsBin
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.create.collect{
+                    when(it){
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let {t->
+                                Log.d("EEEE", "observe: $t")
+                                Toast.makeText(requireContext(), t.createdDate, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        is BaseNetworkResult.Error -> { Toast.makeText(requireContext(), it.message?:"An unexpected error occurred", Toast.LENGTH_SHORT).show()}
+                        is BaseNetworkResult.Loading -> {Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()}
+                    }
+                }
+            }
+        }
     }
 
     private fun send(){
@@ -132,6 +150,10 @@ class ProductUncountableFragment : BaseFragment<FragmentUncountProductDetailsBin
         productAdapter.setClickListener {
             id = it
             navController.navigate(R.id.productDetailsFragment, bundleOf("ID" to id, "TYPE" to type))
+        }
+
+        binding.add.setOnClickListener {
+            viewModel.createBasket(BasketCreateRequest(info = "Basket",productId = id,type = type, amount = 1))
         }
 
         binding.back.setOnClickListener {

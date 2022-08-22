@@ -3,6 +3,7 @@ package dark.composer.carpet.presentation.fragment.product.details
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.data.remote.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.remote.models.response.product.ProductResponse
 import dark.composer.carpet.data.remote.models.response.product.pagination.ProductPaginationResponse
@@ -95,6 +96,32 @@ class ProductDetailsViewModel @Inject constructor(
                     is BaseNetworkResult.Success -> {
                         result.data?.let {
                             _product.emit(BaseNetworkResult.Success(it))
+                        }
+                    }
+                }
+            }.catch { t ->
+                Log.d("OOOOOOO", "getProduct: ")
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun createBasket(createResponse: BasketCreateRequest) {
+        viewModelScope.launch {
+            useCaseBasket.createBasket(createResponse).onEach { result ->
+                when (result) {
+                    is BaseNetworkResult.Error -> {
+                        _create.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _create.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        result.data?.let {
+                            _create.emit(BaseNetworkResult.Success(it))
                         }
                     }
                 }

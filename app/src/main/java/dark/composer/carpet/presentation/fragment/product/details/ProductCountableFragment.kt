@@ -10,6 +10,7 @@ import androidx.lifecycle.whenStarted
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
+import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
 import dark.composer.carpet.databinding.FragmentCountProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
@@ -79,14 +80,33 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
                                 binding.pon.text = t.pon
                                 binding.design.text = t.design
                                 binding.color.text = t.colour
+                                binding.amount.text = t.amount.toString()
                                 binding.price.text = t.price.toString()
                                 binding.visible.text = t.visible.toString()
+                                binding.size.text = t.weight.toString() + "x" +t.height.toString()
                                 binding.date.text = "${t.createDate.substring(11,15)} ${t.createDate.substring(0,10)}"
                                 imageSlider(t.urlImageList?: emptyList(),t.name)
                             }
                         }
                         is BaseNetworkResult.Error -> { Toast.makeText(requireContext(), it.message?:"An unexpected error occurred", Toast.LENGTH_SHORT).show()}
                         is BaseNetworkResult.Loading -> {}
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.create.collect{
+                    when(it){
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let {t->
+                                Log.d("EEEE", "observe: $t")
+                                Toast.makeText(requireContext(), t.createdDate, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        is BaseNetworkResult.Error -> { Toast.makeText(requireContext(), it.message?:"An unexpected error occurred", Toast.LENGTH_SHORT).show()}
+                        is BaseNetworkResult.Loading -> {Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()}
                     }
                 }
             }
@@ -113,6 +133,10 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
     private fun action(){
         binding.more.setOnClickListener {
             menuSettings.show()
+        }
+
+        binding.add.setOnClickListener {
+            viewModel.createBasket(BasketCreateRequest(amount = binding.amountBasket.text.toString().toInt(), type = type, productId = id, info = "Basket"))
         }
 
         menuSettings.setDeleteClickListener {

@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import dark.composer.carpet.R
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.databinding.ItemProfile1Binding
-import dark.composer.carpet.databinding.ItemProfilesBinding
+//import dark.composer.carpet.databinding.ItemProfilesBinding
 
 class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     private val usersList = mutableListOf<ProfileResponse>()

@@ -27,8 +27,8 @@ class BasketUseCase @Inject constructor(private val repository: BasketRepository
         return repository.getBasket(id)
     }
 
-    suspend fun getBasketList(status:String): Flow<BaseNetworkResult<List<BasketPaginationResponse>>> {
-        return repository.getBasketList(status)
+    suspend fun getBasketList(status:String,page: Int,size: Int): Flow<BaseNetworkResult<List<BasketPaginationResponse>>> {
+        return repository.getBasketList(status,page,size)
     }
 
     suspend fun getProductByStatus(status:String,page:Int,size:Int): Flow<BaseNetworkResult<List<BasketPaginationResponse>>> {

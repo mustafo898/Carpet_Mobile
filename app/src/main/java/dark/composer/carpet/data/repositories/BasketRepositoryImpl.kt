@@ -82,20 +82,20 @@ class BasketRepositoryImpl @Inject constructor(private val service: ApiService) 
         }
     }
 
-    override suspend fun getBasketList(status: String): Flow<BaseNetworkResult<List<BasketPaginationResponse>>> = flow {
-//        val response = service.getbaske(status, page, size)
-//        emit(BaseNetworkResult.Loading(true))
-//        if (response.code() == 200) {
-//            response.body()?.let {
-//                emit(BaseNetworkResult.Success(it))
-//            }
-//        } else if (response.code() == 401) {
-//            emit(BaseNetworkResult.Error(response.message().toString()))
-//            Log.d("RRRRRR", "createBasket: ${response.message()}")
-//        } else {
-//            emit(BaseNetworkResult.Loading(false))
-//            emit(BaseNetworkResult.Error(response.message().toString()))
-//        }
+    override suspend fun getBasketList(status: String,page: Int,size: Int): Flow<BaseNetworkResult<List<BasketPaginationResponse>>> = flow {
+        val response = service.getPaginationBasket(status, page, size)
+        emit(BaseNetworkResult.Loading(true))
+        if (response.code() == 200) {
+            response.body()?.let {
+                emit(BaseNetworkResult.Success(it))
+            }
+        } else if (response.code() == 401) {
+            emit(BaseNetworkResult.Error(response.message().toString()))
+            Log.d("RRRRRR", "createBasket: ${response.message()}")
+        } else {
+            emit(BaseNetworkResult.Loading(false))
+            emit(BaseNetworkResult.Error(response.message().toString()))
+        }
     }
 
     override suspend fun getBasket(id: Int): Flow<BaseNetworkResult<BasketCreateResponse>> = flow {

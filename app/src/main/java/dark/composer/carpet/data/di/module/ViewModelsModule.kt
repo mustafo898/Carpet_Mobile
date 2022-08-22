@@ -114,8 +114,6 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(UpdateProfileViewModel::class)
+    @ViewModelKey(BasketViewModel::class)
     abstract fun basketViewModel(basketViewModel : BasketViewModel): ViewModel
-
-
 }

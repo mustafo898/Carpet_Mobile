@@ -176,7 +176,7 @@ interface ApiService {
     @PUT("/basket/emp/{id}")
     suspend fun getByIdBasket(@Path("id") id:Int): Response<BasketCreateResponse>
 
-    @DELETE("/basket/emp/{id}")
+    @DELETE("/basket/adm/{id}")
     suspend fun deleteByIdBasket(@Path("id") id:Int): Response<DeleteResponse>
 
     @GET("/basket/emp/pagination/{status}")

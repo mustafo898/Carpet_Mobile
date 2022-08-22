@@ -18,6 +18,6 @@ interface BasketRepository {
         size: Int
     ): Flow<BaseNetworkResult<List<BasketPaginationResponse>>>
 
-    suspend fun getBasketList(status: String): Flow<BaseNetworkResult<List<BasketPaginationResponse>>>
+    suspend fun getBasketList(status: String,page: Int,size: Int): Flow<BaseNetworkResult<List<BasketPaginationResponse>>>
     suspend fun getBasket(id: Int): Flow<BaseNetworkResult<BasketCreateResponse>>
 }
