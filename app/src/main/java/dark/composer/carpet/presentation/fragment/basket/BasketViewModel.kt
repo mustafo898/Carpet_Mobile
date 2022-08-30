@@ -18,6 +18,9 @@ class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCa
     private val _update = MutableSharedFlow<BaseNetworkResult<BasketCreateResponse>>()
     val update = _update.asSharedFlow()
 
+    private val _getBasket = MutableSharedFlow<BaseNetworkResult<BasketCreateResponse>>()
+    val getBasket = _getBasket.asSharedFlow()
+
     private val _delete = MutableSharedFlow<BaseNetworkResult<DeleteResponse>>()
     val delete = _delete.asSharedFlow()
 
@@ -93,6 +96,32 @@ class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCa
                     is BaseNetworkResult.Success -> {
                         result.data?.let {
                             _listBasket.emit(BaseNetworkResult.Success(it))
+                        }
+                    }
+                }
+            }.catch { t ->
+                Log.d("OOOOOOO", "getProduct: ")
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun getBasket(id: Int) {
+        viewModelScope.launch {
+            basketUseCase.getBasket(id).onEach { result ->
+                when (result) {
+                    is BaseNetworkResult.Error -> {
+                        _getBasket.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _getBasket.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        result.data?.let {
+                            _getBasket.emit(BaseNetworkResult.Success(it))
                         }
                     }
                 }

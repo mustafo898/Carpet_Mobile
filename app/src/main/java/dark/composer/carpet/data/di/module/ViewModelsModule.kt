@@ -22,6 +22,7 @@ import dark.composer.carpet.presentation.fragment.profile.users.create.CreateUse
 import dark.composer.carpet.presentation.fragment.profile.users.UsersViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsViewModel
 import dark.composer.carpet.presentation.fragment.profile.users.update.UpdateUserViewModel
+import dark.composer.carpet.presentation.fragment.sale.HistoryViewModel
 import dark.composer.carpet.presentation.fragment.signup.SignUpViewModel
 
 @Module
@@ -116,4 +117,9 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(BasketViewModel::class)
     abstract fun basketViewModel(basketViewModel : BasketViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HistoryViewModel::class)
+    abstract fun historyViewModel(historyViewModel : HistoryViewModel): ViewModel
 }

@@ -82,7 +82,6 @@ class UpdateViewModel @Inject constructor(
             validWidth(weight) &&
             validHeight(height)
         ) {
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
             viewModelScope.launch {
                 productUseCase.updateProduct(
                     type,
@@ -149,7 +148,7 @@ class UpdateViewModel @Inject constructor(
                         _uploadImage.emit(BaseNetworkResult.Loading(it.isLoading))
                     }
                 }
-            }
+            }.launchIn(viewModelScope)
         }
     }
 

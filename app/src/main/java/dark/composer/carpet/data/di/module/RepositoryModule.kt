@@ -9,6 +9,7 @@ import dark.composer.carpet.domain.repository.factory.FactoryRepository
 import dark.composer.carpet.domain.repository.login.LogInRepository
 import dark.composer.carpet.domain.repository.product.ProductRepository
 import dark.composer.carpet.domain.repository.profile.ProfileRepository
+import dark.composer.carpet.domain.repository.sale.SaleRepository
 import dark.composer.carpet.domain.repository.signup.SignUpRepository
 import dark.composer.carpet.utils.SharedPref
 import javax.inject.Singleton
@@ -20,6 +21,12 @@ object RepositoryModule {
     @Provides
     fun provideProductRepo(mainService: ApiService): ProductRepository {
         return ProductRepositoryImpl(mainService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaleRepo(mainService: ApiService): SaleRepository {
+        return SaleRepositoryImpl(mainService)
     }
 
     @Singleton

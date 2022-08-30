@@ -98,6 +98,9 @@
         <action
             android:id="@+id/action_profileFragment_to_updateProfileFragment"
             app:destination="@id/updateProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_factory_datails_new"
@@ -202,4 +205,9 @@
         android:id="@+id/basketFragment"
         android:name="dark.composer.carpet.presentation.fragment.basket.BasketFragment"
         android:label="BasketFragment" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="dark.composer.carpet.presentation.fragment.sale.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

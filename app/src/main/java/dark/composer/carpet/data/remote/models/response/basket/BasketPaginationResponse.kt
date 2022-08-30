@@ -8,5 +8,7 @@ data class BasketPaginationResponse(
     val type: String,
     val createdDate: String,
     val status: String,
-    val visible: Boolean
+    val visible: Boolean,
+    val amount:Int,
+    val price:Double?=0.0
 )

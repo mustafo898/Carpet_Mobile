@@ -12,22 +12,16 @@ import dark.composer.carpet.databinding.ItemBasketNewBinding
 class BasketAdapter : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
     private val basketList = mutableListOf<BasketPaginationResponse>()
 
-    private var addClickListener: ((id: Int,amount:Int) -> Unit)? = null
+    private var buyClickListener: ((id: String, amount:Int) -> Unit)? = null
 
-    fun setAddClickListener(f: (id: Int,amount:Int) -> Unit) {
-        addClickListener = f
+    fun setBuyClickListener(f: (id: String, amount:Int) -> Unit) {
+        buyClickListener = f
     }
 
-    private var deleteClickListener: ((id: Int) -> Unit)? = null
+    private var moreClickListener: ((view:View,id:Int) -> Unit)? = null
 
-    fun setDeleteClickListener(f: (id: Int) -> Unit) {
-        deleteClickListener = f
-    }
-
-    private var removeClickListener: ((id: Int,amount:Int) -> Unit)? = null
-
-    fun setRemoveClickListener(f: (id: Int,amount:Int) -> Unit) {
-        removeClickListener = f
+    fun setMoreClickListener(f: (view:View,id:Int) -> Unit) {
+        moreClickListener = f
     }
 
     inner class BasketViewHolder(private val binding: ItemBasketNewBinding) :
@@ -39,31 +33,20 @@ class BasketAdapter : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
                 Glide.with(binding.root).load(data.product.imageUrlList).into(binding.image)
             }
             binding.productName.text = data.product.name
-            binding.price.text = data.product.price.toString()
+            binding.price.text = data.amount.toString()
 
             if (data.type == "COUNTABLE"){
-                binding.linear.visibility = View.VISIBLE
                 binding.heightLinear.visibility = View.GONE
             }else{
-                binding.linear.visibility = View.GONE
                 binding.heightLinear.visibility = View.VISIBLE
             }
-            var d = 1
-            binding.amount.text = d.toString()
-            binding.add.setOnClickListener {
-                addClickListener?.invoke(data.id,++d)
-                binding.amount.text = d.toString()
+
+            binding.more.setOnClickListener {
+                moreClickListener?.invoke(it,data.id)
             }
 
-            binding.delete.setOnClickListener {
-                deleteClickListener?.invoke(data.id)
-            }
-
-            binding.remove.setOnClickListener {
-                if (d != 1) {
-                    removeClickListener?.invoke(data.id,--d)
-                    binding.amount.text = d.toString()
-                }
+            binding.buy.setOnClickListener {
+                buyClickListener?.invoke(data.product.uuid,layoutPosition)
             }
         }
     }

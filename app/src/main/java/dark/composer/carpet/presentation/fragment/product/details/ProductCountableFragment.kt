@@ -11,6 +11,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import dark.composer.carpet.R
 import dark.composer.carpet.data.remote.models.request.basket.BasketCreateRequest
+import dark.composer.carpet.data.remote.models.request.sale.SaleRequest
 import dark.composer.carpet.databinding.FragmentCountProductDetailsBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
@@ -34,6 +35,7 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
     var id = ""
     var type = ""
     var page = 0
+    var amount = 1
     var size = 40
 
     override fun onViewCreate() {
@@ -111,6 +113,25 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.sale.collect{
+                    when(it){
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let {t->
+                                Log.d("EEEE", "sale: $t")
+                                Toast.makeText(requireContext(), t.status.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        is BaseNetworkResult.Error -> {
+                            Log.d("EEEE", "sale: ${it.data?.message}")
+                            Toast.makeText(requireContext(), it.message?:"An unexpected error occurred", Toast.LENGTH_SHORT).show()}
+                        is BaseNetworkResult.Loading -> {Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()}
+                    }
+                }
+            }
+        }
     }
 
     private fun send(){
@@ -135,8 +156,26 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
             menuSettings.show()
         }
 
+        binding.amountBasket.text = amount.toString()
+
+        binding.plus.setOnClickListener {
+            ++amount
+            binding.amountBasket.text = amount.toString()
+        }
+
+        binding.minus.setOnClickListener {
+            if (amount != 1){
+                --amount
+                binding.amountBasket.text = amount.toString()
+            }
+        }
+
+//        binding.buy.setOnClickListener {
+//            viewModel.saleCreate(SaleRequest(amount = binding.amountBasket.text.toString().toInt(), type = type, productId = id, price = binding.price.text.toString().toDouble()))
+//        }
+
         binding.add.setOnClickListener {
-            viewModel.createBasket(BasketCreateRequest(amount = binding.amountBasket.text.toString().toInt(), type = type, productId = id, info = "Basket"))
+            viewModel.createBasket(BasketCreateRequest(amount = amount, type = type, productId = id, info = "Basket"))
         }
 
         menuSettings.setDeleteClickListener {

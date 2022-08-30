@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -14,6 +16,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
+import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.LinearLayoutManager
 import dark.composer.carpet.databinding.FragmentUpdateProductBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
@@ -22,6 +25,10 @@ import dark.composer.carpet.utils.BaseNetworkResult
 import dark.composer.carpet.utils.createRequest
 import dark.composer.carpet.utils.uploadFile
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class UpdateProductFragment :
     BaseFragment<FragmentUpdateProductBinding>(FragmentUpdateProductBinding::inflate) {
@@ -134,10 +141,10 @@ class UpdateProductFragment :
             viewLifecycleOwner.lifecycle.whenStarted {
                 viewModel.uploadImage.collect {
                     when(it){
-                        is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
-                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading}", Toast.LENGTH_SHORT).show()
+                        is BaseNetworkResult.Error -> Toast.makeText(requireContext(), "${it.message} file error", Toast.LENGTH_SHORT).show()
+                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "${it.isLoading} file load", Toast.LENGTH_SHORT).show()
                         is BaseNetworkResult.Success -> {
-                            Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Success File", Toast.LENGTH_SHORT).show()
                             navController.popBackStack()
                         }
                     }
@@ -154,7 +161,7 @@ class UpdateProductFragment :
                         is BaseNetworkResult.Success -> {
                             if (list.isNotEmpty()) {
                                 list.forEach { list1->
-                                    Toast.makeText(requireContext(), list1, Toast.LENGTH_SHORT).show()
+//                                    Toast.makeText(requireContext(), list1, Toast.LENGTH_SHORT).show()
                                     viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
                                 }
                             } else {
@@ -281,11 +288,11 @@ class UpdateProductFragment :
         }
     }
 
-//    private fun createRequest(path:String): MultipartBody.Part {
-//        val file = File(path)
-//        val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
-//        return MultipartBody.Part.createFormData("file", file.name, requestBody)
-//    }
+    private fun createRequest(path:String): MultipartBody.Part {
+        val file = File(path)
+        val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+        return MultipartBody.Part.createFormData("file", file.name, requestBody)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -330,10 +337,10 @@ class UpdateProductFragment :
             if (requestCode == REQUEST_CODE) {
                 val uri = data?.data
                 imagePath = uri?.let {
-                    uploadFile(it,requireContext())
+                    uploadFile(it)
                 }.toString()
                 list.add(imagePath)
-                Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), imagePath, Toast.LENGTH_SHORT).show()
                 adapterImage.setImage(imagePath)
             }
         }
@@ -343,14 +350,14 @@ class UpdateProductFragment :
 
     var imagePath = ""
 
-//    private fun uploadFile(uri: Uri): String? {
-//        val projection = arrayOf(MediaStore.Images.Media.DATA)
-//        val loader = CursorLoader(requireContext(), uri, projection, null, null, null)
-//        val cursor = loader.loadInBackground()
-//        val columnIdx = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-//        cursor?.moveToFirst()
-//        val result = cursor?.getString(columnIdx!!)
-//        cursor?.close()
-//        return result
-//    }
+    private fun uploadFile(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val loader = CursorLoader(requireContext(), uri, projection, null, null, null)
+        val cursor = loader.loadInBackground()
+        val columnIdx = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor?.moveToFirst()
+        val result = cursor?.getString(columnIdx!!)
+        cursor?.close()
+        return result
+    }
 }

@@ -75,6 +75,10 @@ class ProfileFragment :
             navController.navigate(R.id.action_profileFragment_to_usersFragment)
         }
 
+        binding.historyNext.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_historyFragment)
+        }
+
         binding.add.setOnClickListener {
             navController.navigate(R.id.action_profileFragment_to_createUserFragment)
         }

@@ -1,25 +1,18 @@
 package dark.composer.carpet.presentation.fragment.basket
 
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import dark.composer.carpet.R
 import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
 import dark.composer.carpet.databinding.FragmentBasketBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.BasketAdapter
-import dark.composer.carpet.presentation.fragment.product.details.ProductDetailsViewModel
+import dark.composer.carpet.presentation.fragment.dialog.MenuBasket
+import dark.composer.carpet.presentation.fragment.dialog.UpdateBasket
 import dark.composer.carpet.utils.BaseNetworkResult
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.internal.assertThreadDoesntHoldLock
 import javax.inject.Inject
 
 
@@ -29,6 +22,12 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     private val adapter by lazy {
         BasketAdapter()
     }
+
+    private lateinit var menuBasket: MenuBasket
+    private val dialog by lazy {
+        UpdateBasket(requireContext())
+    }
+
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
             requireActivity(), providerFactory
@@ -40,17 +39,22 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
         send()
     }
 
-    private fun observe(){
-        viewLifecycleOwner.lifecycleScope.launch{
+    private fun observe() {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.listBasket.collect{
-                    when(it){
+                viewModel.listBasket.collect {
+                    when (it) {
                         is BaseNetworkResult.Error ->
                             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT)
+                        is BaseNetworkResult.Loading -> Toast.makeText(
+                            requireContext(),
+                            "Loading...",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                         is BaseNetworkResult.Success -> {
-                            it.data?.let {t->
+                            it.data?.let { t ->
+                                Log.d("RRRR", "observe: $t")
                                 adapter.setList(t)
                             }
                         }
@@ -59,16 +63,43 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.update.collect{
-                    when(it){
+                viewModel.update.collect {
+                    when (it) {
                         is BaseNetworkResult.Error ->
                             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                        is BaseNetworkResult.Loading -> Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT)
+                        is BaseNetworkResult.Loading -> Toast.makeText(
+                            requireContext(),
+                            "Loading...",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                         is BaseNetworkResult.Success -> {
+                            dialog.dismiss()
+                            Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.getBasket.collect {
+                    when (it) {
+                        is BaseNetworkResult.Error ->
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        is BaseNetworkResult.Loading -> Toast.makeText(
+                            requireContext(),
+                            "Loading...",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let { t ->
+                                dialog.setAmount(t.amount)
+                            }
                         }
                     }
                 }
@@ -76,22 +107,42 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
         }
     }
 
-    private fun send(){
-        adapter.setAddClickListener { id, amount ->
-            viewModel.updateBasket(BasketUpdateRequest(basketId = id, price = 16.0, amount = amount))
+    private fun send() {
+//        adapter.setBuyClickListener { id, amount ->
+//            viewModel.updateBasket(BasketUpdateRequest(basketId = id, price = 16.0, amount = amount))
+////            viewModel.getListBasket("GIVEN",0,20)
+//        }
+
+//        adapter.setRemoveClickListener { id, amount ->
+//            viewModel.updateBasket(BasketUpdateRequest(basketId = id, price = 16.0, amount = amount))
+////            viewModel.getListBasket("GIVEN",0,20)
+//        }
+
+//        adapter.setMoreClickListener {
+//            viewModel.deleteBasket(it)
 //            viewModel.getListBasket("GIVEN",0,20)
+//        }
+        var basketId = 0
+        dialog.setOnUpdateListener { amount ->
+            viewModel.updateBasket(
+                BasketUpdateRequest(
+                    basketId = basketId,
+                    price = 16.0,
+                    amount = amount
+                )
+            )
         }
 
-        adapter.setRemoveClickListener { id, amount ->
-            viewModel.updateBasket(BasketUpdateRequest(basketId = id, price = 16.0, amount = amount))
-//            viewModel.getListBasket("GIVEN",0,20)
+        adapter.setMoreClickListener {it,id->
+            menuBasket = MenuBasket(requireContext(), it)
+            menuBasket.show()
+            basketId = id
+            viewModel.getBasket(basketId)
+            menuBasket.setUpdateClickListener {
+                dialog.show()
+            }
         }
 
-        adapter.setDeleteClickListener {
-            viewModel.deleteBasket(it)
-            viewModel.getListBasket("GIVEN",0,20)
-        }
-
-        viewModel.getListBasket("GIVEN",0,20)
+        viewModel.getListBasket("GIVEN", 0, 20)
     }
 }

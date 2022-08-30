@@ -10,7 +10,9 @@ import dark.composer.carpet.data.remote.models.request.filter.ProductFilterReque
 import dark.composer.carpet.data.remote.models.request.product.ProductCreateRequest
 import dark.composer.carpet.data.remote.models.request.profile.ProfileRequest
 import dark.composer.carpet.data.remote.models.request.profile.create_customer.ProfileCreateRequest
+import dark.composer.carpet.data.remote.models.request.sale.SaleCreateDateRequest
 import dark.composer.carpet.data.remote.models.request.sale.SaleRequest
+import dark.composer.carpet.data.remote.models.request.sale.SaleUpdateRequest
 import dark.composer.carpet.data.remote.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.remote.models.response.basket.BasketPaginationResponse
 import dark.composer.carpet.data.remote.models.response.basket.DeleteResponse
@@ -24,11 +26,15 @@ import dark.composer.carpet.data.remote.models.response.product.pagination.Produ
 import dark.composer.carpet.data.remote.models.response.profile.ProfileFileResponse
 import dark.composer.carpet.data.remote.models.response.profile.ProfileResponse
 import dark.composer.carpet.data.remote.models.response.profile.users.UsersPagination
+import dark.composer.carpet.data.remote.models.response.sale.SaleListByDate
+import dark.composer.carpet.data.remote.models.response.sale.SalePaginationResponse
 import dark.composer.carpet.data.remote.models.response.sale.SaleResponse
 import dark.composer.carpet.utils.Constants
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface ApiService {
     @POST(Constants.SIGNUP)
@@ -170,19 +176,46 @@ interface ApiService {
     @POST("/basket/emp/created")
     suspend fun createBasket(@Body create: BasketCreateRequest): Response<BasketCreateResponse>
 
-    @PUT("/basket/emp/update")
+    @PUT("basket/emp/update")
     suspend fun updateBasket(@Body update: BasketUpdateRequest): Response<BasketCreateResponse>
 
-    @PUT("/basket/emp/{id}")
-    suspend fun getByIdBasket(@Path("id") id:Int): Response<BasketCreateResponse>
+    @GET("/basket/emp/{id}")
+    suspend fun getByIdBasket(@Path("id") id: Int): Response<BasketCreateResponse>
 
     @DELETE("/basket/adm/{id}")
-    suspend fun deleteByIdBasket(@Path("id") id:Int): Response<DeleteResponse>
+    suspend fun deleteByIdBasket(@Path("id") id: Int): Response<DeleteResponse>
 
     @GET("/basket/emp/pagination/{status}")
-    suspend fun getPaginationBasket(@Path("status") status:String, @Query("page") page: Int, @Query("size") size: Int): Response<List<BasketPaginationResponse>>
+    suspend fun getPaginationBasket(
+        @Path("status") status: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<List<BasketPaginationResponse>>
 
     /** Sale */
-    @POST("sale/emp/create")
+    @POST("/sale/emp/create")
     suspend fun createSale(@Body request: SaleRequest): Response<SaleResponse>
+
+    @GET("/sale/emp/pagination/{type}")
+    suspend fun getSaleList(
+        @Path("type") type: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<List<SalePaginationResponse>>
+
+    @PUT("/sale/emp/update/{type}")
+    suspend fun updateSale(
+        @Body updateRequest: SaleUpdateRequest,
+        @Path("type") type: String,
+        @Query("id") id: Int
+    ): Response<SaleResponse>
+
+    @DELETE("/sale/adm/{type}")
+    suspend fun deleteSale(
+        @Path("type") type: String,
+        @Query("id") id: Int
+    ): Response<SaleResponse>
+
+    @POST("/sale/adm/created_date")
+    suspend fun listByCreateDate(@Body date: SaleCreateDateRequest): Response<List<SaleListByDate>>
 }

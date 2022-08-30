@@ -20,6 +20,7 @@ import dark.composer.carpet.presentation.fragment.profile.users.create.CreateUse
 import dark.composer.carpet.presentation.fragment.profile.users.UsersFragment
 import dark.composer.carpet.presentation.fragment.profile.users.details.UserDetailsFragment
 import dark.composer.carpet.presentation.fragment.profile.users.update.UpdateUserFragment
+import dark.composer.carpet.presentation.fragment.sale.HistoryFragment
 import dark.composer.carpet.presentation.fragment.signup.SignUpFragment
 
 @Module
@@ -81,4 +82,7 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun basketFragment(): BasketFragment
+
+    @ContributesAndroidInjector
+    abstract fun historyFragment(): HistoryFragment
 }
