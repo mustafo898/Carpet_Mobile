@@ -176,7 +176,7 @@ interface ApiService {
     @POST("/basket/emp/created")
     suspend fun createBasket(@Body create: BasketCreateRequest): Response<BasketCreateResponse>
 
-    @PUT("basket/emp/update")
+    @PUT("/basket/emp/update")
     suspend fun updateBasket(@Body update: BasketUpdateRequest): Response<BasketCreateResponse>
 
     @GET("/basket/emp/{id}")

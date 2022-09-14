@@ -20,14 +20,10 @@ import javax.inject.Inject
 class ProductDetailsViewModel @Inject constructor(
     private val useCase: ProductUseCase,
     private val basketUseCase: BasketUseCase,
-    private val saleUseCase: SaleUseCase,
 ) : ViewModel() {
 
     private val _update = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
     val update = _update.asSharedFlow()
-
-    private val _sale = MutableSharedFlow<BaseNetworkResult<SaleResponse>>()
-    val sale = _sale.asSharedFlow()
 
     private val _product = MutableSharedFlow<BaseNetworkResult<ProductResponse>>()
     val product = _product.asSharedFlow()
@@ -63,29 +59,7 @@ class ProductDetailsViewModel @Inject constructor(
         }
     }
 
-    fun saleCreate(saleRequest: SaleRequest) {
-        viewModelScope.launch {
-            saleUseCase.createSale(saleRequest).onEach { result ->
-                when (result) {
-                    is BaseNetworkResult.Error -> {
-                        _sale.emit(
-                            BaseNetworkResult.Error(
-                                result.message ?: "An unexpected error occurred"
-                            )
-                        )
-                    }
-                    is BaseNetworkResult.Loading -> {
-                        _sale.emit(BaseNetworkResult.Loading(result.isLoading))
-                    }
-                    is BaseNetworkResult.Success -> {
-                        _sale.emit(BaseNetworkResult.Success(result.data!!))
-                    }
-                }
-            }.catch { t ->
-                Log.d("OOOOOOO", "getProduct: ")
-            }.launchIn(viewModelScope)
-        }
-    }
+
 
     fun getProductList(type: String, page: Int, size: Int) {
         viewModelScope.launch {

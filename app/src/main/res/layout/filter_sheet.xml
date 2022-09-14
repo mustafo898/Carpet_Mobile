@@ -92,7 +92,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:id="@+id/disign"
+                    android:id="@+id/design"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_height="wrap_content"/>
@@ -106,7 +106,7 @@
                 android:id="@+id/colorInput"
                 app:counterEnabled="true"
                 app:counterMaxLength="20"
-                android:hint="Pon">
+                android:hint="Color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/widthInput"
-                    android:hint="Pon">
+                    android:hint="Width">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/heightInput"
-                    android:hint="Pon">
+                    android:hint="Height">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_productFragment_to_productUncountableFragment"
             app:destination="@id/productUncountableFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
 
     <fragment
@@ -210,4 +213,13 @@
         android:name="dark.composer.carpet.presentation.fragment.sale.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/filterFragment"
+        tools:layout="@layout/filter_sheet"
+        android:name="dark.composer.carpet.presentation.fragment.product.filter.FilterFragment"
+        android:label="FilterFragment" >
+        <action
+            android:id="@+id/action_filterFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+    </fragment>
 </navigation>

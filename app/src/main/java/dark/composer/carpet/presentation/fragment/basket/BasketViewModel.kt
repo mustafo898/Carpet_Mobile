@@ -4,16 +4,22 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
+import dark.composer.carpet.data.remote.models.request.sale.SaleRequest
 import dark.composer.carpet.data.remote.models.response.basket.BasketCreateResponse
 import dark.composer.carpet.data.remote.models.response.basket.BasketPaginationResponse
 import dark.composer.carpet.data.remote.models.response.basket.DeleteResponse
+import dark.composer.carpet.data.remote.models.response.sale.SaleResponse
 import dark.composer.carpet.domain.use_case.basket.BasketUseCase
+import dark.composer.carpet.domain.use_case.sale.SaleUseCase
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCase):ViewModel() {
+class BasketViewModel @Inject constructor(
+    private val basketUseCase: BasketUseCase,
+    private val saleUseCase: SaleUseCase,
+) : ViewModel() {
 
     private val _update = MutableSharedFlow<BaseNetworkResult<BasketCreateResponse>>()
     val update = _update.asSharedFlow()
@@ -27,7 +33,34 @@ class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCa
     private val _listBasket = MutableSharedFlow<BaseNetworkResult<List<BasketPaginationResponse>>>()
     val listBasket = _listBasket.asSharedFlow()
 
-    fun updateBasket(updateBasket:BasketUpdateRequest) {
+    private val _sale = MutableSharedFlow<BaseNetworkResult<SaleResponse>>()
+    val sale = _sale.asSharedFlow()
+
+    fun saleCreate(saleRequest: SaleRequest) {
+        viewModelScope.launch {
+            saleUseCase.createSale(saleRequest).onEach { result ->
+                when (result) {
+                    is BaseNetworkResult.Error -> {
+                        _sale.emit(
+                            BaseNetworkResult.Error(
+                                result.message ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                    is BaseNetworkResult.Loading -> {
+                        _sale.emit(BaseNetworkResult.Loading(result.isLoading))
+                    }
+                    is BaseNetworkResult.Success -> {
+                        _sale.emit(BaseNetworkResult.Success(result.data!!))
+                    }
+                }
+            }.catch { t ->
+                Log.d("OOOOOOO", "getProduct: ")
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun updateBasket(updateBasket: BasketUpdateRequest) {
         viewModelScope.launch {
             basketUseCase.updateBasket(updateBasket).onEach { result ->
                 when (result) {
@@ -53,7 +86,7 @@ class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCa
         }
     }
 
-    fun deleteBasket(id:Int) {
+    fun deleteBasket(id: Int) {
         viewModelScope.launch {
             basketUseCase.deleteBasket(id).onEach { result ->
                 when (result) {
@@ -79,9 +112,9 @@ class BasketViewModel @Inject constructor(private val basketUseCase: BasketUseCa
         }
     }
 
-    fun getListBasket(status:String,page:Int,size:Int) {
+    fun getListBasket(status: String, page: Int, size: Int) {
         viewModelScope.launch {
-            basketUseCase.getBasketList(status,page, size).onEach { result ->
+            basketUseCase.getBasketList(status, page, size).onEach { result ->
                 when (result) {
                     is BaseNetworkResult.Error -> {
                         _listBasket.emit(

@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import dark.composer.carpet.data.remote.models.request.basket.BasketUpdateRequest
+import dark.composer.carpet.databinding.DialogBuyBasketBinding
 import dark.composer.carpet.databinding.FragmentBasketBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.BasketAdapter
 import dark.composer.carpet.presentation.fragment.dialog.MenuBasket
+import dark.composer.carpet.presentation.fragment.dialog.SaleDialog
 import dark.composer.carpet.presentation.fragment.dialog.UpdateBasket
 import dark.composer.carpet.utils.BaseNetworkResult
 import kotlinx.coroutines.launch
@@ -26,6 +28,10 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     private lateinit var menuBasket: MenuBasket
     private val dialog by lazy {
         UpdateBasket(requireContext())
+    }
+
+    private val dialogBuy by lazy {
+        SaleDialog(requireContext())
     }
 
     override fun onViewCreate() {
@@ -56,6 +62,9 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
                             it.data?.let { t ->
                                 Log.d("RRRR", "observe: $t")
                                 adapter.setList(t)
+                                t.forEach {y->
+                                    Toast.makeText(requireContext(), "${y.id}", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
                     }
@@ -98,8 +107,39 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
                             .show()
                         is BaseNetworkResult.Success -> {
                             it.data?.let { t ->
+                                dialogBuy.setSaleFields(t)
                                 dialog.setAmount(t.amount)
                             }
+                        }
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.whenStarted {
+                viewModel.sale.collect {
+                    when (it) {
+                        is BaseNetworkResult.Success -> {
+                            it.data?.let { t ->
+                                Log.d("EEEE", "sale: $t")
+                                Toast.makeText(
+                                    requireContext(),
+                                    t.status.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        is BaseNetworkResult.Error -> {
+                            Log.d("EEEE", "sale: ${it.data?.message}")
+                            Toast.makeText(
+                                requireContext(),
+                                it.message ?: "An unexpected error occurred",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is BaseNetworkResult.Loading -> {
+                            Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -123,23 +163,35 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
 //            viewModel.getListBasket("GIVEN",0,20)
 //        }
         var basketId = 0
-        dialog.setOnUpdateListener { amount ->
-            viewModel.updateBasket(
-                BasketUpdateRequest(
-                    basketId = basketId,
-                    price = 16.0,
-                    amount = amount
-                )
-            )
-        }
 
-        adapter.setMoreClickListener {it,id->
+        adapter.setBuyClickListener { id, amount, price ->
+            dialogBuy.show()
+        }
+        dialogBuy.setOnClickListener {
+            viewModel.saleCreate(it)
+
+        }
+//        dialog.setOnUpdateListener { amount ->
+//            viewModel.updateBasket(
+//                BasketUpdateRequest(
+//                    basketId = basketId,
+//                    price = 16.0,
+//                    amount = amount
+//                )
+//            )
+//        }
+
+        adapter.setMoreClickListener { it, id ->
             menuBasket = MenuBasket(requireContext(), it)
             menuBasket.show()
             basketId = id
-            viewModel.getBasket(basketId)
             menuBasket.setUpdateClickListener {
+                viewModel.getBasket(basketId)
                 dialog.show()
+            }
+
+            menuBasket.setDeleteClickListener {
+                viewModel.deleteBasket(basketId)
             }
         }
 

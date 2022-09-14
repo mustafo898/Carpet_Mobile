@@ -1,5 +1,6 @@
 package dark.composer.carpet.presentation.fragment.product
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -45,6 +46,16 @@ class ProductFragment :
     private fun setUpUi() {
         binding.productList.adapter = productAdapter
         binding.filterList.adapter = filterAdapter
+
+        val bundle: Bundle? = this.arguments
+        var s = mutableListOf<String>()
+        bundle?.let {
+            it.getStringArrayList("FILTER")?.let {t->
+                s = t
+            }
+        }
+
+        filterAdapter.setList(s)
     }
 
     private fun observe() {
@@ -105,6 +116,10 @@ class ProductFragment :
 
         productAdapter.setClickListener {
             navController.navigateP(type,it)
+        }
+
+        binding.filter.setOnClickListener {
+            navController.navigate(R.id.action_productFragment_to_filterFragment)
         }
     }
 }

@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dark.composer.carpet.R
+import dark.composer.carpet.data.remote.models.request.filter.ProductFilterRequest
 import dark.composer.carpet.databinding.FragmentAdminNewBinding
 import dark.composer.carpet.presentation.fragment.BaseFragment
 import dark.composer.carpet.presentation.fragment.adapters.FactoryAdminAdapter
 import dark.composer.carpet.presentation.fragment.adapters.ProductAdapter
+import dark.composer.carpet.presentation.fragment.dialog.MenuType
 import dark.composer.carpet.utils.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,11 +35,15 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         ProductAdapter()
     }
 
+    private val menuType by lazy {
+        MenuType(requireContext(),binding.type)
+    }
+
     private val factoryAdminAdapter by lazy {
         FactoryAdminAdapter()
     }
 
-    private var type = "UNCOUNTABLE"
+    private var type = "COUNTABLE"
 
     override fun onViewCreate() {
         viewModel = ViewModelProvider(
@@ -110,9 +116,9 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
                             Log.d("EEEEE", "observe: ${it.data}")
                             binding.progress.visibility = View.GONE
                             binding.scroll.visibility = View.VISIBLE
-                            factoryAdminAdapter.setList(it.data?: emptyList())
+                            factoryAdminAdapter.setList(it.data ?: emptyList())
                         }
-                        is BaseNetworkResult.Loading-> {
+                        is BaseNetworkResult.Loading -> {
                             binding.progress.visibility = View.VISIBLE
                             binding.scroll.visibility = View.GONE
                         }
@@ -128,12 +134,28 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
     }
 
     private fun send() {
-        viewModel.getProfile()
-        viewModel.getFactoryList(0, 20)
-        viewModel.getProductList(type, 0, 20)
+        if (!sharedPref.getToken().isNullOrEmpty()) {
+            viewModel.getProfile()
+            viewModel.getProductList(type, 0, 20)
+            viewModel.getFactoryList(0, 20)
+        }
     }
 
     private fun action() {
+        binding.type.setOnClickListener {
+            menuType.show()
+        }
+
+        menuType.setCountableClickListener {
+            getPagination("COUNTABLE")
+            Toast.makeText(requireContext(), "Countable", Toast.LENGTH_SHORT).show()
+        }
+
+        menuType.setUncountableClickListener {
+            getPagination("UNCOUNTABLE")
+            Toast.makeText(requireContext(), "Uncountable", Toast.LENGTH_SHORT).show()
+        }
+
         binding.seeAll.setOnClickListener {
             navController.navigate(R.id.action_adminFragment_to_factoryFragment)
         }
@@ -148,14 +170,14 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         productAdapter.setClickListener {
             Log.d("RRRRR", "adapter: $it")
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            navController.navigateA(type,it)
+            navController.navigateA(type, it)
         }
 
         binding.image.setOnClickListener {
 //            sharedPref.clearAllCache()
-            if (sharedPref.getToken().isNullOrEmpty()){
+            if (sharedPref.getToken().isNullOrEmpty()) {
                 navController.navigate(R.id.action_adminFragment_to_logInFragment)
-            }else{
+            } else {
                 navController.navigate(R.id.action_adminFragment_to_profileFragment)
             }
 
@@ -163,7 +185,8 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
     }
 
     private fun setupUi() {
-        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility = View.VISIBLE
+        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)?.visibility =
+            View.VISIBLE
         binding.list.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         binding.list.adapter = productAdapter
@@ -175,4 +198,8 @@ class AdminFragment : BaseFragment<FragmentAdminNewBinding>(FragmentAdminNewBind
         snapper.attachToRecyclerView(binding.factoriesList)
     }
 
+    private fun getPagination(type:String){
+        this.type = type
+        viewModel.getProductList(type = type, page = 0, size = 20)
+    }
 }

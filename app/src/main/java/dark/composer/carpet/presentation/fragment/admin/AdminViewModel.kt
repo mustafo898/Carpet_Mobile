@@ -38,8 +38,7 @@ class AdminViewModel @Inject constructor(
                         )
                     )
                     is BaseNetworkResult.Loading -> _profile.emit(
-                        BaseNetworkResult.Loading(result.isLoading
-                        )
+                        BaseNetworkResult.Loading(result.isLoading)
                     )
                     is BaseNetworkResult.Success -> result.data?.let { t ->
                         _profile.emit(
@@ -56,12 +55,12 @@ class AdminViewModel @Inject constructor(
         viewModelScope.launch {
             useCaseFactory.getFactoryList(page, size).onEach { result ->
                 when (result) {
-                    is BaseNetworkResult.Error -> _profile.emit(
+                    is BaseNetworkResult.Error -> _factory.emit(
                         BaseNetworkResult.Error(
                             result.message ?: "An unexpected error occurred"
                         )
                     )
-                    is BaseNetworkResult.Loading -> _profile.emit(
+                    is BaseNetworkResult.Loading -> _factory.emit(
                         BaseNetworkResult.Loading(
                             result.isLoading
                         )

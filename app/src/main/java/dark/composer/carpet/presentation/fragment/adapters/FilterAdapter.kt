@@ -20,6 +20,9 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.FilterViewHolder>(){
             binding.btn.setOnClickListener {
                 clickListener?.invoke(layoutPosition)
             }
+            itemView.setOnClickListener {
+                deleteItem(layoutPosition)
+            }
         }
     }
 

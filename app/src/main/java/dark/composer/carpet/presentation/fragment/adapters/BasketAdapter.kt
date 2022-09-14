@@ -1,5 +1,6 @@
 package dark.composer.carpet.presentation.fragment.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,9 @@ import dark.composer.carpet.databinding.ItemBasketNewBinding
 class BasketAdapter : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
     private val basketList = mutableListOf<BasketPaginationResponse>()
 
-    private var buyClickListener: ((id: String, amount:Int) -> Unit)? = null
+    private var buyClickListener: ((id: String, amount:Int, height:Double) -> Unit)? = null
 
-    fun setBuyClickListener(f: (id: String, amount:Int) -> Unit) {
+    fun setBuyClickListener(f: (id: String, amount:Int,height:Double) -> Unit) {
         buyClickListener = f
     }
 
@@ -30,8 +31,9 @@ class BasketAdapter : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
             if (data.product.imageUrlList.isNullOrEmpty()) {
                 binding.image.setImageResource(R.drawable.ic_shopping_basket)
             }else{
-                Glide.with(binding.root).load(data.product.imageUrlList).into(binding.image)
+                Glide.with(binding.root).load(data.product.imageUrlList[0]).into(binding.image)
             }
+            Log.d("OOOO", "bind: ${data.product.imageUrlList}")
             binding.productName.text = data.product.name
             binding.price.text = data.amount.toString()
 
@@ -46,7 +48,7 @@ class BasketAdapter : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
             }
 
             binding.buy.setOnClickListener {
-                buyClickListener?.invoke(data.product.uuid,layoutPosition)
+                buyClickListener?.invoke(data.product.uuid,data.amount,0.0)
             }
         }
     }

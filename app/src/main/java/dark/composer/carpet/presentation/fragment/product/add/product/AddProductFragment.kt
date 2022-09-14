@@ -196,7 +196,9 @@ class AddProductFragment :
                             if (list.isNotEmpty()) {
                                 list.forEach { list1->
                                     Toast.makeText(requireContext(), list1, Toast.LENGTH_SHORT).show()
-                                    viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
+                                    if (!list.isNullOrEmpty()){
+                                        viewModel.uploadFile(createRequest(list1),it.data?.attachUUID!!)
+                                    }
                                 }
                             } else {
                                 navController.popBackStack()

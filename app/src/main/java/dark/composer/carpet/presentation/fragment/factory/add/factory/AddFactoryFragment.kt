@@ -164,8 +164,7 @@ class AddFactoryFragment : BaseFragment<FragmentAddFactoryNewBinding>(FragmentAd
                 imagePath = uri?.let { uploadFile(it,requireContext()) }.toString()
                 Glide.with(requireContext()).load(imagePath).into(binding.image)
                 val file = File(imagePath)
-                val requestBody =
-                    RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
+                val requestBody = RequestBody.create("multipart/form-date".toMediaTypeOrNull(), file)
                 body = MultipartBody.Part.createFormData("file", file.name, requestBody)
                 Toast.makeText(requireContext(), "$body", Toast.LENGTH_SHORT).show()
             }

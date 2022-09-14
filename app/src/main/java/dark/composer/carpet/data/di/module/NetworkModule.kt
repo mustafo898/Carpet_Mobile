@@ -24,8 +24,6 @@ object NetworkModule {
         httpLoggingInterceptor: HttpLoggingInterceptor,
         shared: SharedPref
     ): Retrofit {
-//        val httpLoggingInterceptor = HttpLoggingInterceptor()
-//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val gson = GsonBuilder()
             .setLenient()
             .create()
@@ -44,11 +42,6 @@ object NetworkModule {
                         else request.newBuilder()
                             .header("Authorization", "Bearer ${shared.getToken()}")
                         chain.proceed(newRequest.build())
-//                            .also {
-//                        if (it.code == 401) {
-//                              Handler(Looper.getMainLooper()).post { shared.setAccessToken("empty") }
-//                        }
-//                        }
                     }
                     .build()
             )

@@ -113,25 +113,6 @@ class ProductCountableFragment : BaseFragment<FragmentCountProductDetailsBinding
                 }
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.whenStarted {
-                viewModel.sale.collect{
-                    when(it){
-                        is BaseNetworkResult.Success -> {
-                            it.data?.let {t->
-                                Log.d("EEEE", "sale: $t")
-                                Toast.makeText(requireContext(), t.status.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        is BaseNetworkResult.Error -> {
-                            Log.d("EEEE", "sale: ${it.data?.message}")
-                            Toast.makeText(requireContext(), it.message?:"An unexpected error occurred", Toast.LENGTH_SHORT).show()}
-                        is BaseNetworkResult.Loading -> {Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()}
-                    }
-                }
-            }
-        }
     }
 
     private fun send(){
